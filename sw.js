@@ -2,7 +2,7 @@
 // 目的：快取「畫面外殼」（HTML/圖示），讓 App 在弱網路下仍能開啟；
 // 資料（股價、雲端同步）一律走網路，不快取，避免看到過期數字。
 
-const CACHE_NAME = 'jiaxiang-warroom-v7-1';
+const CACHE_NAME = 'jiaxiang-warroom-v8-0-strategy-1';
 const APP_SHELL = [
   './',
   './index.html',

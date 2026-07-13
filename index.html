@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
-    <title>家祥投資戰情室 v7.1 - 45歲圓夢退休 三分頁整合版</title>
+    <title>家祥投資戰情室 v8.0 - 45歲圓夢退休 策略選股版</title>
 
     <!-- PWA / 加到主畫面（手機App化）設定 -->
     <link rel="manifest" href="manifest.json">
@@ -176,7 +176,7 @@
                 </div>
                 <div>
                     <h1 class="text-lg font-bold tracking-wider text-white flex items-center gap-2">
-                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v7.1 即時報價版</span>
+                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v8.0 策略選股版</span>
                     </h1>
                     <p class="text-xs text-slate-400">🤖 財經富貴 // 與 AI 一起朝 45 歲 5,000 萬總資產目標邁進</p>
                 </div>
@@ -200,6 +200,7 @@
             <button class="tab-btn" data-tab-target="overview" onclick="switchTab('overview')"><i class="fa-solid fa-chart-pie mr-1.5"></i>資產總覽</button>
             <button class="tab-btn" data-tab-target="intel" onclick="switchTab('intel')"><i class="fa-solid fa-newspaper mr-1.5"></i>財經情報</button>
             <button class="tab-btn" data-tab-target="trading" onclick="switchTab('trading')"><i class="fa-solid fa-arrows-rotate mr-1.5"></i>交易與AI檢討</button>
+            <button class="tab-btn" data-tab-target="strategy" onclick="switchTab('strategy')"><i class="fa-solid fa-bullseye mr-1.5"></i>策略選股</button>
         </nav>
     </header>
 
@@ -229,6 +230,7 @@
                     </div>
                     <span class="text-[10px] bg-emerald-900/30 text-emerald-400 px-2 py-1 rounded border border-emerald-500/30">真實逐日記錄</span>
                 </div>
+                <div id="trend-daily-change" class="hidden flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono mb-3"></div>
                 <div class="w-full h-48 flex items-center justify-center">
                     <canvas id="trendChart"></canvas>
                     <p id="trend-empty-hint" class="hidden text-xs text-slate-500 text-center px-4 leading-relaxed"></p>
@@ -690,10 +692,38 @@
                             </div>
                         </h3>
                         <div class="mt-2 text-right">
-                            <span class="text-[10px] text-slate-500"><i class="fa-solid fa-cloud-arrow-down"></i> 日記內容已自動從 Google Sheet 抓取，若需永久保存修改請至試算表編輯。</span>
+                            <span class="text-[10px] text-slate-500"><i class="fa-solid fa-cloud-arrow-down"></i> 直接在下方新增/編輯，會自動同步到雲端 Google Sheet 的 Daily_Log 分頁。</span>
                         </div>
                     </div>
-                    
+
+                    <!-- 新增/編輯日記表單 -->
+                    <div class="bg-slate-800/40 border border-cyber-border rounded-xl p-4 mb-4 space-y-2.5">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                            <div>
+                                <label class="text-[10px] text-slate-500">日期</label>
+                                <input type="date" id="journal-input-date" class="w-full bg-slate-900 border border-cyber-border rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-purple-500 font-mono mt-0.5">
+                            </div>
+                            <div>
+                                <label class="text-[10px] text-slate-500">當日報酬 %</label>
+                                <input type="number" step="0.01" id="journal-input-daily-ret" placeholder="0" class="w-full bg-slate-900 border border-cyber-border rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-purple-500 font-mono mt-0.5">
+                            </div>
+                            <div>
+                                <label class="text-[10px] text-slate-500">佔總資產 %</label>
+                                <input type="number" step="0.01" id="journal-input-total-ret" placeholder="0" class="w-full bg-slate-900 border border-cyber-border rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-purple-500 font-mono mt-0.5">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-slate-500">操作反思 / 日記內容</label>
+                            <textarea id="journal-input-note" rows="3" placeholder="今天市場發生了什麼？我做了什麼判斷？回頭看做對/做錯了什麼？" class="w-full mt-0.5 bg-slate-900 border border-cyber-border rounded-lg px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 resize-none"></textarea>
+                        </div>
+                        <div class="flex justify-between items-center gap-2">
+                            <button id="journal-cancel-edit-btn" onclick="cancelJournalEdit()" class="hidden text-slate-400 hover:text-white transition text-xs font-semibold px-3 py-1.5">取消編輯</button>
+                            <button onclick="saveJournalEntry()" class="ml-auto bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold px-4 py-1.5 rounded-lg transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-floppy-disk"></i> <span id="journal-save-btn-label">儲存日記</span>
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- Scrollable Journal Container -->
                     <div id="journal-container" class="flex-grow overflow-y-auto space-y-4 pr-2">
                         <!-- Rendered dynamically by JavaScript -->
@@ -749,13 +779,14 @@
                         <div class="bg-blue-600 text-white p-2 rounded-lg text-xs flex items-center justify-center font-bold">富貴</div>
                         <div class="bg-cyber-card border border-cyber-border rounded-xl p-3.5 max-w-[85%] text-slate-200 leading-relaxed shadow-md">
                             家祥您好，我是您的財經戰術助手「財經富貴」！🤖<br>
-                            我們已升級至 <strong>v7.0 三分頁整合版</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
-                            現在系統分為三個分頁：<strong>📊 資產總覽</strong>（資產現況與 5,000 萬進度）、<strong>📰 財經情報</strong>（每日自動彙整你追蹤的財經頻道，可一鍵請我結合持股解讀）、<strong>📈 交易與AI檢討</strong>（買賣紀錄、績效日曆與我的戰術裁決）。<br><br>
+                            我們已升級至 <strong>v8.0 策略選股版</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
+                            現在系統分為四個分頁：<strong>📊 資產總覽</strong>（資產現況與 5,000 萬進度）、<strong>📰 財經情報</strong>（每日自動彙整你追蹤的財經頻道，可一鍵請我結合持股解讀）、<strong>📈 交易與AI檢討</strong>（買賣紀錄、績效日曆與我的戰術裁決）、<strong>🎯 策略選股</strong>（五流派自動選股引擎：胃納量核心榜、持股停損儀表板、當日訊號榜、結構財候選、題材熱度雷達，可一鍵請我給操作策略）。<br><br>
                             💡 <strong>操作核心心法：</strong><br>
                             1. 「🏆 45歲退休圓夢計畫」的 <strong>5,000 萬淨值目標</strong>可直接在畫面上調高調低，所有推估即時重算；退休被動收入只是下方的現金流方向參考。<br>
                             2. 「🤝 AI 共識操作重點摘要」記錄我們每次討論後的行動共識，也可一鍵從我的回覆產生摘要。<br>
                             3. 買賣股票請用「新增買進/賣出紀錄」，會請你確認股數/價格/標的後才送出，並自動記入下方「歷史交易明細」月曆。<br>
-                            4. 我專注在投資與資產配置紀律，<strong>不會給保險建議</strong>（你的保障很完整）。<br>
+                            4. 「🎯 策略選股」分頁的停損儀表板會依「成本-8% 或 跌破20日均線，先到先觸發」自動盯你的持股，觸發時也會寄 Email 通知你。<br>
+                            5. 我專注在投資與資產配置紀律，<strong>不會給保險建議</strong>（你的保障很完整）。<br>
                             （目前個股明細為依 PDF 報告總市值反推的過渡估算值，待你提供精確股數後我可協助更新）
                         </div>
                     </div>
@@ -768,6 +799,129 @@
                         <i class="fa-solid fa-paper-plane"></i> 發送
                     </button>
                 </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 🎯 策略選股（第四分頁：五流派自動選股引擎） -->
+        <!-- ============================================== -->
+        <div data-tab="strategy" class="space-y-6">
+            <!-- 控制列 -->
+            <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
+                <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-3">
+                    <div class="flex items-center gap-2.5">
+                        <div class="bg-amber-500/20 text-amber-400 p-2 rounded-lg border border-amber-500/30"><i class="fa-solid fa-bullseye text-lg"></i></div>
+                        <div>
+                            <h3 class="text-base font-bold text-white">🎯 策略選股（五流派自動選股引擎）</h3>
+                            <p id="strategy-scan-info" class="text-xs text-slate-400">尚未載入</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button id="btn-strategy-scan" onclick="triggerStrategyScan()" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-emerald-500/30 text-xs font-medium px-3 py-1.5 rounded-lg transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-radar"></i> 立即掃描
+                        </button>
+                        <button onclick="loadStrategyData()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-cyber-border text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-rotate"></i> 重新整理
+                        </button>
+                        <button onclick="askFuguiForStrategy()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-lg shadow-blue-900/20">
+                            <i class="fa-solid fa-robot"></i> 請富貴給操作策略
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 降級提示：後端尚未升級 -->
+            <div id="strategy-upgrade-hint" class="hidden bg-amber-950/40 border border-amber-500/30 rounded-xl p-4 flex items-start gap-3">
+                <i class="fa-solid fa-triangle-exclamation text-amber-400 mt-0.5"></i>
+                <div class="text-xs text-amber-200/90 leading-relaxed">
+                    <p class="font-semibold text-amber-300 mb-1">策略選股引擎尚未就緒</p>
+                    <p class="hint-text">請依《策略選股升級指南》更新 Code.gs 並部署新版本，接著到試算表選單「🎯 策略選股」依序執行①②③。</p>
+                </div>
+            </div>
+
+            <div id="strategy-main-content" class="space-y-6">
+                <!-- 🛡️ 持股停損儀表板（B流派） -->
+                <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-shield-halved text-red-400"></i>
+                        <h3 class="text-sm font-bold text-white">🛡️ 持股停損儀表板 <span class="text-[10px] text-slate-500 font-normal">（成本-8% 或 跌破20日均線，先到先觸發）</span></h3>
+                    </div>
+                    <div class="overflow-x-auto rounded-xl border border-cyber-border">
+                        <table class="w-full text-left border-collapse bg-slate-900/30 text-xs">
+                            <thead>
+                                <tr class="border-b border-cyber-border text-slate-400 font-semibold bg-slate-800/50">
+                                    <th class="py-2.5 px-3">代號/名稱</th>
+                                    <th class="py-2.5 px-2">類別</th>
+                                    <th class="py-2.5 px-2">成本</th>
+                                    <th class="py-2.5 px-2">現價</th>
+                                    <th class="py-2.5 px-2">停損價</th>
+                                    <th class="py-2.5 px-2">距離</th>
+                                    <th class="py-2.5 px-3">狀態</th>
+                                </tr>
+                            </thead>
+                            <tbody id="stoploss-dashboard-body" class="divide-y divide-cyber-border text-slate-300">
+                                <tr><td colspan="7" class="text-center text-slate-500 py-6 text-xs">尚未載入</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 🚨 當日訊號榜（C流派） -->
+                <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-bolt text-amber-400"></i>
+                        <h3 class="text-sm font-bold text-white">🚨 當日訊號榜 <span class="text-[10px] text-slate-500 font-normal">（旱地拔蔥 / 突破糾結 / 頂天立地，⭐=投信當日買超）</span></h3>
+                    </div>
+                    <div id="school-c-signals-container" class="space-y-3">
+                        <div class="text-center text-slate-500 text-xs py-6">尚未載入</div>
+                    </div>
+                </div>
+
+                <!-- 🌡️ 題材強弱表（C流派） -->
+                <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-fire text-orange-400"></i>
+                        <h3 class="text-sm font-bold text-white">🌡️ 題材強弱表</h3>
+                    </div>
+                    <div id="theme-strength-container" class="overflow-x-auto">
+                        <div class="text-center text-slate-500 text-xs py-4">尚未載入</div>
+                    </div>
+                </div>
+
+                <!-- 🏔️ 胃納量核心榜（A流派） -->
+                <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-mountain text-blue-400"></i>
+                        <h3 class="text-sm font-bold text-white">🏔️ 胃納量核心榜 <span class="text-[10px] text-slate-500 font-normal">（成交值前30 ∩ 大主題池 ∩ 站上40日均線）</span></h3>
+                    </div>
+                    <div id="school-a-container" class="space-y-2">
+                        <div class="text-center text-slate-500 text-xs py-4">尚未載入</div>
+                    </div>
+                </div>
+
+                <!-- 📊 結構財候選（D流派） -->
+                <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-chart-column text-purple-400"></i>
+                        <h3 class="text-sm font-bold text-white">📊 結構財候選 <span class="text-[10px] text-slate-500 font-normal">（月營收年增≥30% 且 連3月遞增或創高）</span></h3>
+                    </div>
+                    <div id="school-d-container" class="space-y-2">
+                        <div class="text-center text-slate-500 text-xs py-4">尚未載入</div>
+                    </div>
+                </div>
+
+                <!-- 📡 題材熱度雷達（E流派） -->
+                <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-satellite-dish text-emerald-400"></i>
+                        <h3 class="text-sm font-bold text-white">📡 題材熱度雷達 <span class="text-[10px] text-slate-500 font-normal">（晚間財經筆記近14日提及次數：🟢前導 🟡發酵中 🔴紅海）</span></h3>
+                    </div>
+                    <div id="school-e-container" class="space-y-2">
+                        <div class="text-center text-slate-500 text-xs py-4">尚未載入</div>
+                    </div>
+                </div>
+
+                <p class="text-[10px] text-slate-500 text-center pb-2">⚠️ 以上為系統依規則自動判定的候選名單與紀律提醒，不是買進/賣出指令，訊號僅供參考，不構成投資建議。</p>
             </div>
         </div>
 
@@ -987,7 +1141,16 @@
             // (these act as an offline cache; cloud data, when available, takes priority)
             try { tradeLog = JSON.parse(localStorage.getItem('trade_log') || '[]'); } catch(e) { tradeLog = []; }
             try { consensusLog = JSON.parse(localStorage.getItem('consensus_log') || '[]'); } catch(e) { consensusLog = []; }
+            try { journalData = JSON.parse(localStorage.getItem('journal_data') || '[]'); } catch(e) { journalData = []; }
             try { netWorthHistory = JSON.parse(localStorage.getItem('networth_history') || '[]'); } catch(e) { netWorthHistory = []; }
+
+            // 績效日曆預設顯示「當前實際月份」，並把新增表單的日期預填今天
+            const todayStr = getLocalDateStr();
+            const nowCal = new Date();
+            currentCalYear = nowCal.getFullYear();
+            currentCalMonth = nowCal.getMonth() + 1;
+            const journalDateInput = document.getElementById('journal-input-date');
+            if (journalDateInput) journalDateInput.value = todayStr;
 
             // 交易月曆預設顯示「當前實際月份」，避免固定停在 6 月
             const now = new Date();
@@ -1172,7 +1335,8 @@
             await syncStockHoldingsToSheet();
             for (const t of tradeLog) { await syncTradeLogEntryToSheet(t); }
             for (const c of consensusLog) { await syncConsensusEntryToSheet(c); }
-            addSystemMessage("⬆️ 已將目前畫面上的資產、持股、交易紀錄與共識摘要，寫入您的雲端試算表。之後可以直接在 Google Sheet 或這個網頁上編輯，兩邊會保持同步。");
+            for (const j of journalData) { await syncJournalEntryToSheet(j); }
+            addSystemMessage("⬆️ 已將目前畫面上的資產、持股、交易紀錄、共識摘要與績效日曆，寫入您的雲端試算表。之後可以直接在 Google Sheet 或這個網頁上編輯，兩邊會保持同步。");
             setSyncStatus('emerald', '雲端初始化完成');
         }
 
@@ -1443,18 +1607,15 @@
             container.innerHTML = '';
 
             const targetPrefix = `${currentCalYear}-${String(currentCalMonth).padStart(2, '0')}`;
-            const filteredEntries = journalData.map((entry, originalIdx) => ({ entry, originalIdx }))
-                                               .filter(item => item.entry.date.startsWith(targetPrefix))
-                                               .sort((a, b) => new Date(b.entry.date) - new Date(a.entry.date));
+            const filteredEntries = journalData.filter(entry => entry.date.startsWith(targetPrefix))
+                                               .sort((a, b) => new Date(b.date) - new Date(a.date));
 
             if (filteredEntries.length === 0) {
-                container.innerHTML = `<div class="text-slate-500 text-sm italic text-center py-10 bg-slate-900/30 rounded-xl border border-dashed border-cyber-border">此月份尚未有雲端紀錄。請至 Google Sheet (Daily_Log 分頁) 新增。</div>`;
+                container.innerHTML = `<div class="text-slate-500 text-sm italic text-center py-10 bg-slate-900/30 rounded-xl border border-dashed border-cyber-border">此月份尚無日記，在上方表單新增一筆吧。</div>`;
                 return;
             }
 
-            filteredEntries.forEach((item) => {
-                const entry = item.entry;
-                const idx = item.originalIdx;
+            filteredEntries.forEach((entry) => {
                 const card = document.createElement('div');
                 card.className = "bg-slate-800/40 border border-cyber-border rounded-xl p-4 transition hover:bg-slate-800/60 shadow-md";
                 card.innerHTML = `
@@ -1462,7 +1623,7 @@
                         <div class="flex items-center gap-2">
                             <span class="bg-slate-900 text-purple-400 font-mono font-bold text-sm px-2 py-1 rounded border border-purple-500/30">${entry.date}</span>
                         </div>
-                        <div class="flex flex-wrap items-center gap-3 text-xs text-slate-300">
+                        <div class="flex flex-wrap items-center gap-2 text-xs text-slate-300">
                             <label class="flex items-center gap-1.5 bg-slate-900/50 px-2 py-1 rounded border border-cyber-border">
                                 <span class="text-slate-400">當日報酬:</span>
                                 <span class="font-mono text-white">${entry.dailyRet}%</span>
@@ -1471,12 +1632,79 @@
                                 <span class="text-slate-400">佔總資產:</span>
                                 <span class="font-mono text-white">${entry.totalRet}%</span>
                             </label>
+                            <button onclick="editJournalEntry('${entry.date}')" title="編輯" class="text-slate-500 hover:text-purple-400 transition px-1"><i class="fa-solid fa-pen text-xs"></i></button>
+                            <button onclick="deleteJournalEntry('${entry.date}')" title="刪除" class="text-slate-500 hover:text-red-400 transition px-1"><i class="fa-solid fa-trash text-xs"></i></button>
                         </div>
                     </div>
                     <div class="w-full bg-slate-900/50 border border-cyber-border rounded-lg p-3 text-sm text-slate-200 leading-relaxed shadow-inner min-h-[80px] whitespace-pre-wrap">${entry.note}</div>
                 `;
                 container.appendChild(card);
             });
+        }
+
+        // ==========================================
+        // 績效日曆日記：新增／編輯／刪除（一天一筆，以日期為唯一鍵）
+        // ==========================================
+        let journalEditingDate = null; // 非 null 時代表正在編輯這一天的既有紀錄
+
+        function saveJournalEntry() {
+            const dateInput = document.getElementById('journal-input-date');
+            const date = dateInput.value;
+            if (!date) { alert('請選擇日期'); return; }
+
+            const entry = {
+                date: date,
+                dailyRet: parseFloat(document.getElementById('journal-input-daily-ret').value) || 0,
+                totalRet: parseFloat(document.getElementById('journal-input-total-ret').value) || 0,
+                note: document.getElementById('journal-input-note').value.trim()
+            };
+
+            const existingIdx = journalData.findIndex(j => j.date === date);
+            if (existingIdx >= 0) journalData[existingIdx] = entry;
+            else journalData.push(entry);
+
+            localStorage.setItem('journal_data', JSON.stringify(journalData));
+            currentCalYear = parseInt(date.slice(0, 4), 10);
+            currentCalMonth = parseInt(date.slice(5, 7), 10);
+            updateCalLabel();
+            renderJournal();
+            cancelJournalEdit();
+            syncJournalEntryToSheet(entry);
+        }
+
+        function editJournalEntry(date) {
+            const entry = journalData.find(j => j.date === date);
+            if (!entry) return;
+            journalEditingDate = date;
+            document.getElementById('journal-input-date').value = entry.date;
+            document.getElementById('journal-input-daily-ret').value = entry.dailyRet;
+            document.getElementById('journal-input-total-ret').value = entry.totalRet;
+            document.getElementById('journal-input-note').value = entry.note;
+            document.getElementById('journal-save-btn-label').textContent = '更新日記';
+            document.getElementById('journal-cancel-edit-btn').classList.remove('hidden');
+            document.getElementById('journal-input-note').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function cancelJournalEdit() {
+            journalEditingDate = null;
+            document.getElementById('journal-input-daily-ret').value = '';
+            document.getElementById('journal-input-total-ret').value = '';
+            document.getElementById('journal-input-note').value = '';
+            document.getElementById('journal-input-date').value = getLocalDateStr();
+            document.getElementById('journal-save-btn-label').textContent = '儲存日記';
+            document.getElementById('journal-cancel-edit-btn').classList.add('hidden');
+        }
+
+        function deleteJournalEntry(date) {
+            if (!confirm(`確定要刪除 ${date} 這篇日記嗎？`)) return;
+            journalData = journalData.filter(j => j.date !== date);
+            localStorage.setItem('journal_data', JSON.stringify(journalData));
+            renderJournal();
+            writeToSheet('Daily_Log', 'delete', { date: date });
+        }
+
+        function syncJournalEntryToSheet(entry) {
+            writeToSheet('Daily_Log', 'upsert', entry);
         }
 
         // ==========================================
@@ -2188,6 +2416,8 @@
             // 只使用真實記錄的快照（從你實際開始使用當天起）
             const hist = [...netWorthHistory].sort((a, b) => a.date.localeCompare(b.date));
 
+            renderDailyChangeBadge(hist);
+
             if (trendChartObj) trendChartObj.destroy();
 
             // 資料不足時，顯示提示而非假造曲線
@@ -2224,6 +2454,31 @@
             } catch (err) {}
         }
 
+        // 較前一日的淨值／戰力總額 +- 幅度徽章
+        // 台灣慣例：增加＝紅色、減少＝綠色（跟股票報價的漲跌燈號一致，故意跟西方習慣相反）
+        function renderDailyChangeBadge(hist) {
+            const el = document.getElementById('trend-daily-change');
+            if (!el) return;
+            if (!hist || hist.length < 2) { el.classList.add('hidden'); el.innerHTML = ''; return; }
+
+            const today = hist[hist.length - 1];
+            const prev = hist[hist.length - 2];
+            const pctChange = (curr, base) => (base ? ((curr - base) / Math.abs(base)) * 100 : 0);
+            const netPct = pctChange(today.netWorth, prev.netWorth);
+            const combatPct = pctChange(today.combat, prev.combat);
+
+            const colorClass = (v) => v > 0 ? 'text-red-400' : (v < 0 ? 'text-emerald-400' : 'text-slate-400');
+            const arrow = (v) => v > 0 ? '▲' : (v < 0 ? '▼' : '─');
+            const fmt = (v) => `${v > 0 ? '+' : ''}${v.toFixed(2)}%`;
+
+            el.innerHTML = `
+                <span class="text-slate-500">較前一日 (${prev.date})：</span>
+                <span class="${colorClass(netPct)} font-bold">淨值 ${arrow(netPct)} ${fmt(netPct)}</span>
+                <span class="${colorClass(combatPct)} font-bold">戰力 ${arrow(combatPct)} ${fmt(combatPct)}</span>
+            `;
+            el.classList.remove('hidden');
+        }
+
         // ==========================================================
         // 三分頁切換系統
         // ==========================================================
@@ -2237,6 +2492,8 @@
             localStorage.setItem('active_tab', name);
             // 第一次進入財經情報分頁時才載入資料（避免開機就多打一次 API）
             if (name === 'intel' && !intelLoadedOnce) loadIntelDigests();
+            // 第一次進入策略選股分頁時才載入資料
+            if (name === 'strategy' && !strategyLoadedOnce) loadStrategyData();
             window.scrollTo({ top: 0 });
         }
 
@@ -2572,6 +2829,320 @@ ${videoLines || '（無）'}
             await executeGeminiRequest(prompt);
         }
 
+        // ==========================================================
+        // 🎯 策略選股（五流派自動選股引擎，串接 Code.gs v8.0 新增的四個 action）
+        //    ?action=signals   → 訊號榜 + 題材強弱（A/C/D/E流派）
+        //    ?action=stoploss  → 持股停損儀表板（B流派）
+        //    ?action=strategy_scan → 手動觸發一次掃描
+        // ==========================================================
+        let strategyLoadedOnce = false;
+        let strategySignals = null;
+        let strategyStoploss = null;
+
+        async function strategyFetch(action) {
+            if (!appsScriptUrl) throw new Error('尚未設定 Apps Script 網址，請至「系統與 API 設定」填入。');
+            const res = await fetch(`${appsScriptUrl}?action=${action}&t=${Date.now()}`, { redirect: 'follow' });
+            const json = await res.json();
+            if (json.status !== 'ok') throw new Error(json.message || 'API 回報了未知錯誤。');
+            return json.data;
+        }
+
+        function showStrategyUpgradeHint(msg) {
+            const hint = document.getElementById('strategy-upgrade-hint');
+            const main = document.getElementById('strategy-main-content');
+            if (hint) {
+                hint.classList.remove('hidden');
+                const t = hint.querySelector('.hint-text');
+                if (t && msg) t.textContent = msg;
+            }
+            if (main) main.classList.add('hidden');
+        }
+
+        function hideStrategyUpgradeHint() {
+            const hint = document.getElementById('strategy-upgrade-hint');
+            const main = document.getElementById('strategy-main-content');
+            if (hint) hint.classList.add('hidden');
+            if (main) main.classList.remove('hidden');
+        }
+
+        async function loadStrategyData() {
+            strategyLoadedOnce = true;
+            if (!appsScriptUrl) {
+                showStrategyUpgradeHint('尚未設定 Apps Script 網址，請至右上角「系統與 API 設定」填入。');
+                return;
+            }
+            const infoEl = document.getElementById('strategy-scan-info');
+            if (infoEl) infoEl.textContent = '📡 載入中...';
+            try {
+                const [signals, stoploss] = await Promise.all([strategyFetch('signals'), strategyFetch('stoploss')]);
+                if (!signals || !Array.isArray(signals.schoolC) || !stoploss || !Array.isArray(stoploss.items)) {
+                    showStrategyUpgradeHint('偵測到後端 Apps Script 尚未升級到策略選股引擎版本（?action=signals 未回傳預期格式）。');
+                    return;
+                }
+                strategySignals = signals;
+                strategyStoploss = stoploss;
+                hideStrategyUpgradeHint();
+                renderStrategyDashboard();
+            } catch (err) {
+                showStrategyUpgradeHint(err.message);
+                if (infoEl) infoEl.textContent = '載入失敗';
+            }
+        }
+
+        async function triggerStrategyScan() {
+            if (!appsScriptUrl) { alert('請先設定 Apps Script 網址。'); return; }
+            const btn = document.getElementById('btn-strategy-scan');
+            if (btn) { btn.disabled = true; btn.classList.add('opacity-50'); }
+            try {
+                const data = await strategyFetch('strategy_scan');
+                if (data && data.error) {
+                    alert('掃描回報：' + data.error);
+                } else if (data) {
+                    alert(`掃描完成！\n交易日：${data.tradeDate || '—'}\n新增歷史筆數：${data.historyAppended ?? '—'}\n今日訊號數：${data.signalsFound ?? '—'}\n停損觸發：${data.stopBreaches ?? 0} 檔${data.emailSent ? '（已寄送 Email 通知）' : ''}`);
+                }
+                await loadStrategyData();
+            } catch (err) {
+                alert('掃描失敗：' + err.message);
+            } finally {
+                if (btn) { btn.disabled = false; btn.classList.remove('opacity-50'); }
+            }
+        }
+
+        function renderStrategyDashboard() {
+            renderStoplossDashboard();
+            renderSchoolCSignals();
+            renderThemeStrength();
+            renderSchoolACore();
+            renderSchoolDCandidates();
+            renderSchoolEHeat();
+            const info = document.getElementById('strategy-scan-info');
+            if (info) {
+                const d = (strategySignals && strategySignals.date) || '尚無訊號資料';
+                const checkedAt = strategyStoploss && strategyStoploss.checkedAt
+                    ? new Date(strategyStoploss.checkedAt).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' })
+                    : '—';
+                info.textContent = `訊號日期：${d}　停損檢查時間：${checkedAt}`;
+            }
+        }
+
+        function planCardHtml(plan) {
+            if (!plan) return '';
+            return `<div class="mt-2 pt-2 border-t border-cyber-border/50 space-y-1 text-[11px] text-slate-400 leading-relaxed">
+                ${plan.entry ? `<p><span class="text-slate-500">進場：</span>${escapeHtml(plan.entry)}</p>` : ''}
+                ${plan.position ? `<p><span class="text-slate-500">部位：</span>${escapeHtml(plan.position)}</p>` : ''}
+                ${plan.stop ? `<p><span class="text-slate-500">停損：</span>${escapeHtml(plan.stop)}</p>` : ''}
+                ${plan.exit ? `<p><span class="text-slate-500">出場：</span>${escapeHtml(plan.exit)}</p>` : ''}
+                ${plan.note ? `<p class="text-amber-400">${escapeHtml(plan.note)}</p>` : ''}
+            </div>`;
+        }
+
+        function renderStoplossDashboard() {
+            const tbody = document.getElementById('stoploss-dashboard-body');
+            if (!tbody) return;
+            const items = (strategyStoploss && strategyStoploss.items) || [];
+            if (items.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center text-slate-500 py-6 text-xs">尚無持股資料</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = items.map(it => {
+                const categoryLabel = it.category === 'long'
+                    ? '<span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded border border-cyber-border">核心-僅監測</span>'
+                    : it.category === 'short'
+                    ? '<span class="text-[10px] bg-red-900/30 text-red-400 px-2 py-0.5 rounded border border-red-500/30">短線動能</span>'
+                    : '<span class="text-[10px] bg-purple-900/30 text-purple-400 px-2 py-0.5 rounded border border-purple-500/30">中期波段</span>';
+                const breached = !!(it.applies && it.breached);
+                const rowClass = breached ? 'bg-red-950/30' : '';
+                const distText = it.distancePct !== null && it.distancePct !== undefined
+                    ? (it.distancePct >= 0 ? '+' : '') + (it.distancePct * 100).toFixed(1) + '%' : 'N/A';
+                const distClass = breached ? 'text-cyber-danger font-bold' : (it.distancePct !== null && it.distancePct < 0.03 ? 'text-amber-400' : 'text-slate-300');
+                let statusHtml;
+                if (!it.applies) statusHtml = '<span class="text-slate-500">— 核心持股僅監測</span>';
+                else if (breached) statusHtml = `<span class="text-cyber-danger font-bold">🔴 已跌破！建議${(it.distancePct !== null && it.distancePct < -0.05) ? '全數出清' : '減碼1/2'}</span>`;
+                else statusHtml = '<span class="text-cyber-success">🟢 安全</span>';
+                if (it.warnings && it.warnings.length) {
+                    statusHtml += `<div class="text-[10px] text-amber-400 mt-0.5">🟠 ${it.warnings.map(escapeHtml).join('；')}</div>`;
+                }
+                return `<tr class="border-b border-cyber-border/50 ${rowClass}">
+                    <td class="py-2 px-3 font-medium text-white">${escapeHtml(it.name)}<span class="text-[10px] text-slate-500 ml-1 font-mono">(${escapeHtml(it.code)})</span></td>
+                    <td class="py-2 px-2">${categoryLabel}</td>
+                    <td class="py-2 px-2 font-mono">${it.cost || '—'}</td>
+                    <td class="py-2 px-2 font-mono">${it.price || '—'}</td>
+                    <td class="py-2 px-2 font-mono">${it.stopPrice !== null && it.stopPrice !== undefined ? it.stopPrice : '—'}<span class="text-[10px] text-slate-500 block">${escapeHtml(it.stopType || '')}</span></td>
+                    <td class="py-2 px-2 font-mono ${distClass}">${distText}</td>
+                    <td class="py-2 px-3">${statusHtml}</td>
+                </tr>`;
+            }).join('');
+        }
+
+        function renderSchoolCSignals() {
+            const container = document.getElementById('school-c-signals-container');
+            if (!container) return;
+            const items = (strategySignals && strategySignals.schoolC) || [];
+            if (items.length === 0) {
+                container.innerHTML = `<div class="text-center text-slate-500 text-xs py-6">今日股池無訊號——沒有訊號也是紀律，空手等待就是最好的動作。</div>`;
+                return;
+            }
+            const holdingCodes = myHoldingCodes();
+            container.innerHTML = items.map(it => {
+                const held = holdingCodes.has(String(it.code));
+                const changeText = (it.changePct !== '' && it.changePct !== undefined && it.changePct !== null)
+                    ? (parseFloat(it.changePct) * 100).toFixed(1) + '%' : '';
+                return `<div class="bg-slate-800/40 border border-cyber-border rounded-xl p-4">
+                    <div class="flex justify-between items-start gap-2 flex-wrap">
+                        <div>
+                            <span class="text-[10px] bg-blue-900/30 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">${escapeHtml(it.theme || '')}</span>
+                            <span class="text-sm font-bold text-white ml-2">${held ? '📌 ' : ''}${escapeHtml(it.name)} <span class="text-slate-500 font-mono text-xs">(${escapeHtml(it.code)})</span></span>
+                            ${it.bonus ? '<span class="text-amber-400 text-xs ml-1">⭐</span>' : ''}
+                        </div>
+                        <div class="text-right">
+                            <span class="text-sm font-bold text-amber-400">${escapeHtml(it.signal)}</span>
+                            <span class="text-xs text-slate-400 block font-mono">${it.close || ''}${changeText ? ' (' + changeText + ')' : ''}</span>
+                        </div>
+                    </div>
+                    ${planCardHtml(it.plan)}
+                </div>`;
+            }).join('');
+        }
+
+        function renderThemeStrength() {
+            const container = document.getElementById('theme-strength-container');
+            if (!container) return;
+            const themes = (strategySignals && strategySignals.themes) || [];
+            if (themes.length === 0) {
+                container.innerHTML = `<div class="text-center text-slate-500 text-xs py-4">尚無題材強弱資料（執行一次掃描累積股價資料後就會顯示）</div>`;
+                return;
+            }
+            container.innerHTML = `<table class="w-full text-left text-xs"><tbody>` + themes.map(t => {
+                const pct = (t.avgChange * 100).toFixed(1);
+                const hot = t.avgChange > 0.02;
+                const colorClass = t.avgChange >= 0 ? 'text-cyber-success' : 'text-cyber-danger';
+                return `<tr class="border-b border-cyber-border/30">
+                    <td class="py-1.5 px-2 text-slate-200">${hot ? '🔥 ' : ''}${escapeHtml(t.theme)}</td>
+                    <td class="py-1.5 px-2 text-slate-500">${t.count} 檔</td>
+                    <td class="py-1.5 px-2 text-slate-400">最強：${escapeHtml(t.best || '')}</td>
+                    <td class="py-1.5 px-2 text-right font-mono ${colorClass}">${t.avgChange >= 0 ? '+' : ''}${pct}%</td>
+                </tr>`;
+            }).join('') + `</tbody></table>`;
+        }
+
+        function renderSchoolACore() {
+            const container = document.getElementById('school-a-container');
+            if (!container) return;
+            const items = (strategySignals && strategySignals.schoolA) || [];
+            if (items.length === 0) {
+                container.innerHTML = `<div class="text-center text-slate-500 text-xs py-4">今日無胃納量核心榜（需成交值前30名且站上40日均線）</div>`;
+                return;
+            }
+            const holdingCodes = myHoldingCodes();
+            container.innerHTML = items.map(it => {
+                const held = holdingCodes.has(String(it.code));
+                return `<div class="bg-slate-800/40 border border-cyber-border rounded-xl p-3 flex justify-between items-center flex-wrap gap-2">
+                    <div>
+                        <span class="text-sm font-bold text-white">${held ? '📌 ' : ''}${escapeHtml(it.name)} <span class="text-slate-500 font-mono text-xs">(${escapeHtml(it.code)})</span></span>
+                        <span class="text-[10px] text-slate-500 ml-2">${escapeHtml(it.theme || '')}</span>
+                    </div>
+                    <div class="text-right text-xs text-slate-400">
+                        <span class="font-mono text-white">${it.close || ''}</span>
+                        ${it.plan && it.plan.entry ? `<span class="block text-[10px] text-cyber-success">${escapeHtml(it.plan.entry)}</span>` : ''}
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function renderSchoolDCandidates() {
+            const container = document.getElementById('school-d-container');
+            if (!container) return;
+            const items = (strategySignals && strategySignals.schoolD) || [];
+            if (items.length === 0) {
+                container.innerHTML = `<div class="text-center text-slate-500 text-xs py-4">今日無結構財候選（需月營收年增≥30%且連3月遞增或創高）</div>`;
+                return;
+            }
+            container.innerHTML = items.map(it => {
+                const yoy = (it.changePct !== '' && it.changePct !== undefined && it.changePct !== null)
+                    ? (parseFloat(it.changePct) * 100).toFixed(1) + '%' : '';
+                return `<div class="bg-slate-800/40 border border-cyber-border rounded-xl p-3 flex justify-between items-center gap-2 flex-wrap">
+                    <div>
+                        <span class="text-sm font-bold text-white">${escapeHtml(it.name)} <span class="text-slate-500 font-mono text-xs">(${escapeHtml(it.code)})</span></span>
+                        <span class="text-xs text-cyber-success ml-2">營收YoY ${yoy}</span>
+                        ${it.plan && it.plan.note ? `<span class="text-[10px] text-slate-500 block">${escapeHtml(it.plan.note)}</span>` : ''}
+                    </div>
+                    <button onclick="askFuguiForDStock('${escapeHtml(it.code)}', '${escapeHtml(it.name)}')" class="bg-slate-700 hover:bg-slate-600 text-white text-[10px] px-2.5 py-1.5 rounded-lg transition flex-shrink-0">🤖 請富貴反推目標價</button>
+                </div>`;
+            }).join('');
+        }
+
+        function renderSchoolEHeat() {
+            const container = document.getElementById('school-e-container');
+            if (!container) return;
+            const items = (strategySignals && strategySignals.schoolE) || [];
+            if (items.length === 0) {
+                container.innerHTML = `<div class="text-center text-slate-500 text-xs py-4">今日無題材熱度資料（需已設定「晚間財經筆記 API 網址」）</div>`;
+                return;
+            }
+            container.innerHTML = items.map(it => `<div class="bg-slate-800/40 border border-cyber-border rounded-xl p-3 flex justify-between items-center flex-wrap gap-2">
+                <div>
+                    <span class="text-sm font-bold text-white">${escapeHtml(it.name)} <span class="text-slate-500 font-mono text-xs">(${escapeHtml(it.code)})</span></span>
+                    <span class="text-xs ml-2">${escapeHtml(it.signal || '')}</span>
+                </div>
+                <div class="text-[10px] text-slate-500">${it.plan && it.plan.note ? escapeHtml(it.plan.note) : ''}</div>
+            </div>`).join('');
+        }
+
+        // 把當日五流派掃描結果打包給財經富貴，產出固定格式的操作策略
+        async function askFuguiForStrategy() {
+            if (!strategySignals || !strategyStoploss) { alert('請先載入策略選股資料（切到本分頁會自動載入）。'); return; }
+            const s = strategySignals, sl = strategyStoploss;
+            const stoplossText = (sl.items || []).map(it =>
+                `- ${it.name}(${it.code})[${it.category}]：現價${it.price}，停損價${it.stopPrice}(${it.stopType})，距離${it.distancePct !== null ? (it.distancePct * 100).toFixed(1) + '%' : 'N/A'}${(it.breached && it.applies) ? '　⚠️已跌破！' : ''}`
+            ).join('\n') || '（無持股資料）';
+            const cText = (s.schoolC || []).map(it => `- [C-${it.signal}] ${it.name}(${it.code})，${it.theme}，收盤${it.close}${it.bonus ? '⭐投信買超' : ''}`).join('\n') || '（今日無C流派訊號）';
+            const aText = (s.schoolA || []).map(it => `- [A-胃納量] ${it.name}(${it.code})，收盤${it.close}`).join('\n') || '（今日無A流派候選）';
+            const dText = (s.schoolD || []).map(it => `- [D-結構財] ${it.name}(${it.code})，${(it.plan && it.plan.note) || ''}`).join('\n') || '（今日無D流派候選）';
+            const eText = (s.schoolE || []).map(it => `- [E-${it.signal}] ${it.name}(${it.code})，${(it.plan && it.plan.note) || ''}`).join('\n') || '（今日無E流派熱度訊號）';
+            const themeText = (s.themes || []).map(t => `- ${t.theme}：平均${(t.avgChange * 100).toFixed(1)}%（${t.count}檔訊號，代表${t.best}）`).join('\n') || '（今日無題材強弱資料）';
+
+            const prompt = `以下是「策略選股」分頁 ${s.date || '（尚無掃描資料）'} 的五流派自動掃描結果：
+
+【持股停損儀表板】
+${stoplossText}
+
+【C流派 今日訊號榜】（股Luck量化訊號：旱地拔蔥/突破糾結/頂天立地）
+${cText}
+
+【A流派 胃納量核心榜】（巨人傑：成交值前30且站上40日均線）
+${aText}
+
+【D流派 結構財候選】（月營收年增≥30%且連3月遞增或創高）
+${dText}
+
+【E流派 題材熱度雷達】（晚間財經筆記近14日提及次數）
+${eText}
+
+【C流派 題材強弱排行】
+${themeText}
+
+請依固定格式給我：
+1. 持股檢視：逐檔判斷留/減/停損，明確引用停損儀表板的數字
+2. 今日訊號解讀：哪些值得納入觀察名單、哪些是雜訊，並說明是依哪個流派的邏輯判斷
+3. 建議動作：最多3條，具體到價位與部位%（可以是「今日無動作」）
+4. 風險提醒：必須包含「以上訊號僅供參考，不構成投資建議」
+
+請用繁體中文回答，語氣專業精確。`;
+            switchTab('trading');
+            addUserMessage('🎯 請富貴根據今日策略選股結果給操作策略');
+            await executeGeminiRequest(prompt);
+        }
+
+        // 針對單一「結構財候選」用 VicYeh 的本益比反推法產出目標價估算
+        async function askFuguiForDStock(code, name) {
+            const item = ((strategySignals && strategySignals.schoolD) || []).find(it => String(it.code) === String(code));
+            const note = item && item.plan ? item.plan.note : '';
+            const prompt = `請針對「結構財候選」${name}(${code})，用VicYeh的方法：把公司拆成本業與新業務分別估EPS，乘上保守本益比反推目標價區間，並計算上檔空間百分比。目前系統偵測到的營收動能：${note || '（無）'}。請結合你所知的公開資訊給我：\n1. 保守EPS估算與依據\n2. 合理本益比區間（可參考同業或歷史河流圖）\n3. 目標價區間與上檔空間%\n4. 是否達到VicYeh門檻（上檔空間≥30%才值得納入觀察）\n5. 風險提醒（非投資建議、若資訊不足請明確說明）`;
+            switchTab('trading');
+            addUserMessage(`🤖 請富貴反推 ${name}(${code}) 目標價`);
+            await executeGeminiRequest(prompt);
+        }
+
         // Settings Modal
         function toggleSettingsModal() {
             const modal = document.getElementById('settings-modal');
@@ -2596,6 +3167,13 @@ ${videoLines || '（無）'}
                 financeNoteUrl = newFinanceNoteUrl;
                 localStorage.setItem('finance_note_api_url', financeNoteUrl);
                 intelLoadedOnce = false; // 換了資料來源，下次進入財經情報分頁重新載入
+                strategyLoadedOnce = false; // E流派熱度雷達依賴此網址，也需重新載入
+            }
+            // 每次儲存都同步一份給後端 Strategy_Config，E流派掃描引擎才能讀到
+            // （後端沒有 localStorage；「每次都同步」而非「變更才同步」，
+            //  這樣既有用戶只要按一次儲存就能啟用E流派，不必重貼網址）
+            if (appsScriptUrl && newFinanceNoteUrl) {
+                writeToSheet('Strategy_Config', 'set', { key: 'financeNoteApiUrl', value: newFinanceNoteUrl });
             }
 
             toggleSettingsModal();
@@ -2715,7 +3293,7 @@ ${videoLines || '（無）'}
                 : '（目前尚無交易紀錄）';
 
             const portfolioContext = `
-家祥當前控制中樞 v7.0 (三分頁整合版) 精密即時數據：
+家祥當前控制中樞 v8.0 (四分頁整合版) 精密即時數據：
 目前總資產淨值: ${currentNetWorthText}
 【主要目標】45歲總資產淨值達 $${netWorthGoal.toLocaleString()}（${(netWorthGoal/10000).toLocaleString()}萬），目前達成率約 ${Math.round(currentNetWorthNum / netWorthGoal * 100)}%
 持股明細：
