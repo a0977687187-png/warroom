@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
-    <title>家祥投資戰情室 v8.0 - 45歲圓夢退休 策略選股版</title>
+    <title>家祥投資戰情室 v8.2 - 45歲圓夢退休 策略選股版</title>
 
     <!-- PWA / 加到主畫面（手機App化）設定 -->
     <link rel="manifest" href="manifest.json">
@@ -73,6 +73,7 @@
         .tab-hidden { display: none !important; }
         .tab-btn {
             flex: 1;
+            min-width: 0; /* 允許flex項目縮到比文字內容窄，否則4個分頁在窄螢幕會把整頁撐開橫向捲動 */
             padding: 0.55rem 0.75rem;
             border-radius: 0.75rem;
             font-size: 0.8rem;
@@ -81,6 +82,11 @@
             border: 1px solid transparent;
             transition: all .2s ease;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; /* 真的塞不下時顯示...，而不是撐破版面 */
+        }
+        @media (max-width: 480px) {
+            .tab-btn { font-size: 0.68rem; padding: 0.5rem 0.35rem; }
         }
         .tab-btn:hover { color: #E2E8F0; background: rgba(51,65,85,.5); }
         .tab-btn-active {
@@ -176,7 +182,7 @@
                 </div>
                 <div>
                     <h1 class="text-lg font-bold tracking-wider text-white flex items-center gap-2">
-                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v8.0 策略選股版</span>
+                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v8.2 策略選股版</span>
                     </h1>
                     <p class="text-xs text-slate-400">🤖 財經富貴 // 與 AI 一起朝 45 歲 5,000 萬總資產目標邁進</p>
                 </div>
@@ -338,13 +344,13 @@
                 <table class="w-full text-left border-collapse bg-slate-900/30 text-xs">
                     <thead>
                         <tr class="border-b border-cyber-border text-slate-400 font-semibold bg-slate-800/50">
-                            <th class="py-2.5 px-3">滾存年限</th>
-                            <th class="py-2.5 px-2">預估年齡</th>
-                            <th class="py-2.5 px-2">證券資產預估總市值</th>
-                            <th class="py-2.5 px-2">預估總資產淨值</th>
-                            <th class="py-2.5 px-2">5% 轉換年化配息</th>
-                            <th class="py-2.5 px-2">保單還本支援</th>
-                            <th class="py-2.5 px-3">距 5,000 萬達成率</th>
+                            <th class="py-2.5 px-3 whitespace-nowrap">滾存年限</th>
+                            <th class="py-2.5 px-2 whitespace-nowrap">預估年齡</th>
+                            <th class="py-2.5 px-2 whitespace-nowrap">證券資產預估總市值</th>
+                            <th class="py-2.5 px-2 whitespace-nowrap">預估總資產淨值</th>
+                            <th class="py-2.5 px-2 whitespace-nowrap">5% 轉換年化配息</th>
+                            <th class="py-2.5 px-2 whitespace-nowrap">保單還本支援</th>
+                            <th class="py-2.5 px-3 whitespace-nowrap">距 5,000 萬達成率</th>
                         </tr>
                     </thead>
                     <tbody id="milestone-table-body" class="divide-y divide-cyber-border text-slate-300">
@@ -522,16 +528,16 @@
                         <table class="w-full text-left border-collapse bg-slate-900/30">
                             <thead>
                                 <tr class="border-b border-cyber-border text-xs text-slate-400 font-semibold bg-slate-800/50">
-                                    <th class="py-3 px-3">代號/名稱</th>
-                                    <th class="py-3 px-2">動態類別</th>
-                                    <th class="py-3 px-2">股數</th>
-                                    <th class="py-3 px-2">收盤價</th>
-                                    <th class="py-3 px-2">
+                                    <th class="py-3 px-3 whitespace-nowrap">代號/名稱</th>
+                                    <th class="py-3 px-2 whitespace-nowrap">動態類別</th>
+                                    <th class="py-3 px-2 whitespace-nowrap">股數</th>
+                                    <th class="py-3 px-2 whitespace-nowrap">收盤價</th>
+                                    <th class="py-3 px-2 whitespace-nowrap">
                                         現值 <span class="text-[10px] text-slate-500 block leading-tight">(已扣交易稅與手續費)</span>
                                     </th>
-                                    <th class="py-3 px-2">持股成本</th>
-                                    <th class="py-3 px-3 text-right">未實現損益</th>
-                                    <th class="py-3 px-3">買進理由 / 論點</th>
+                                    <th class="py-3 px-2 whitespace-nowrap">持股成本</th>
+                                    <th class="py-3 px-3 text-right whitespace-nowrap">未實現損益</th>
+                                    <th class="py-3 px-3 whitespace-nowrap">買進理由 / 論點</th>
                                 </tr>
                             </thead>
                             <tbody id="stock-table-body" class="divide-y divide-cyber-border text-sm">
@@ -779,7 +785,7 @@
                         <div class="bg-blue-600 text-white p-2 rounded-lg text-xs flex items-center justify-center font-bold">富貴</div>
                         <div class="bg-cyber-card border border-cyber-border rounded-xl p-3.5 max-w-[85%] text-slate-200 leading-relaxed shadow-md">
                             家祥您好，我是您的財經戰術助手「財經富貴」！🤖<br>
-                            我們已升級至 <strong>v8.0 策略選股版</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
+                            我們已升級至 <strong>v8.2 策略選股版</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
                             現在系統分為四個分頁：<strong>📊 資產總覽</strong>（資產現況與 5,000 萬進度）、<strong>📰 財經情報</strong>（每日自動彙整你追蹤的財經頻道，可一鍵請我結合持股解讀）、<strong>📈 交易與AI檢討</strong>（買賣紀錄、績效日曆與我的戰術裁決）、<strong>🎯 策略選股</strong>（五流派自動選股引擎：胃納量核心榜、持股停損儀表板、當日訊號榜、結構財候選、題材熱度雷達，可一鍵請我給操作策略）。<br><br>
                             💡 <strong>操作核心心法：</strong><br>
                             1. 「🏆 45歲退休圓夢計畫」的 <strong>5,000 萬淨值目標</strong>可直接在畫面上調高調低，所有推估即時重算；退休被動收入只是下方的現金流方向參考。<br>
@@ -840,11 +846,26 @@
             </div>
 
             <div id="strategy-main-content" class="space-y-6">
+                <!-- 📣 今日作戰摘要（三方會議決議：先看這裡，一目瞭然） -->
+                <div class="bg-cyber-card border border-amber-500/30 rounded-2xl p-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <i class="fa-solid fa-clipboard-check text-amber-400"></i>
+                        <h3 class="text-sm font-bold text-white">📣 今日作戰摘要 <span class="text-[10px] text-slate-500 font-normal">（先看這裡：今天要做什麼、看什麼）</span></h3>
+                    </div>
+                    <div id="daily-briefing">
+                        <div class="text-center text-slate-500 text-xs py-4">尚未載入</div>
+                    </div>
+                </div>
+
                 <!-- 🛡️ 持股停損儀表板（B流派） -->
                 <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
-                    <div class="flex items-center gap-2 mb-4">
+                    <div class="flex items-center gap-2 mb-4 flex-wrap">
                         <i class="fa-solid fa-shield-halved text-red-400"></i>
                         <h3 class="text-sm font-bold text-white">🛡️ 持股停損儀表板 <span class="text-[10px] text-slate-500 font-normal">（成本-8% 或 跌破20日均線，先到先觸發）</span></h3>
+                        <div class="ml-auto flex items-center gap-2 flex-shrink-0">
+                            <span id="school-b-updated" class="text-[10px] text-slate-500 whitespace-nowrap"></span>
+                            <button onclick="showSchoolExplain('B')" class="flex-shrink-0 text-[10px] text-slate-500 hover:text-white border border-cyber-border rounded-full px-2 py-0.5 transition"><i class="fa-solid fa-circle-question"></i> 說明</button>
+                        </div>
                     </div>
                     <div class="overflow-x-auto rounded-xl border border-cyber-border">
                         <table class="w-full text-left border-collapse bg-slate-900/30 text-xs">
@@ -868,12 +889,32 @@
 
                 <!-- 🚨 當日訊號榜（C流派） -->
                 <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
-                    <div class="flex items-center gap-2 mb-4">
+                    <div class="flex items-center gap-2 mb-4 flex-wrap">
                         <i class="fa-solid fa-bolt text-amber-400"></i>
                         <h3 class="text-sm font-bold text-white">🚨 當日訊號榜 <span class="text-[10px] text-slate-500 font-normal">（旱地拔蔥 / 突破糾結 / 頂天立地，⭐=投信當日買超）</span></h3>
+                        <div class="ml-auto flex items-center gap-2 flex-shrink-0">
+                            <span id="school-c-updated" class="text-[10px] text-slate-500 whitespace-nowrap"></span>
+                            <button onclick="showSchoolExplain('C')" class="flex-shrink-0 text-[10px] text-slate-500 hover:text-white border border-cyber-border rounded-full px-2 py-0.5 transition"><i class="fa-solid fa-circle-question"></i> 說明</button>
+                        </div>
                     </div>
                     <div id="school-c-signals-container" class="space-y-3">
                         <div class="text-center text-slate-500 text-xs py-6">尚未載入</div>
+                    </div>
+                </div>
+
+                <!-- 🔭 全市場強勢股雷達（股池外候選股發現器） -->
+                <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
+                    <div class="flex items-center gap-2 mb-1 flex-wrap">
+                        <i class="fa-solid fa-binoculars text-cyan-400"></i>
+                        <h3 class="text-sm font-bold text-white">🔭 全市場強勢股雷達 <span class="text-[10px] text-slate-500 font-normal">（股池以外：全市場成交值前150 ∩ 漲幅≥5% ∩ 長紅實體≥80%）</span></h3>
+                        <div class="ml-auto flex items-center gap-2 flex-shrink-0">
+                            <span id="school-r-updated" class="text-[10px] text-slate-500 whitespace-nowrap"></span>
+                            <button onclick="showSchoolExplain('R')" class="flex-shrink-0 text-[10px] text-slate-500 hover:text-white border border-cyber-border rounded-full px-2 py-0.5 transition"><i class="fa-solid fa-circle-question"></i> 說明</button>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mb-4">這是「候選股發現器」——只看單日量價的初篩，沒有均線與量比佐證。看到有興趣的按「＋股池」加入追蹤，累積資料後就有完整訊號。</p>
+                    <div id="school-r-container" class="space-y-2">
+                        <div class="text-center text-slate-500 text-xs py-4">尚未載入</div>
                     </div>
                 </div>
 
@@ -890,9 +931,13 @@
 
                 <!-- 🏔️ 胃納量核心榜（A流派） -->
                 <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
-                    <div class="flex items-center gap-2 mb-4">
+                    <div class="flex items-center gap-2 mb-4 flex-wrap">
                         <i class="fa-solid fa-mountain text-blue-400"></i>
                         <h3 class="text-sm font-bold text-white">🏔️ 胃納量核心榜 <span class="text-[10px] text-slate-500 font-normal">（成交值前30 ∩ 大主題池 ∩ 站上40日均線）</span></h3>
+                        <div class="ml-auto flex items-center gap-2 flex-shrink-0">
+                            <span id="school-a-updated" class="text-[10px] text-slate-500 whitespace-nowrap"></span>
+                            <button onclick="showSchoolExplain('A')" class="flex-shrink-0 text-[10px] text-slate-500 hover:text-white border border-cyber-border rounded-full px-2 py-0.5 transition"><i class="fa-solid fa-circle-question"></i> 說明</button>
+                        </div>
                     </div>
                     <div id="school-a-container" class="space-y-2">
                         <div class="text-center text-slate-500 text-xs py-4">尚未載入</div>
@@ -901,9 +946,13 @@
 
                 <!-- 📊 結構財候選（D流派） -->
                 <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
-                    <div class="flex items-center gap-2 mb-4">
+                    <div class="flex items-center gap-2 mb-4 flex-wrap">
                         <i class="fa-solid fa-chart-column text-purple-400"></i>
                         <h3 class="text-sm font-bold text-white">📊 結構財候選 <span class="text-[10px] text-slate-500 font-normal">（月營收年增≥30% 且 連3月遞增或創高）</span></h3>
+                        <div class="ml-auto flex items-center gap-2 flex-shrink-0">
+                            <span id="school-d-updated" class="text-[10px] text-slate-500 whitespace-nowrap"></span>
+                            <button onclick="showSchoolExplain('D')" class="flex-shrink-0 text-[10px] text-slate-500 hover:text-white border border-cyber-border rounded-full px-2 py-0.5 transition"><i class="fa-solid fa-circle-question"></i> 說明</button>
+                        </div>
                     </div>
                     <div id="school-d-container" class="space-y-2">
                         <div class="text-center text-slate-500 text-xs py-4">尚未載入</div>
@@ -912,11 +961,56 @@
 
                 <!-- 📡 題材熱度雷達（E流派） -->
                 <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
-                    <div class="flex items-center gap-2 mb-4">
+                    <div class="flex items-center gap-2 mb-4 flex-wrap">
                         <i class="fa-solid fa-satellite-dish text-emerald-400"></i>
                         <h3 class="text-sm font-bold text-white">📡 題材熱度雷達 <span class="text-[10px] text-slate-500 font-normal">（晚間財經筆記近14日提及次數：🟢前導 🟡發酵中 🔴紅海）</span></h3>
+                        <div class="ml-auto flex items-center gap-2 flex-shrink-0">
+                            <span id="school-e-updated" class="text-[10px] text-slate-500 whitespace-nowrap"></span>
+                            <button onclick="showSchoolExplain('E')" class="flex-shrink-0 text-[10px] text-slate-500 hover:text-white border border-cyber-border rounded-full px-2 py-0.5 transition"><i class="fa-solid fa-circle-question"></i> 說明</button>
+                        </div>
                     </div>
                     <div id="school-e-container" class="space-y-2">
+                        <div class="text-center text-slate-500 text-xs py-4">尚未載入</div>
+                    </div>
+                </div>
+
+                <!-- 📈 訊號成績單（M5：對抗倖存者偏誤） -->
+                <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
+                    <div class="flex items-center gap-2 mb-1">
+                        <i class="fa-solid fa-square-poll-vertical text-teal-400"></i>
+                        <h3 class="text-sm font-bold text-white">📈 訊號成績單 <span class="text-[10px] text-slate-500 font-normal">（每個訊號發生滿10個交易日後，自動結算實際報酬）</span></h3>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mb-4">讓數據告訴你哪個訊號在目前行情真的有效——這是整套系統對抗「只曬對的單」倖存者偏誤的機制。</p>
+                    <div id="scorecard-container">
+                        <div class="text-center text-slate-500 text-xs py-4">尚未載入</div>
+                    </div>
+                </div>
+
+                <!-- 🎛️ 題材股池管理 -->
+                <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
+                    <div class="flex items-center gap-2 mb-1">
+                        <i class="fa-solid fa-sliders text-slate-400"></i>
+                        <h3 class="text-sm font-bold text-white">🎛️ 題材股池管理 <span class="text-[10px] text-slate-500 font-normal">（訊號榜與題材強弱只掃這份名單）</span></h3>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mb-4">新增上市股會自動回補近3個月歷史股價、下次掃描就有完整訊號；上櫃股需每日累積約40~60個交易日。</p>
+                    <div class="flex flex-wrap items-end gap-2 mb-4">
+                        <div>
+                            <label class="text-[10px] text-slate-500">題材分類</label>
+                            <select id="pool-theme-select" onchange="onPoolThemeSelect()" class="block bg-slate-900 border border-cyber-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500 mt-0.5">
+                                <option value="">載入中...</option>
+                            </select>
+                        </div>
+                        <div id="pool-custom-theme-wrap" class="hidden">
+                            <label class="text-[10px] text-slate-500">自訂題材名稱</label>
+                            <input type="text" id="pool-custom-theme" placeholder="例如：機器人" class="block w-28 bg-slate-900 border border-cyber-border rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500 mt-0.5">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-slate-500">股票代號</label>
+                            <input type="text" id="pool-add-code" placeholder="如 3008" class="block w-24 bg-slate-900 border border-cyber-border rounded-lg px-3 py-2 text-xs text-white font-mono focus:outline-none focus:border-amber-500 mt-0.5">
+                        </div>
+                        <button id="btn-pool-add" onclick="addPoolStock()" class="bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition">＋ 加入股池</button>
+                    </div>
+                    <div id="pool-list-container" class="space-y-3">
                         <div class="text-center text-slate-500 text-xs py-4">尚未載入</div>
                     </div>
                 </div>
@@ -1073,6 +1167,17 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- 策略選股：各流派「怎麼選出來的」說明彈窗 -->
+    <div id="school-explain-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur z-50 flex items-center justify-center p-4">
+        <div class="bg-cyber-card border border-cyber-border rounded-2xl max-w-lg w-full p-6 space-y-3 shadow-2xl relative max-h-[85vh] overflow-y-auto">
+            <button onclick="closeSchoolExplain()" class="absolute right-4 top-4 text-slate-500 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 id="school-explain-title" class="text-base font-bold text-white pr-6"></h3>
+            <p id="school-explain-body" class="text-xs text-slate-300 leading-relaxed whitespace-pre-line"></p>
         </div>
     </div>
 
@@ -1750,7 +1855,7 @@
                 const row = document.createElement('tr');
                 row.className = "border-b border-cyber-border/50 hover:bg-slate-800/20 transition text-slate-300";
                 row.innerHTML = `
-                    <td class="py-3 px-3 font-medium text-white">
+                    <td class="py-3 px-3 font-medium text-white whitespace-nowrap">
                         <div class="text-[11px] font-mono text-slate-400">${stock.code}</div>
                         <div>${stock.name}</div>
                     </td>
@@ -1763,14 +1868,14 @@
                         <!-- Cloud tooltip indicator -->
                         ${appsScriptUrl ? '<i class="fa-solid fa-cloud text-[9px] text-blue-500 absolute top-2 right-1 opacity-50"></i>' : ''}
                     </td>
-                    <td class="py-3 px-2 font-mono text-slate-100 flex flex-col justify-center gap-0.5">
+                    <td class="py-3 px-2 font-mono text-slate-100 flex flex-col justify-center gap-0.5 whitespace-nowrap">
                         <span>${formatCurrency(netVal)}</span>
                         <span class="text-[9px] text-slate-500 opacity-80" title="估計扣除手續費: ${formatCurrency(grossVal * brokerFeeRate)} / 證交稅: ${formatCurrency(grossVal * sellTaxRate)}">含稅費扣除</span>
                     </td>
                     <td class="py-3 px-2 font-mono text-slate-400">
                         <input type="number" value="${stock.cost}" onchange="updateStockField(${idx}, 'cost', this.value)" class="w-20 bg-slate-900 border border-cyber-border rounded px-1.5 py-1 text-xs text-white font-mono text-center transition focus:ring-1 focus:ring-blue-500">
                     </td>
-                    <td class="py-3 px-3 text-right font-mono ${pnlClass} font-semibold">${pnlSign}${formatCurrency(pnl)} <br><span class="text-[10px] opacity-80">(${pnlSign}${pnlPct.toFixed(2)}%)</span></td>
+                    <td class="py-3 px-3 text-right font-mono whitespace-nowrap ${pnlClass} font-semibold">${pnlSign}${formatCurrency(pnl)} <br><span class="text-[10px] opacity-80">(${pnlSign}${pnlPct.toFixed(2)}%)</span></td>
                     <td class="py-3 px-3">
                         <textarea rows="2" placeholder="為什麼買這檔？進場論點..." onchange="updateStockField(${idx}, 'reason', this.value)" class="w-40 bg-slate-900 border border-cyber-border rounded px-2 py-1 text-[11px] text-slate-300 focus:outline-none focus:border-blue-500 resize-none">${stock.reason || ''}</textarea>
                     </td>
@@ -1959,13 +2064,13 @@
                     const achieveClass = m.achievementPct >= 100 ? 'text-emerald-400 font-bold' : 'text-slate-300';
                     return `
                         <tr class="hover:bg-slate-800/30 transition ${rowClass}">
-                            <td class="py-2.5 px-3 font-semibold text-white">第 ${m.year} 年${badge}</td>
-                            <td class="py-2.5 px-2">${m.ageRange}</td>
-                            <td class="py-2.5 px-2 font-mono">${formatCurrency(m.stockValue)}</td>
-                            <td class="py-2.5 px-2 font-mono text-white">${formatCurrency(m.netWorth)}</td>
-                            <td class="py-2.5 px-2 font-mono">${formatCurrency(m.annualDividend5pct)}</td>
-                            <td class="py-2.5 px-2 font-mono">${m.policySupport > 0 ? formatCurrency(m.policySupport) : '(暫不用於退休)'}</td>
-                            <td class="py-2.5 px-3 ${achieveClass}">${m.achievementPct}% ${m.achievementPct >= 100 ? '🚀' : (m.achievementPct >= 85 ? '🔥' : '')}</td>
+                            <td class="py-2.5 px-3 font-semibold text-white whitespace-nowrap">第 ${m.year} 年${badge}</td>
+                            <td class="py-2.5 px-2 whitespace-nowrap">${m.ageRange}</td>
+                            <td class="py-2.5 px-2 font-mono whitespace-nowrap">${formatCurrency(m.stockValue)}</td>
+                            <td class="py-2.5 px-2 font-mono text-white whitespace-nowrap">${formatCurrency(m.netWorth)}</td>
+                            <td class="py-2.5 px-2 font-mono whitespace-nowrap">${formatCurrency(m.annualDividend5pct)}</td>
+                            <td class="py-2.5 px-2 font-mono whitespace-nowrap">${m.policySupport > 0 ? formatCurrency(m.policySupport) : '(暫不用於退休)'}</td>
+                            <td class="py-2.5 px-3 whitespace-nowrap ${achieveClass}">${m.achievementPct}% ${m.achievementPct >= 100 ? '🚀' : (m.achievementPct >= 85 ? '🔥' : '')}</td>
                         </tr>
                     `;
                 }).join('');
@@ -2466,15 +2571,18 @@
             const pctChange = (curr, base) => (base ? ((curr - base) / Math.abs(base)) * 100 : 0);
             const netPct = pctChange(today.netWorth, prev.netWorth);
             const combatPct = pctChange(today.combat, prev.combat);
+            const netDiff = today.netWorth - prev.netWorth;
+            const combatDiff = today.combat - prev.combat;
 
             const colorClass = (v) => v > 0 ? 'text-red-400' : (v < 0 ? 'text-emerald-400' : 'text-slate-400');
             const arrow = (v) => v > 0 ? '▲' : (v < 0 ? '▼' : '─');
             const fmt = (v) => `${v > 0 ? '+' : ''}${v.toFixed(2)}%`;
+            const fmtDiff = (v) => `${v >= 0 ? '+' : '-'}${formatCurrency(Math.abs(v))}`;
 
             el.innerHTML = `
                 <span class="text-slate-500">較前一日 (${prev.date})：</span>
-                <span class="${colorClass(netPct)} font-bold">淨值 ${arrow(netPct)} ${fmt(netPct)}</span>
-                <span class="${colorClass(combatPct)} font-bold">戰力 ${arrow(combatPct)} ${fmt(combatPct)}</span>
+                <span class="${colorClass(netPct)} font-bold">淨值 ${arrow(netPct)} ${fmt(netPct)}（${fmtDiff(netDiff)}）</span>
+                <span class="${colorClass(combatPct)} font-bold">戰力 ${arrow(combatPct)} ${fmt(combatPct)}（${fmtDiff(combatDiff)}）</span>
             `;
             el.classList.remove('hidden');
         }
@@ -2838,6 +2946,108 @@ ${videoLines || '（無）'}
         let strategyLoadedOnce = false;
         let strategySignals = null;
         let strategyStoploss = null;
+        let schoolDExpanded = false;
+        let schoolEExpanded = false;
+        const SCHOOL_LIST_COLLAPSE_COUNT = 5; // D/E流派收合時預設顯示幾檔
+        const schoolEFilterMap = { '前導': '🟢', '發酵中': '🟡', '紅海': '🔴' };
+        let schoolEActiveFilters = new Set(Object.keys(schoolEFilterMap)); // 預設三種燈號都顯示
+
+        function toggleSchoolD() { schoolDExpanded = !schoolDExpanded; renderSchoolDCandidates(); }
+        function toggleSchoolE() { schoolEExpanded = !schoolEExpanded; renderSchoolEHeat(); }
+        function toggleSchoolEFilter(key) {
+            if (schoolEActiveFilters.has(key)) schoolEActiveFilters.delete(key); else schoolEActiveFilters.add(key);
+            schoolEExpanded = false; // 換篩選條件時重新從收合狀態看起，避免展開後篩選出一堆但只看得到部分
+            renderSchoolEHeat();
+        }
+        function collapseToggleHtml(total, expanded, toggleFn, colorClass) {
+            if (total <= SCHOOL_LIST_COLLAPSE_COUNT) return '';
+            return `<button onclick="${toggleFn}()" class="w-full text-center text-xs ${colorClass} py-2 mt-1 border-t border-cyber-border/50 transition">
+                ${expanded ? '▲ 收合' : `▼ 顯示全部 ${total} 檔`}
+            </button>`;
+        }
+
+        // 每個流派「這些標的是怎麼選出來的」白話文說明，點「說明」按鈕彈出
+        const SCHOOL_EXPLANATIONS = {
+            A: {
+                title: '🏔️ 胃納量核心榜 是怎麼選出來的？',
+                body: `邏輯來自「巨人傑」流派：他的核心心法是資金越大，越該優先看流動性夠不夠，而不是型態。
+
+系統做法：
+① 從全市場抓「成交值」排行前30名（代表資金量大、進出不會影響股價）
+② 只留屬於你設定的「AI核心」或「能源」主題池的股票
+③ 最後只留收盤價站在40日均線之上的（代表中期趨勢向上）
+
+這是「長線核心倉」的加碼參考，不是進場訊號——出現在榜上代表「這檔現在體質健康，可以在拉回時分批布局」，不是叫你追高買進。`
+            },
+            B: {
+                title: '🛡️ 持股停損儀表板 是怎麼算的？',
+                body: `邏輯來自 Kao Paotishi 流派的核心心法：「先看停損再決定要不要進場」。
+
+系統做法：
+每天用「成本-8%」和「20日均線」兩個價位，取數字比較高的那個當停損價（哪個先被跌破就算數，稱為「先到先觸發」）。
+
+安全設計：
+若查不到這檔的有效股價（連線失敗、資料異常等），系統絕對不會拿無效資料去判斷，會誠實顯示「⚠️ API連線中斷，稍後重試」，不會誤發警報。
+若真的跌破，會在畫面顯示紅色警報並寄 Email 通知你；6~8月除權息旺季跌破時，還會額外提醒你先確認是不是除息造成的假跌破。`
+            },
+            C: {
+                title: '🚨 當日訊號榜 是怎麼選出來的？',
+                body: `邏輯來自「股Luck」流派的三種量化型態（僅限你的題材股池內，不是全台股）：
+
+① 旱地拔蔥：長期盤整、量縮很久後，突然帶量噴出第一根長紅
+② 突破糾結：均線糾結纏繞很久後，放量向上突破
+③ 頂天立地：題材噴出的長紅K，實體漲幅很大
+
+三種型態都要求成交量是平常的1.5~2倍以上，確保是真的有資金進場，不是雜訊假訊號。
+⭐代表當天投信也同步買超，屬於「型態+籌碼」雙重確認，可信度更高（這是股Luck本人的做法）。
+
+這些是「進場候選」，每張卡片都附了進場價、部位大小、停損價、出場條件——出現訊號不代表保證會漲，紀律照樣要顧。`
+            },
+            D: {
+                title: '📊 結構財候選 是怎麼選出來的？',
+                body: `邏輯來自 WJ／VicYeh 流派：抓「月營收年增率」轉強的股票，代表公司基本面正在好轉。
+
+系統做法：
+① 月營收年增率 ≥ 30%
+② 而且連續3個月都在成長，或是創近12個月新高
+③ 只看「上市」公司（月營收公開資料不含上櫃股，所以像群聯這種上櫃股不會出現在這裡——這是資料來源限制，不是系統漏掉）
+
+按「請富貴反推目標價」，會請 AI 用本益比河流圖的方法，幫你估算合理的目標價區間（VicYeh流派的做法：上檔空間要達30%以上才值得留意）。`
+            },
+            E: {
+                title: '📡 題材熱度雷達 是怎麼算的？',
+                body: `邏輯來自 Ashin／PTT股票公社 這類「資訊情緒」流派：統計你在「晚間財經筆記」追蹤的財經頻道，同一檔股票被提到次數的變化（近7天 vs 前7天）。
+
+三種燈號：
+🟢 前導候選：最近突然變熱門，但股價還沒漲多少（可能還沒被市場發現）
+🟡 發酵中：持續有人在討論
+🔴 紅海警示：討論度已經很高、股價也漲了一大段（題材可能快到頂了，要小心追高）
+
+這是「情報流派」，僅供觀察參考，不是進出場訊號——單純只是幫你留意「最近大家在聊什麼」。`
+            },
+            R: {
+                title: '🔭 全市場強勢股雷達 是怎麼選出來的？',
+                body: `這個跟你的題材股池無關，是每天掃描「全台股市場」（不限於股池內的股票）。
+
+篩選條件（只用當天單一根K線的資料，沒有歷史佐證）：
+① 成交值排全市場前150名
+② 當天漲幅 ≥ 5%
+③ K線實體（收盤減開盤的長度）占當天最高最低振幅的80%以上
+
+這代表是真的有大資金在買、不是雜訊。因為沒有歷史資料佐證均線與量比，角色只是「候選股發現器」——看到有興趣的按「＋股池」，系統會自動回補3個月歷史資料，之後就能享有完整的訊號追蹤跟停損保護。`
+            }
+        };
+
+        function showSchoolExplain(key) {
+            const info = SCHOOL_EXPLANATIONS[key];
+            if (!info) return;
+            document.getElementById('school-explain-title').textContent = info.title;
+            document.getElementById('school-explain-body').textContent = info.body;
+            document.getElementById('school-explain-modal').classList.remove('hidden');
+        }
+        function closeSchoolExplain() {
+            document.getElementById('school-explain-modal').classList.add('hidden');
+        }
 
         async function strategyFetch(action) {
             if (!appsScriptUrl) throw new Error('尚未設定 Apps Script 網址，請至「系統與 API 設定」填入。');
@@ -2883,6 +3093,7 @@ ${videoLines || '（無）'}
                 strategyStoploss = stoploss;
                 hideStrategyUpgradeHint();
                 renderStrategyDashboard();
+                loadPoolList(); // 股池清單獨立載入，失敗不影響上面的榜單
             } catch (err) {
                 showStrategyUpgradeHint(err.message);
                 if (infoEl) infoEl.textContent = '載入失敗';
@@ -2898,7 +3109,10 @@ ${videoLines || '（無）'}
                 if (data && data.error) {
                     alert('掃描回報：' + data.error);
                 } else if (data) {
-                    alert(`掃描完成！\n交易日：${data.tradeDate || '—'}\n新增歷史筆數：${data.historyAppended ?? '—'}\n今日訊號數：${data.signalsFound ?? '—'}\n停損觸發：${data.stopBreaches ?? 0} 檔${data.emailSent ? '（已寄送 Email 通知）' : ''}`);
+                    const misNote = data.usedMisFallback
+                        ? '\n\n⚡ 證交所官方全市場資料還沒更新，本次改用即時報價幫股池搶先更新（胃納量榜A流派與全市場強勢股雷達暫不更新，等官方資料到了下次掃描會自動補上）。'
+                        : '';
+                    alert(`掃描完成！\n交易日：${data.tradeDate || '—'}\n新增歷史筆數：${data.historyAppended ?? '—'}\n今日訊號數：${data.signalsFound ?? '—'}\n停損觸發：${data.stopBreaches ?? 0} 檔${data.emailSent ? '（已寄送 Email 通知）' : ''}${misNote}`);
                 }
                 await loadStrategyData();
             } catch (err) {
@@ -2909,12 +3123,15 @@ ${videoLines || '（無）'}
         }
 
         function renderStrategyDashboard() {
+            renderDailyBriefing();
             renderStoplossDashboard();
             renderSchoolCSignals();
+            renderSchoolRRadar();
             renderThemeStrength();
             renderSchoolACore();
             renderSchoolDCandidates();
             renderSchoolEHeat();
+            renderScorecard();
             const info = document.getElementById('strategy-scan-info');
             if (info) {
                 const d = (strategySignals && strategySignals.date) || '尚無訊號資料';
@@ -2923,6 +3140,98 @@ ${videoLines || '（無）'}
                     : '—';
                 info.textContent = `訊號日期：${d}　停損檢查時間：${checkedAt}`;
             }
+            renderSchoolUpdatedBadges();
+        }
+
+        // 每個流派各自顯示「更新：幾號」——股池改用MIS即時報價備援後，A/R流派遇到證交所
+        // 官方全市場資料延遲時會跳過，可能跟C/D/E不是同一天，這裡把每個流派卡片自己的
+        // 資料日期標出來，日期比今天舊時額外加「（尚未更新到今天）」，避免看到某流派是空的
+        // 就誤以為「今天沒標的」，其實是「這流派今天還沒更新」。
+        function schoolUpdatedLabel(asOfDate) {
+            if (!asOfDate) return '尚無資料';
+            const todayIso = new Date().toISOString().slice(0, 10);
+            return asOfDate === todayIso ? `更新：${asOfDate}` : `更新：${asOfDate}（尚未更新到今天）`;
+        }
+
+        function renderSchoolUpdatedBadges() {
+            const s = strategySignals || {};
+            const map = {
+                'school-a-updated': s.schoolAAsOf,
+                'school-c-updated': s.schoolCAsOf,
+                'school-d-updated': s.schoolDAsOf,
+                'school-e-updated': s.schoolEAsOf,
+                'school-r-updated': s.schoolRAsOf
+            };
+            Object.keys(map).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = schoolUpdatedLabel(map[id]);
+            });
+            const bEl = document.getElementById('school-b-updated');
+            if (bEl) {
+                bEl.textContent = (strategyStoploss && strategyStoploss.checkedAt)
+                    ? `更新：${new Date(strategyStoploss.checkedAt).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' })}`
+                    : '尚無資料';
+            }
+        }
+
+        // 📣 今日作戰摘要（三方會議決議）：把八個區塊濃縮成「結論一句話 + 必辦/候選/觀察三欄」。
+        // 優先序反映紀律：停損（保命）→ 訊號（賺錢）→ 觀察（準備）。
+        function renderDailyBriefing() {
+            const el = document.getElementById('daily-briefing');
+            if (!el) return;
+            const s = strategySignals || {};
+            const items = (strategyStoploss && strategyStoploss.items) || [];
+            const breaches = items.filter(it => it.breached && it.applies);
+            const unavailable = items.filter(it => it.priceUnavailable);
+            const overheat = items.filter(it => !it.priceUnavailable && it.warnings && it.warnings.length);
+            const cSignals = s.schoolC || [];
+            const radarCount = (s.schoolR || []).length;
+            const dCount = (s.schoolD || []).length;
+            const eLeadCount = (s.schoolE || []).filter(x => String(x.signal || '').indexOf('前導') !== -1).length;
+            const topTheme = (s.themes && s.themes.length) ? s.themes[0] : null;
+
+            let conclusion, concClass;
+            if (breaches.length) { conclusion = `🔴 優先處理：${breaches.length} 檔持股跌破停損`; concClass = 'text-cyber-danger'; }
+            else if (cSignals.length) { conclusion = `🎯 今日有 ${cSignals.length} 個進場候選訊號`; concClass = 'text-amber-300'; }
+            else { conclusion = '😌 今日無進場訊號、持股安全——空手等待就是紀律'; concClass = 'text-cyber-success'; }
+
+            // 必辦欄
+            const mustDo = [];
+            breaches.forEach(b => mustDo.push(`<span class="text-cyber-danger">🔴 ${escapeHtml(b.name)}(${escapeHtml(b.code)}) 跌破停損 ${b.stopPrice}</span>`));
+            if (unavailable.length) mustDo.push(`<span class="text-amber-400">⚠️ ${unavailable.length} 檔查價失敗，暫無法判斷停損</span>`);
+            overheat.forEach(o => mustDo.push(`<span class="text-amber-400">🟠 ${escapeHtml(o.name)}：${escapeHtml(o.warnings[0])}</span>`));
+            if (!mustDo.length) mustDo.push('<span class="text-slate-400">持股全數安全，無需動作</span>');
+
+            // 候選欄（依⭐與量比排序後的前3檔）
+            const candidates = cSignals.slice(0, 3).map(c =>
+                `<span>${c.bonus ? '⭐' : ''}${escapeHtml(c.name)}(${escapeHtml(c.code)}) <span class="text-amber-400">${escapeHtml(c.signal)}</span>${c.theme ? ` <span class="text-slate-500">${escapeHtml(c.theme)}</span>` : ''}</span>`);
+            if (cSignals.length > 3) candidates.push(`<span class="text-slate-500">…還有 ${cSignals.length - 3} 檔，見下方訊號榜</span>`);
+            if (!candidates.length) candidates.push('<span class="text-slate-400">今日股池無訊號——空手也是紀律</span>');
+
+            // 觀察欄
+            const watch = [];
+            if (radarCount) watch.push(`🔭 全市場雷達 ${radarCount} 檔`);
+            if (dCount) watch.push(`📊 結構財候選 ${dCount} 檔`);
+            if (eLeadCount) watch.push(`📡 題材前導 ${eLeadCount} 檔`);
+            if (topTheme) watch.push(`🌡️ 最強題材：${escapeHtml(topTheme.theme)}（${topTheme.avgChange >= 0 ? '+' : ''}${(topTheme.avgChange * 100).toFixed(1)}%）`);
+            if (!watch.length) watch.push('<span class="text-slate-400">今日無觀察項目</span>');
+
+            el.innerHTML = `
+                <p class="text-base font-bold ${concClass} mb-4">${conclusion}</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                    <div class="bg-slate-800/40 border border-cyber-border rounded-xl p-3">
+                        <p class="text-[10px] text-red-400 font-bold mb-1.5">① 必辦（紀律優先）</p>
+                        <div class="space-y-1 leading-relaxed">${mustDo.join('<br>')}</div>
+                    </div>
+                    <div class="bg-slate-800/40 border border-cyber-border rounded-xl p-3">
+                        <p class="text-[10px] text-amber-400 font-bold mb-1.5">② 進場候選（今天可以研究的標的）</p>
+                        <div class="space-y-1 leading-relaxed">${candidates.join('<br>')}</div>
+                    </div>
+                    <div class="bg-slate-800/40 border border-cyber-border rounded-xl p-3">
+                        <p class="text-[10px] text-cyan-400 font-bold mb-1.5">③ 觀察面（不急著動）</p>
+                        <div class="space-y-1 leading-relaxed">${watch.join('<br>')}</div>
+                    </div>
+                </div>`;
         }
 
         function planCardHtml(plan) {
@@ -2951,25 +3260,31 @@ ${videoLines || '（無）'}
                     ? '<span class="text-[10px] bg-red-900/30 text-red-400 px-2 py-0.5 rounded border border-red-500/30">短線動能</span>'
                     : '<span class="text-[10px] bg-purple-900/30 text-purple-400 px-2 py-0.5 rounded border border-purple-500/30">中期波段</span>';
                 const breached = !!(it.applies && it.breached);
-                const rowClass = breached ? 'bg-red-950/30' : '';
+                const priceUnavailable = !!it.priceUnavailable;
+                const rowClass = breached ? 'bg-red-950/30' : (priceUnavailable ? 'bg-amber-950/20' : '');
                 const distText = it.distancePct !== null && it.distancePct !== undefined
                     ? (it.distancePct >= 0 ? '+' : '') + (it.distancePct * 100).toFixed(1) + '%' : 'N/A';
                 const distClass = breached ? 'text-cyber-danger font-bold' : (it.distancePct !== null && it.distancePct < 0.03 ? 'text-amber-400' : 'text-slate-300');
+                // 安全閥：查不到有效股價（0/負數/N/A）時，絕不宣告安全或跌破，明確顯示「無法判斷」
                 let statusHtml;
-                if (!it.applies) statusHtml = '<span class="text-slate-500">— 核心持股僅監測</span>';
+                if (priceUnavailable) statusHtml = '<span class="text-amber-400 font-bold">⚠️ API連線中斷，稍後重試</span>';
+                else if (!it.applies) statusHtml = '<span class="text-slate-500">— 核心持股僅監測</span>';
                 else if (breached) statusHtml = `<span class="text-cyber-danger font-bold">🔴 已跌破！建議${(it.distancePct !== null && it.distancePct < -0.05) ? '全數出清' : '減碼1/2'}</span>`;
                 else statusHtml = '<span class="text-cyber-success">🟢 安全</span>';
+                if (!priceUnavailable && it.quoteStale) {
+                    statusHtml += '<div class="text-[10px] text-slate-500 mt-0.5">（上次同步價格，非即時）</div>';
+                }
                 if (it.warnings && it.warnings.length) {
                     statusHtml += `<div class="text-[10px] text-amber-400 mt-0.5">🟠 ${it.warnings.map(escapeHtml).join('；')}</div>`;
                 }
                 return `<tr class="border-b border-cyber-border/50 ${rowClass}">
-                    <td class="py-2 px-3 font-medium text-white">${escapeHtml(it.name)}<span class="text-[10px] text-slate-500 ml-1 font-mono">(${escapeHtml(it.code)})</span></td>
-                    <td class="py-2 px-2">${categoryLabel}</td>
-                    <td class="py-2 px-2 font-mono">${it.cost || '—'}</td>
-                    <td class="py-2 px-2 font-mono">${it.price || '—'}</td>
-                    <td class="py-2 px-2 font-mono">${it.stopPrice !== null && it.stopPrice !== undefined ? it.stopPrice : '—'}<span class="text-[10px] text-slate-500 block">${escapeHtml(it.stopType || '')}</span></td>
-                    <td class="py-2 px-2 font-mono ${distClass}">${distText}</td>
-                    <td class="py-2 px-3">${statusHtml}</td>
+                    <td class="py-2 px-3 font-medium text-white whitespace-nowrap">${escapeHtml(it.name)}<span class="text-[10px] text-slate-500 ml-1 font-mono">(${escapeHtml(it.code)})</span></td>
+                    <td class="py-2 px-2 whitespace-nowrap">${categoryLabel}</td>
+                    <td class="py-2 px-2 font-mono whitespace-nowrap">${it.cost || '—'}</td>
+                    <td class="py-2 px-2 font-mono whitespace-nowrap">${priceUnavailable ? '<span class="text-amber-400">查詢失敗</span>' : (it.price || '—')}</td>
+                    <td class="py-2 px-2 font-mono whitespace-nowrap">${it.stopPrice !== null && it.stopPrice !== undefined ? it.stopPrice : '—'}<span class="text-[10px] text-slate-500 block">${escapeHtml(it.stopType || '')}</span></td>
+                    <td class="py-2 px-2 font-mono whitespace-nowrap ${distClass}">${priceUnavailable ? '—' : distText}</td>
+                    <td class="py-2 px-3 whitespace-nowrap">${statusHtml}</td>
                 </tr>`;
             }).join('');
         }
@@ -3012,17 +3327,17 @@ ${videoLines || '（無）'}
                 container.innerHTML = `<div class="text-center text-slate-500 text-xs py-4">尚無題材強弱資料（執行一次掃描累積股價資料後就會顯示）</div>`;
                 return;
             }
-            container.innerHTML = `<table class="w-full text-left text-xs"><tbody>` + themes.map(t => {
+            container.innerHTML = `<div class="overflow-x-auto rounded-xl border border-cyber-border"><table class="w-full text-left text-xs"><tbody>` + themes.map(t => {
                 const pct = (t.avgChange * 100).toFixed(1);
                 const hot = t.avgChange > 0.02;
                 const colorClass = t.avgChange >= 0 ? 'text-cyber-success' : 'text-cyber-danger';
                 return `<tr class="border-b border-cyber-border/30">
-                    <td class="py-1.5 px-2 text-slate-200">${hot ? '🔥 ' : ''}${escapeHtml(t.theme)}</td>
-                    <td class="py-1.5 px-2 text-slate-500">${t.count} 檔</td>
-                    <td class="py-1.5 px-2 text-slate-400">最強：${escapeHtml(t.best || '')}</td>
-                    <td class="py-1.5 px-2 text-right font-mono ${colorClass}">${t.avgChange >= 0 ? '+' : ''}${pct}%</td>
+                    <td class="py-1.5 px-2 text-slate-200 whitespace-nowrap">${hot ? '🔥 ' : ''}${escapeHtml(t.theme)}</td>
+                    <td class="py-1.5 px-2 text-slate-500 whitespace-nowrap">${t.count} 檔</td>
+                    <td class="py-1.5 px-2 text-slate-400 whitespace-nowrap">最強：${escapeHtml(t.best || '')}</td>
+                    <td class="py-1.5 px-2 text-right font-mono whitespace-nowrap ${colorClass}">${t.avgChange >= 0 ? '+' : ''}${pct}%</td>
                 </tr>`;
-            }).join('') + `</tbody></table>`;
+            }).join('') + `</tbody></table></div>`;
         }
 
         function renderSchoolACore() {
@@ -3057,7 +3372,8 @@ ${videoLines || '（無）'}
                 container.innerHTML = `<div class="text-center text-slate-500 text-xs py-4">今日無結構財候選（需月營收年增≥30%且連3月遞增或創高）</div>`;
                 return;
             }
-            container.innerHTML = items.map(it => {
+            const displayItems = schoolDExpanded ? items : items.slice(0, SCHOOL_LIST_COLLAPSE_COUNT);
+            const cards = displayItems.map(it => {
                 const yoy = (it.changePct !== '' && it.changePct !== undefined && it.changePct !== null)
                     ? (parseFloat(it.changePct) * 100).toFixed(1) + '%' : '';
                 return `<div class="bg-slate-800/40 border border-cyber-border rounded-xl p-3 flex justify-between items-center gap-2 flex-wrap">
@@ -3069,23 +3385,221 @@ ${videoLines || '（無）'}
                     <button onclick="askFuguiForDStock('${escapeHtml(it.code)}', '${escapeHtml(it.name)}')" class="bg-slate-700 hover:bg-slate-600 text-white text-[10px] px-2.5 py-1.5 rounded-lg transition flex-shrink-0">🤖 請富貴反推目標價</button>
                 </div>`;
             }).join('');
+            container.innerHTML = `<div class="space-y-2">${cards}</div>` +
+                collapseToggleHtml(items.length, schoolDExpanded, 'toggleSchoolD', 'text-purple-400 hover:text-purple-300');
+        }
+
+        // 🔭 全市場強勢股雷達（school R）：股池外的候選股發現器，可一鍵加入股池
+        function renderSchoolRRadar() {
+            const container = document.getElementById('school-r-container');
+            if (!container) return;
+            const items = (strategySignals && strategySignals.schoolR) || [];
+            if (items.length === 0) {
+                container.innerHTML = `<div class="text-center text-slate-500 text-xs py-4">今日全市場（股池以外）沒有符合條件的強勢股</div>`;
+                return;
+            }
+            container.innerHTML = items.map(it => {
+                const changeText = (it.changePct !== '' && it.changePct !== undefined && it.changePct !== null)
+                    ? '+' + (parseFloat(it.changePct) * 100).toFixed(1) + '%' : '';
+                return `<div class="bg-slate-800/40 border border-cyber-border rounded-xl p-3 flex justify-between items-center gap-2 flex-wrap">
+                    <div>
+                        <span class="text-sm font-bold text-white">${escapeHtml(it.name)} <span class="text-slate-500 font-mono text-xs">(${escapeHtml(it.code)})</span></span>
+                        <span class="text-xs text-cyber-success font-mono ml-2">${escapeHtml(String(it.close || ''))} ${changeText}</span>
+                        ${it.plan && it.plan.note ? `<span class="text-[10px] text-slate-500 block">${escapeHtml(it.plan.note)}</span>` : ''}
+                    </div>
+                    <button onclick="quickAddRadarStock('${escapeHtml(it.code)}', '${escapeHtml(it.name)}')" class="bg-cyan-700 hover:bg-cyan-600 text-white text-[10px] px-2.5 py-1.5 rounded-lg transition flex-shrink-0">＋ 股池</button>
+                </div>`;
+            }).join('');
+        }
+
+        async function quickAddRadarStock(code, name) {
+            if (!confirm('把 ' + name + '（' + code + '）加入股池的「雷達觀察」題材？\n上市股會自動回補3個月歷史，之後每天納入完整訊號掃描。')) return;
+            try {
+                const data = await strategyFetch('pool_add&theme=' + encodeURIComponent('雷達觀察') + '&code=' + encodeURIComponent(code));
+                if (data && data.added) {
+                    alert('✅ ' + data.name + '（' + data.code + '）' + data.message);
+                    await loadPoolList();
+                } else {
+                    alert('⚠️ ' + ((data && data.message) || '加入失敗，請稍後再試'));
+                }
+            } catch (e) {
+                alert('加入失敗：' + e.message);
+            }
+        }
+
+        // 📈 訊號成績單（school C 訊號的10日後實際報酬統計）
+        function renderScorecard() {
+            const container = document.getElementById('scorecard-container');
+            if (!container) return;
+            const sc = (strategySignals && strategySignals.scorecard) || null;
+            if (!sc || !sc.evaluated) {
+                container.innerHTML = `<div class="text-center text-slate-500 text-xs py-4">尚無已結算的訊號。訊號發生滿 10 個交易日後會自動結算，之後這裡會顯示每種訊號的實際勝率。</div>`;
+                return;
+            }
+            const statRows = (sc.stats || []).map(s => {
+                const wr = (s.winRate * 100).toFixed(0);
+                const avg = (s.avgRet10 * 100).toFixed(1);
+                const avgClass = s.avgRet10 >= 0 ? 'text-cyber-success' : 'text-cyber-danger';
+                const smallSample = s.n < 10 ? '<span class="text-[9px] text-amber-400 ml-1">樣本仍少</span>' : '';
+                return `<tr class="border-b border-cyber-border/30">
+                    <td class="py-1.5 px-2 text-slate-200 whitespace-nowrap">${escapeHtml(s.signal)}${smallSample}</td>
+                    <td class="py-1.5 px-2 text-slate-400 font-mono whitespace-nowrap">${s.n} 筆</td>
+                    <td class="py-1.5 px-2 font-mono whitespace-nowrap ${s.winRate >= 0.5 ? 'text-cyber-success' : 'text-slate-300'}">${wr}%</td>
+                    <td class="py-1.5 px-2 text-right font-mono whitespace-nowrap ${avgClass}">${s.avgRet10 >= 0 ? '+' : ''}${avg}%</td>
+                </tr>`;
+            }).join('');
+            const recentRows = (sc.recent || []).map(r => {
+                const ret = r.ret10 !== null ? ((r.ret10 >= 0 ? '+' : '') + (r.ret10 * 100).toFixed(1) + '%') : '—';
+                const retClass = r.ret10 !== null && r.ret10 >= 0 ? 'text-cyber-success' : 'text-cyber-danger';
+                return `<span class="inline-flex items-center gap-1 text-[10px] bg-slate-800/60 border border-cyber-border rounded-full px-2 py-0.5">
+                    <span class="text-slate-500 font-mono">${escapeHtml(r.date || '')}</span>
+                    <span class="text-slate-300">${escapeHtml(r.name || r.code)}</span>
+                    <span class="text-slate-500">${escapeHtml(r.signal || '')}</span>
+                    <span class="font-mono ${retClass}">${ret}</span>
+                </span>`;
+            }).join(' ');
+            container.innerHTML = `
+                <div class="overflow-x-auto rounded-xl border border-cyber-border mb-3">
+                    <table class="w-full text-left text-xs bg-slate-900/30">
+                        <thead><tr class="border-b border-cyber-border text-slate-400 font-semibold bg-slate-800/50">
+                            <th class="py-2 px-2">訊號</th><th class="py-2 px-2">已結算</th><th class="py-2 px-2">10日勝率</th><th class="py-2 px-2 text-right">平均10日報酬</th>
+                        </tr></thead>
+                        <tbody>${statRows}</tbody>
+                    </table>
+                </div>
+                ${recentRows ? `<p class="text-[10px] text-slate-500 mb-1.5">最近結算：</p><div class="flex flex-wrap gap-1.5">${recentRows}</div>` : ''}`;
         }
 
         function renderSchoolEHeat() {
             const container = document.getElementById('school-e-container');
             if (!container) return;
-            const items = (strategySignals && strategySignals.schoolE) || [];
-            if (items.length === 0) {
+            const allItems = (strategySignals && strategySignals.schoolE) || [];
+            if (allItems.length === 0) {
                 container.innerHTML = `<div class="text-center text-slate-500 text-xs py-4">今日無題材熱度資料（需已設定「晚間財經筆記 API 網址」）</div>`;
                 return;
             }
-            container.innerHTML = items.map(it => `<div class="bg-slate-800/40 border border-cyber-border rounded-xl p-3 flex justify-between items-center flex-wrap gap-2">
+
+            const filterBar = `<div class="flex flex-wrap gap-1.5 mb-3">
+                ${Object.keys(schoolEFilterMap).map(key => {
+                    const active = schoolEActiveFilters.has(key);
+                    return `<button onclick="toggleSchoolEFilter('${key}')" class="text-[10px] px-2.5 py-1 rounded-full border transition ${active ? 'bg-slate-700 text-white border-cyber-border' : 'bg-slate-900/50 text-slate-600 border-cyber-border/40'}">${schoolEFilterMap[key]} ${key}</button>`;
+                }).join('')}
+            </div>`;
+
+            const items = allItems.filter(it => {
+                const sig = String(it.signal || '');
+                return [...schoolEActiveFilters].some(key => sig.indexOf(key) !== -1);
+            });
+
+            if (items.length === 0) {
+                container.innerHTML = filterBar + `<div class="text-center text-slate-500 text-xs py-4">目前燈號篩選下沒有符合的股票</div>`;
+                return;
+            }
+
+            const displayItems = schoolEExpanded ? items : items.slice(0, SCHOOL_LIST_COLLAPSE_COUNT);
+            const cards = displayItems.map(it => `<div class="bg-slate-800/40 border border-cyber-border rounded-xl p-3 flex justify-between items-center flex-wrap gap-2">
                 <div>
                     <span class="text-sm font-bold text-white">${escapeHtml(it.name)} <span class="text-slate-500 font-mono text-xs">(${escapeHtml(it.code)})</span></span>
                     <span class="text-xs ml-2">${escapeHtml(it.signal || '')}</span>
                 </div>
                 <div class="text-[10px] text-slate-500">${it.plan && it.plan.note ? escapeHtml(it.plan.note) : ''}</div>
             </div>`).join('');
+            container.innerHTML = filterBar + `<div class="space-y-2">${cards}</div>` +
+                collapseToggleHtml(items.length, schoolEExpanded, 'toggleSchoolE', 'text-emerald-400 hover:text-emerald-300');
+        }
+
+        // ==========================================================
+        // 🎛️ 題材股池管理（新增/移除直接在網頁操作，寫回雲端 Strategy_Pool）
+        // ==========================================================
+        let strategyPool = null;
+
+        async function loadPoolList() {
+            try {
+                const data = await strategyFetch('pool');
+                if (!data || !Array.isArray(data.items)) return;
+                strategyPool = data.items;
+                renderPoolList();
+            } catch (e) { /* 股池載入失敗不影響其他區塊 */ }
+        }
+
+        function onPoolThemeSelect() {
+            const sel = document.getElementById('pool-theme-select');
+            const wrap = document.getElementById('pool-custom-theme-wrap');
+            if (sel && wrap) wrap.classList.toggle('hidden', sel.value !== '__custom__');
+        }
+
+        function renderPoolList() {
+            const container = document.getElementById('pool-list-container');
+            if (!container) return;
+            const items = strategyPool || [];
+
+            // 重建題材下拉選單（保留目前選取值）
+            const sel = document.getElementById('pool-theme-select');
+            const themes = [...new Set(items.map(it => it.theme).filter(t => t))];
+            if (sel) {
+                const cur = sel.value;
+                sel.innerHTML = themes.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('') +
+                    '<option value="__custom__">＋ 自訂新題材...</option>';
+                if (cur && (themes.includes(cur) || cur === '__custom__')) sel.value = cur;
+                onPoolThemeSelect();
+            }
+
+            if (items.length === 0) {
+                container.innerHTML = '<div class="text-center text-slate-500 text-xs py-4">股池是空的。請先到試算表選單「🎯 策略選股」執行「① 建立預設題材股池」，或直接在上方新增。</div>';
+                return;
+            }
+            const byTheme = {};
+            items.forEach(it => { (byTheme[it.theme || '未分類'] = byTheme[it.theme || '未分類'] || []).push(it); });
+            container.innerHTML = Object.keys(byTheme).map(t => `
+                <div>
+                    <p class="text-[10px] text-amber-400/80 font-bold mb-1.5">${escapeHtml(t)}（${byTheme[t].length} 檔）</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        ${byTheme[t].map(it => `
+                            <span class="inline-flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-full border ${it.enabled ? 'bg-slate-800 text-slate-200 border-cyber-border' : 'bg-slate-900 text-slate-600 border-cyber-border/50 line-through'}">
+                                ${it.name ? escapeHtml(it.name) + ' <span class="font-mono text-slate-500">' + escapeHtml(it.code) + '</span>' : '<span class="text-slate-500 italic">尚無股名</span> <span class="font-mono text-slate-500">' + escapeHtml(it.code) + '</span>'}
+                                <button onclick="removePoolStock('${escapeHtml(it.code)}', '${escapeHtml(it.name || it.code)}')" title="移出股池" class="text-slate-600 hover:text-red-400 transition"><i class="fa-solid fa-xmark"></i></button>
+                            </span>`).join('')}
+                    </div>
+                </div>`).join('');
+        }
+
+        async function addPoolStock() {
+            const sel = document.getElementById('pool-theme-select');
+            let theme = sel ? sel.value : '';
+            if (theme === '__custom__') theme = (document.getElementById('pool-custom-theme').value || '').trim();
+            const code = (document.getElementById('pool-add-code').value || '').trim().toUpperCase();
+            if (!theme) { alert('請先選擇題材分類（或輸入自訂題材名稱）'); return; }
+            if (!code) { alert('請輸入股票代號'); return; }
+            const btn = document.getElementById('btn-pool-add');
+            if (btn) { btn.disabled = true; btn.classList.add('opacity-50'); btn.textContent = '加入中...'; }
+            try {
+                const data = await strategyFetch('pool_add&theme=' + encodeURIComponent(theme) + '&code=' + encodeURIComponent(code));
+                if (data && data.added) {
+                    alert('✅ ' + data.name + '（' + data.code + '，' + (data.market || '') + '）' + data.message);
+                    document.getElementById('pool-add-code').value = '';
+                    await loadPoolList();
+                } else {
+                    alert('⚠️ ' + ((data && data.message) || '加入失敗，請稍後再試'));
+                }
+            } catch (e) {
+                alert('加入失敗：' + e.message);
+            } finally {
+                if (btn) { btn.disabled = false; btn.classList.remove('opacity-50'); btn.textContent = '＋ 加入股池'; }
+            }
+        }
+
+        async function removePoolStock(code, name) {
+            if (!confirm('確定把 ' + name + '（' + code + '）移出股池？之後就不會再掃描這檔的訊號。')) return;
+            try {
+                const data = await strategyFetch('pool_remove&code=' + encodeURIComponent(code));
+                if (data && data.removed) {
+                    await loadPoolList();
+                } else {
+                    alert('⚠️ ' + ((data && data.message) || '移除失敗'));
+                }
+            } catch (e) {
+                alert('移除失敗：' + e.message);
+            }
         }
 
         // 把當日五流派掃描結果打包給財經富貴，產出固定格式的操作策略
@@ -3099,6 +3613,10 @@ ${videoLines || '（無）'}
             const aText = (s.schoolA || []).map(it => `- [A-胃納量] ${it.name}(${it.code})，收盤${it.close}`).join('\n') || '（今日無A流派候選）';
             const dText = (s.schoolD || []).map(it => `- [D-結構財] ${it.name}(${it.code})，${(it.plan && it.plan.note) || ''}`).join('\n') || '（今日無D流派候選）';
             const eText = (s.schoolE || []).map(it => `- [E-${it.signal}] ${it.name}(${it.code})，${(it.plan && it.plan.note) || ''}`).join('\n') || '（今日無E流派熱度訊號）';
+            const rText = (s.schoolR || []).map(it => `- [雷達] ${it.name}(${it.code})，${(it.plan && it.plan.note) || ''}（股池外初篩，僅單日量價）`).join('\n') || '（今日雷達無發現）';
+            const scText = (s.scorecard && s.scorecard.evaluated > 0)
+                ? s.scorecard.stats.map(x => `- ${x.signal}：已結算${x.n}筆，10日勝率${(x.winRate * 100).toFixed(0)}%，平均10日報酬${(x.avgRet10 * 100).toFixed(1)}%${x.n < 10 ? '（樣本仍少，參考性低）' : ''}`).join('\n')
+                : '（尚無已結算的訊號，成績單累積中）';
             const themeText = (s.themes || []).map(t => `- ${t.theme}：平均${(t.avgChange * 100).toFixed(1)}%（${t.count}檔訊號，代表${t.best}）`).join('\n') || '（今日無題材強弱資料）';
 
             const prompt = `以下是「策略選股」分頁 ${s.date || '（尚無掃描資料）'} 的五流派自動掃描結果：
@@ -3118,8 +3636,14 @@ ${dText}
 【E流派 題材熱度雷達】（晚間財經筆記近14日提及次數）
 ${eText}
 
+【全市場強勢股雷達】（股池以外的單日初篩，無均線/量比佐證）
+${rText}
+
 【C流派 題材強弱排行】
 ${themeText}
+
+【訊號成績單】（過去訊號滿10個交易日後的實際結算，用來校準各訊號可信度）
+${scText}
 
 請依固定格式給我：
 1. 持股檢視：逐檔判斷留/減/停損，明確引用停損儀表板的數字
