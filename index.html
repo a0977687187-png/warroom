@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
-    <title>家祥投資戰情室 v8.2 - 45歲圓夢退休 策略選股版</title>
+    <title>家祥投資戰情室 v8.7 - 45歲圓夢退休 雙帳戶版</title>
 
     <!-- PWA / 加到主畫面（手機App化）設定 -->
     <link rel="manifest" href="manifest.json">
@@ -143,15 +143,15 @@
                 "yearEndBonus": 69000,
                 "festivalBonus": 5000,
                 "annualStockContribution": 200000,      // 建議每年固定提撥進股市
-                "policyEvenYear": 302300,
-                "policyOddYear": 266300,
-                "fubonMin": 6000,
-                "fubonMax": 10000,
-                "cathayMin": 64000,
-                "cathayMax": 66000,
-                "policyIncomeMin": 280000,               // 生活教育水庫（保單還本）年下限
-                "policyIncomeMax": 360000,               // 生活教育水庫（保單還本）年上限
-                "policyIncomeAtRetirement": 350000,      // 45歲退休時保單水庫可提供的年現金流
+                "policyEvenYear": 282300,                 // 雙數年：樂事年年+南山年年春+雙星雙好(2026-07保單健檢報告v3)
+                "policyOddYear": 246300,                  // 單數年：樂事年年+南山年年春(無雙星雙好給付年)
+                "fubonMin": 29124,                        // 富邦美滿長紅估計配息 45歲 $900美元 x32.36
+                "fubonMax": 32360,                        // 富邦美滿長紅估計配息 65歲 $1,000美元 x32.36
+                "cathayMin": 67956,                       // 國泰萬美利估計配息 45歲 $2,100美元 x32.36
+                "cathayMax": 71192,                       // 國泰萬美利估計配息 65歲 $2,200美元 x32.36
+                "policyIncomeMin": 361380,               // 生活教育水庫（保單還本）年下限(45歲，報告表列全年合計)
+                "policyIncomeMax": 367852,               // 生活教育水庫（保單還本）年上限(65歲，報告表列全年合計)
+                "policyIncomeAtRetirement": 364616,      // 45歲退休時保單水庫可提供的年現金流(6欄位中點平均)
                 "cashQuarantine": 912000,                // 應圈存的保費與預備金
                 "cashQuarantineDetail": [
                     { "item": "富邦滿長紅（最後一期保費）", "amount": 500000 },
@@ -169,6 +169,108 @@
                 "annualPassiveIncomeGoal": 1000000,       // 退休年被動收入參考值 — 僅供比較，非主要目標
                 "requiredStockYieldContribution": 650000, // 扣除保單支援後，股票需創造的年配息缺口
                 "assumedCagr": 0.07                        // 滾存表估算年化報酬率
+            },
+
+            // ==========================================
+            // 保單資產（來自《張家祥_保單健檢與財務效益分析報告_最終版v3》，報告日期 2026-07）
+            // 匯率基準 USD 1 : TWD 32.36。第四章身故/理賠總表為國泰健檢書截圖補充，
+            // 資料擷取時間點早於新光解約轉富邦異動，屬於舊狀態快照（報告內已加註提醒）。
+            // ==========================================
+            "policyAssets": {
+                "reportDate": "2026-07",
+                "exchangeRate": 32.36,
+                "cashLoop": {
+                    "annualPayoutTwd": 264300,
+                    "annualPremiumTwd": 221204,
+                    "surplusTwd": 43096,
+                    "note": "扣除已解約的新光鑫利雙喜後，台幣還本險每年領回的生存金降為約26.4萬元，仍完全覆蓋所有台幣醫療保障保費（22.1萬元），結餘約4.3萬元。兩張還本險金額最大的來源（樂事年年14.63萬、年年春10萬）都是固定金額，不會隨通膨調整，建議每3~5年重新檢視。"
+                },
+                "savingsPolicies": [
+                    { "company": "國泰人壽", "product": "萬美利利率變動型美元終身壽險", "policyNo": "WUL/9269971611", "startDate": "2025-06-05", "insuredAmount": "38.0萬美元", "paymentYears": "2年", "annualPremium": "40,312美元", "status": "已繳清", "payout": "現金給付模式估計配息 $2,100~2,200美元/年", "note": "第10年正式保本點，第20年完全複利滾存可累積至$137,683（總報酬+70.8%）" },
+                    { "company": "富邦人壽", "product": "美滿長紅外幣分紅終身壽險", "policyNo": "PFU/1081560051-00", "startDate": "2026-02-24", "insuredAmount": "6.0萬美元", "paymentYears": "2年", "annualPremium": "17,346美元", "status": "已繳清", "payout": "估計配息 $900~1,000美元/年（分紅型，非保證）", "note": "由新光鑫利雙喜解約轉入。分紅型商品，建議每年追蹤富邦公告實際分紅結果" },
+                    { "company": "國泰人壽", "product": "樂事年年終身壽險", "insuredAmount": "550萬元", "paymentYears": "6年", "annualPremium": "-", "status": "已繳清", "payout": "每年固定領 14.63萬元", "note": "" },
+                    { "company": "南山人壽", "product": "年年春還本終身保險", "insuredAmount": "100萬元", "paymentYears": "10年", "annualPremium": "-", "status": "已繳清", "payout": "每年固定領 10.0萬元", "note": "" },
+                    { "company": "國泰人壽", "product": "雙星/雙好還本終身壽險", "insuredAmount": "35萬元", "paymentYears": "20年", "annualPremium": "-", "status": "已繳清", "payout": "每兩年固定領約 3.6萬元", "note": "隔年給付，非每年" },
+                    { "company": "新光人壽", "product": "鑫利雙喜利率變動型終身還本", "insuredAmount": "100萬元", "paymentYears": "6年", "annualPremium": "-", "status": "已解約", "payout": "資金已轉入富邦美滿長紅，不再計入現金流", "note": "解約日 2026年2月，原每年領約2萬元", "cancelled": true },
+                    { "company": "凱基人壽", "product": "鑫美利豐美元利率變動型終身壽險（定期給付型）", "insuredAmount": "1.0萬美元", "paymentYears": "6年", "annualPremium": "3,458美元", "status": "報告未明確標示，建議跟顧問確認", "payout": "-", "note": "截圖補充項目，文字稿未提及" },
+                    { "company": "南山人壽", "product": "鑫利年年外幣增額終身壽險", "insuredAmount": "1.0萬美元", "paymentYears": "6年", "annualPremium": "-", "status": "已繳清", "payout": "-", "note": "截圖補充項目，文字稿未提及" }
+                ],
+                "protectionPolicies": [
+                    { "company": "國泰人壽", "product": "真安順手術醫療終身保險", "annualPremium": 9405 },
+                    { "company": "國泰人壽", "product": "新真安心住院醫療終身保險", "annualPremium": 10276 },
+                    { "company": "南山人壽", "product": "終身醫療保險（含HS-10實支附約）", "annualPremium": 4200 },
+                    { "company": "三商美邦", "product": "新真健康終身醫療險（兩張主約）", "annualPremium": 19280 },
+                    { "company": "三商美邦", "product": "祥平安終身保險（含意外與醫療附約）", "annualPremium": 39385 },
+                    { "company": "三商美邦", "product": "安心樂活長期照顧終身保險", "annualPremium": 33800 },
+                    { "company": "三商美邦", "product": "新33醫靠預定定期健康保險", "annualPremium": 89298 },
+                    { "company": "三商美邦", "product": "新守健康手術醫療終身健康保險（兩張主約）", "annualPremium": 15560 }
+                ],
+                "protectionPremiumTotal": 221204,
+                "retirementCashflowTable": [
+                    { "age": 45, "twdPolicyAnnual": 264300, "cathayUsd": 2100, "fubonUsd": 900, "totalUsd": 3000, "usdInTwd": 97080, "totalTwd": 361380, "monthlyAvg": 30100 },
+                    { "age": 50, "twdPolicyAnnual": 264300, "cathayUsd": 2150, "fubonUsd": 1000, "totalUsd": 3150, "usdInTwd": 101934, "totalTwd": 366234, "monthlyAvg": 30500 },
+                    { "age": 55, "twdPolicyAnnual": 264300, "cathayUsd": 2180, "fubonUsd": 1000, "totalUsd": 3180, "usdInTwd": 102905, "totalTwd": 367205, "monthlyAvg": 30600 },
+                    { "age": 60, "twdPolicyAnnual": 264300, "cathayUsd": 2200, "fubonUsd": 1000, "totalUsd": 3200, "usdInTwd": 103552, "totalTwd": 367852, "monthlyAvg": 30600 },
+                    { "age": 65, "twdPolicyAnnual": 264300, "cathayUsd": 2200, "fubonUsd": 1000, "totalUsd": 3200, "usdInTwd": 103552, "totalTwd": 367852, "monthlyAvg": 30600 }
+                ],
+                "retirementSummary": "45~65歲的21年間，累計可領取現金配息約760萬元台幣（純領配息、不解約本金策略下的結果）；65歲時兩張美元保單本金仍完整保留，未動用本金。若改採「完全解約複利滾存」策略，萬美利第20年可一次拿回$137,683（總報酬+70.8%，年化約2.7%），但需放棄身故保障與現金流穩定性，兩種策略互斥。",
+                "usdPolicyProjections": {
+                    "cathayWanmeili": {
+                        "cost": 80624,
+                        "table": [
+                            { "year": 2, "solvencyValue": 51718, "accumulatedGrowth": 0, "totalCash": 51718, "note": "較成本虧損約$28,900（正常，早期解約成本尚未攤提完）" },
+                            { "year": 5, "solvencyValue": 69008, "accumulatedGrowth": 0, "totalCash": 69008, "note": "前5年僅能購買增額繳清保額或抵繳保費" },
+                            { "year": 10, "solvencyValue": 74860, "accumulatedGrowth": 11371, "totalCash": 86231, "note": "正式保本點" },
+                            { "year": 14, "solvencyValue": 80598, "accumulatedGrowth": 22896, "totalCash": 103494, "note": "" },
+                            { "year": 20, "solvencyValue": 92530, "accumulatedGrowth": 45153, "totalCash": 137683, "note": "總報酬約+70.8%（若完全不提領、複利滾存到期解約）" }
+                        ]
+                    },
+                    "fubonMeimanchanghong": {
+                        "cost": 34692,
+                        "table": [
+                            { "year": "6~8", "estimate": "漸次保本", "note": "分紅型商品，紅利依實際經營績效發放，非保證" },
+                            { "year": 10, "estimate": "約$40,000~42,000", "twd": "約合台幣129萬~136萬" },
+                            { "year": 15, "estimate": "約$48,000~52,000", "twd": "約合台幣155萬~168萬" }
+                        ]
+                    }
+                },
+                "claimsSummary": {
+                    "asOf": "國泰人壽健檢書第6~18頁（時間點早於新光解約轉富邦異動，仍為新光有效保單、無富邦保單的舊狀態）",
+                    "death": [
+                        { "cause": "一般身故", "amountTwd": 18395000 },
+                        { "cause": "意外身故", "amountTwd": 22095000, "note": "比一般身故多出約370萬元，主要來自三商美邦祥平安意外傷害附約(ADDR,200萬)與新33醫靠的意外身故加成給付" },
+                        { "cause": "癌症身故", "amountTwd": 18395000 }
+                    ],
+                    "criticalIllness": [
+                        { "source": "三商美邦 新33醫靠", "item": "初次罹癌一次給付", "amountTwd": 1430000 },
+                        { "source": "三商美邦 新33醫靠", "item": "初期或輕度癌症保險金", "amountTwd": 149000 },
+                        { "source": "三商美邦 新33醫靠", "item": "初次罹患特定癌症", "amountTwd": 100000 },
+                        { "source": "三商美邦 祥平安附約", "item": "重大疾病健康保險附約(DDBR)", "amountTwd": 500000 },
+                        { "source": "國泰 真安順", "item": "重大疾病暨特定傷病保險金", "amountTwd": 100000 },
+                        { "source": "三商美邦 愛安心(IAC)", "item": "重大傷病一次給付（已繳清）", "amountTwd": 15000 }
+                    ],
+                    "criticalIllnessTotal": 2294000,
+                    "disabilityAndCare": [
+                        { "source": "三商美邦 祥平安附約", "item": "意外傷害失能保險金（依失能等級）", "amount": "11萬~220萬元" },
+                        { "source": "三商美邦 安心樂活長照", "item": "長期照顧復健保險金（一次）", "amountTwd": 390000 },
+                        { "source": "三商美邦 安心樂活長照", "item": "長期照顧保險金（分期/年）", "amountTwd": 312000, "frequency": "每年" }
+                    ],
+                    "special": [
+                        { "item": "骨髓移植保險金", "amountTwd": 240000 },
+                        { "item": "義乳重建手術保險金", "amountTwd": 80000 },
+                        { "item": "義肢裝設保險金", "amountTwd": 80000 },
+                        { "item": "義齒裝設保險金", "amountTwd": 40000 },
+                        { "item": "嚴重燒燙傷保險金", "amountTwd": 500000 },
+                        { "item": "生命末期提前給付（凱基）", "amountTwd": 146000, "note": "約4,500美元換算" }
+                    ]
+                },
+                "actionItems": [
+                    "富邦分紅為非保證項目，建議每年追蹤富邦人壽公告的實際分紅結果",
+                    "新33醫靠年繳高達8.9萬元，佔台幣總保費逾四成，但也是癌症一次金保障的主要來源（143萬），調整前務必確認替代方案能維持同等保障",
+                    "實支實付醫療雜費額度目前分散於南山(5萬x2)與三商美邦(20萬)，現代自費手術耗材常單次自費15~40萬元，可考慮拉高至30~50萬元",
+                    "匯率與通膨假設，退休規劃應留有緩衝（美元配息以區間規劃，例如2.8~3.2萬/月，而非單一數字）",
+                    "建議每3~5年重新核對一次「還本險生存金 vs 醫療保費總額」的差額，並同步更新身故/重疾/失能保障總表"
+                ]
             }
         };
     </script>
@@ -182,7 +284,7 @@
                 </div>
                 <div>
                     <h1 class="text-lg font-bold tracking-wider text-white flex items-center gap-2">
-                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v8.2 策略選股版</span>
+                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v8.7 雙帳戶版</span>
                     </h1>
                     <p class="text-xs text-slate-400">🤖 財經富貴 // 與 AI 一起朝 45 歲 5,000 萬總資產目標邁進</p>
                 </div>
@@ -207,6 +309,7 @@
             <button class="tab-btn" data-tab-target="intel" onclick="switchTab('intel')"><i class="fa-solid fa-newspaper mr-1.5"></i>財經情報</button>
             <button class="tab-btn" data-tab-target="trading" onclick="switchTab('trading')"><i class="fa-solid fa-arrows-rotate mr-1.5"></i>交易與AI檢討</button>
             <button class="tab-btn" data-tab-target="strategy" onclick="switchTab('strategy')"><i class="fa-solid fa-bullseye mr-1.5"></i>策略選股</button>
+            <button class="tab-btn" data-tab-target="policy" onclick="switchTab('policy')"><i class="fa-solid fa-file-shield mr-1.5"></i>保單資產</button>
         </nav>
     </header>
 
@@ -218,9 +321,9 @@
                 <i class="fa-solid fa-triangle-exclamation text-lg"></i>
             </div>
             <div class="flex-grow">
-                <h4 class="text-sm font-semibold text-amber-300">戰術紀律稽核警報：動能部位嚴重溢出！</h4>
+                <h4 class="text-sm font-semibold text-amber-300">戰術紀律稽核警報：元大戰鬥部位超出目標比例！</h4>
                 <p class="text-xs text-amber-200/80 mt-1 leading-relaxed">
-                    短線動能部位（高波動個股）比例大幅超越預期 10% 限制。請嚴格執行動能汰弱留強指令，當股價回到成本線或前高時，無情進行部位縮減。
+                    元大個股戰鬥部位已超過兩帳戶合計的 20% 上限。請嚴格執行汰弱留強指令，當股價回到成本線或前高時，無情進行部位縮減，把資金拉回玉山長期核心。
                 </p>
             </div>
         </div>
@@ -234,7 +337,12 @@
                         <i class="fa-solid fa-chart-area text-blue-500"></i>
                         <h3 class="text-base font-bold text-white">資產淨值成長軌跡</h3>
                     </div>
-                    <span class="text-[10px] bg-emerald-900/30 text-emerald-400 px-2 py-1 rounded border border-emerald-500/30">真實逐日記錄</span>
+                    <div class="flex items-center gap-2">
+                        <button onclick="openSnapshotManager()" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded border border-cyber-border transition flex items-center gap-1">
+                            <i class="fa-solid fa-sliders"></i> 管理紀錄
+                        </button>
+                        <span class="text-[10px] bg-emerald-900/30 text-emerald-400 px-2 py-1 rounded border border-emerald-500/30">真實逐日記錄</span>
+                    </div>
                 </div>
                 <div id="trend-daily-change" class="hidden flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono mb-3"></div>
                 <div class="w-full h-48 flex items-center justify-center">
@@ -271,6 +379,32 @@
                     <p id="metric-progress-diff" class="text-xs text-slate-500 mt-2 text-right">計算中...</p>
                 </div>
             </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 兩帳戶部位軌跡（玉山長期 vs 元大戰鬥） -->
+        <!-- ============================================== -->
+        <div data-tab="overview" class="bg-cyber-card border border-cyber-border rounded-2xl p-5 relative overflow-hidden">
+            <div class="flex flex-wrap justify-between items-center gap-2 mb-3">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-scale-balanced text-amber-400"></i>
+                    <h3 class="text-base font-bold text-white">兩帳戶部位軌跡</h3>
+                </div>
+                <div class="flex items-center gap-1 bg-slate-900/70 border border-cyber-border rounded-lg p-1">
+                    <button data-acctmode="both"  onclick="setAcctChartMode('both')"  class="acct-mode-btn text-[10px] px-2 py-1 rounded transition">兩者</button>
+                    <button data-acctmode="value" onclick="setAcctChartMode('value')" class="acct-mode-btn text-[10px] px-2 py-1 rounded transition">只看市值</button>
+                    <button data-acctmode="pct"   onclick="setAcctChartMode('pct')"   class="acct-mode-btn text-[10px] px-2 py-1 rounded transition">只看報酬率</button>
+                </div>
+            </div>
+            <div id="acct-daily-change" class="hidden flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono mb-3"></div>
+            <div class="w-full h-52 flex items-center justify-center">
+                <canvas id="acctTrendChart"></canvas>
+                <p id="acct-trend-empty-hint" class="hidden text-xs text-slate-500 text-center px-4 leading-relaxed"></p>
+            </div>
+            <p class="text-[10px] text-slate-500 mt-2 leading-relaxed">
+                實線＝各帳戶持股市值（左軸，已扣稅費）；虛線＝各帳戶未實現報酬率（右軸）。
+                <span class="text-slate-400">市值會因為入金而上升，看真實績效請對照報酬率虛線。</span>
+            </p>
         </div>
 
         <!-- ============================================== -->
@@ -523,27 +657,67 @@
                         <span id="quote-updated-label" class="text-[10px] text-slate-500"></span>
                     </div>
 
-                    <!-- Responsive Table -->
-                    <div class="overflow-x-auto rounded-xl border border-cyber-border">
-                        <table class="w-full text-left border-collapse bg-slate-900/30">
-                            <thead>
-                                <tr class="border-b border-cyber-border text-xs text-slate-400 font-semibold bg-slate-800/50">
-                                    <th class="py-3 px-3 whitespace-nowrap">代號/名稱</th>
-                                    <th class="py-3 px-2 whitespace-nowrap">動態類別</th>
-                                    <th class="py-3 px-2 whitespace-nowrap">股數</th>
-                                    <th class="py-3 px-2 whitespace-nowrap">收盤價</th>
-                                    <th class="py-3 px-2 whitespace-nowrap">
-                                        現值 <span class="text-[10px] text-slate-500 block leading-tight">(已扣交易稅與手續費)</span>
-                                    </th>
-                                    <th class="py-3 px-2 whitespace-nowrap">持股成本</th>
-                                    <th class="py-3 px-3 text-right whitespace-nowrap">未實現損益</th>
-                                    <th class="py-3 px-3 whitespace-nowrap">買進理由 / 論點</th>
-                                </tr>
-                            </thead>
-                            <tbody id="stock-table-body" class="divide-y divide-cyber-border text-sm">
-                                <!-- Dynamically filled by JavaScript -->
-                            </tbody>
-                        </table>
+                    <!-- 玉山長期部位 -->
+                    <div class="rounded-xl border border-blue-500/30 overflow-hidden mb-5">
+                        <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-slate-800/50 border-b border-blue-500/30">
+                            <h4 class="text-sm font-bold text-blue-300 flex items-center gap-1.5">🏦 玉山長期部位</h4>
+                            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-mono">
+                                <span class="text-slate-400">市值 <span id="acct-esun-value" class="text-white font-bold">$0</span></span>
+                                <span class="text-slate-400">損益 <span id="acct-esun-pnl" class="font-bold">$0</span></span>
+                                <span class="text-slate-400">報酬率 <span id="acct-esun-pct" class="font-bold">0.00%</span></span>
+                                <span class="text-slate-400">佔比 <span id="acct-esun-share" class="text-slate-200 font-bold">0.0%</span></span>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse bg-slate-900/30">
+                                <thead>
+                                    <tr class="border-b border-cyber-border text-xs text-slate-400 font-semibold bg-slate-800/30">
+                                        <th class="py-2.5 px-3 whitespace-nowrap">代號/名稱</th>
+                                        <th class="py-2.5 px-2 whitespace-nowrap">帳戶</th>
+                                        <th class="py-2.5 px-2 whitespace-nowrap">動態類別</th>
+                                        <th class="py-2.5 px-2 whitespace-nowrap">股數</th>
+                                        <th class="py-2.5 px-2 whitespace-nowrap">收盤價</th>
+                                        <th class="py-2.5 px-2 whitespace-nowrap">現值 <span class="text-[10px] text-slate-500 block leading-tight">(已扣稅費)</span></th>
+                                        <th class="py-2.5 px-2 whitespace-nowrap">持股成本</th>
+                                        <th class="py-2.5 px-3 text-right whitespace-nowrap">未實現損益</th>
+                                        <th class="py-2.5 px-3 whitespace-nowrap">買進理由 / 論點</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="stock-table-body-esun" class="divide-y divide-cyber-border text-sm"></tbody>
+                            </table>
+                        </div>
+                        <p id="acct-esun-empty" class="hidden text-xs text-slate-500 italic text-center py-6">此帳戶目前沒有持股。用「新增買進/賣出紀錄」買進時選擇這個帳戶即可。</p>
+                    </div>
+                    <!-- 元大個股戰鬥部位 -->
+                    <div class="rounded-xl border border-amber-500/30 overflow-hidden mb-5">
+                        <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-slate-800/50 border-b border-amber-500/30">
+                            <h4 class="text-sm font-bold text-amber-300 flex items-center gap-1.5">⚔️ 元大個股戰鬥部位</h4>
+                            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-mono">
+                                <span class="text-slate-400">市值 <span id="acct-yuanta-value" class="text-white font-bold">$0</span></span>
+                                <span class="text-slate-400">損益 <span id="acct-yuanta-pnl" class="font-bold">$0</span></span>
+                                <span class="text-slate-400">報酬率 <span id="acct-yuanta-pct" class="font-bold">0.00%</span></span>
+                                <span class="text-slate-400">佔比 <span id="acct-yuanta-share" class="text-slate-200 font-bold">0.0%</span></span>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse bg-slate-900/30">
+                                <thead>
+                                    <tr class="border-b border-cyber-border text-xs text-slate-400 font-semibold bg-slate-800/30">
+                                        <th class="py-2.5 px-3 whitespace-nowrap">代號/名稱</th>
+                                        <th class="py-2.5 px-2 whitespace-nowrap">帳戶</th>
+                                        <th class="py-2.5 px-2 whitespace-nowrap">動態類別</th>
+                                        <th class="py-2.5 px-2 whitespace-nowrap">股數</th>
+                                        <th class="py-2.5 px-2 whitespace-nowrap">收盤價</th>
+                                        <th class="py-2.5 px-2 whitespace-nowrap">現值 <span class="text-[10px] text-slate-500 block leading-tight">(已扣稅費)</span></th>
+                                        <th class="py-2.5 px-2 whitespace-nowrap">持股成本</th>
+                                        <th class="py-2.5 px-3 text-right whitespace-nowrap">未實現損益</th>
+                                        <th class="py-2.5 px-3 whitespace-nowrap">買進理由 / 論點</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="stock-table-body-yuanta" class="divide-y divide-cyber-border text-sm"></tbody>
+                            </table>
+                        </div>
+                        <p id="acct-yuanta-empty" class="hidden text-xs text-slate-500 italic text-center py-6">此帳戶目前沒有持股。用「新增買進/賣出紀錄」買進時選擇這個帳戶即可。</p>
                     </div>
 
                     <!-- Cash & External asset management -->
@@ -610,7 +784,7 @@
                 <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6 shadow-lg shadow-black/20">
                     <div class="flex items-center gap-2 mb-4">
                         <i class="fa-solid fa-chart-pie text-emerald-500"></i>
-                        <h3 class="text-base font-bold text-white">80/10/10 戰鬥本金紀律稽核</h3>
+                        <h3 class="text-base font-bold text-white">兩帳戶資金比例稽核</h3>
                     </div>
                     <div class="relative w-48 h-48 mx-auto mb-4">
                         <canvas id="allocationChart"></canvas>
@@ -618,42 +792,36 @@
                     <div class="space-y-3 text-xs">
                         <div class="bg-slate-800/50 border border-cyber-border rounded-xl p-3 hover:bg-slate-800 transition">
                             <div class="flex justify-between items-center font-medium">
-                                <span class="text-blue-400 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-blue-500"></span>長線核心 (目標 80%)</span>
-                                <span id="audit-long-pct" class="font-mono">0.0%</span>
+                                <span class="text-blue-400 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-blue-500"></span>🏦 玉山長期 (目標 80%)</span>
+                                <span id="audit-esun-pct" class="font-mono">0.0%</span>
                             </div>
                             <div class="w-full bg-slate-900 h-1.5 rounded-full mt-2 overflow-hidden">
-                                <div id="audit-long-bar" class="bg-blue-500 h-full transition-all duration-500" style="width: 0%"></div>
+                                <div id="audit-esun-bar" class="bg-blue-500 h-full transition-all duration-500" style="width: 0%"></div>
                             </div>
                             <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-                                <span id="audit-long-val">目前: $0</span>
-                                <span id="audit-long-diff" class="text-amber-400">計算中</span>
+                                <span id="audit-esun-val">目前: $0</span>
+                                <span id="audit-esun-diff" class="text-amber-400">計算中</span>
                             </div>
                         </div>
                         <div class="bg-slate-800/50 border border-cyber-border rounded-xl p-3 hover:bg-slate-800 transition">
                             <div class="flex justify-between items-center font-medium">
-                                <span class="text-purple-400 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-purple-500"></span>中期波段 (目標 10%)</span>
-                                <span id="audit-mid-pct" class="font-mono">0.0%</span>
+                                <span class="text-amber-400 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-amber-500"></span>⚔️ 元大戰鬥 (目標 20%)</span>
+                                <span id="audit-yuanta-pct" class="font-mono">0.0%</span>
                             </div>
                             <div class="w-full bg-slate-900 h-1.5 rounded-full mt-2 overflow-hidden">
-                                <div id="audit-mid-bar" class="bg-purple-500 h-full transition-all duration-500" style="width: 0%"></div>
+                                <div id="audit-yuanta-bar" class="bg-amber-500 h-full transition-all duration-500" style="width: 0%"></div>
                             </div>
                             <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-                                <span id="audit-mid-val">目前: $0</span>
-                                <span id="audit-mid-diff" class="text-amber-400 font-mono">計算中</span>
+                                <span id="audit-yuanta-val">目前: $0</span>
+                                <span id="audit-yuanta-diff" class="text-amber-400 font-mono">計算中</span>
                             </div>
                         </div>
-                        <div class="bg-slate-800/50 border border-cyber-border rounded-xl p-3 hover:bg-slate-800 transition">
-                            <div class="flex justify-between items-center font-medium">
-                                <span class="text-red-400 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-red-500"></span>短線動能 (目標 10%)</span>
-                                <span id="audit-short-pct" class="font-mono">0.0%</span>
+                        <div class="bg-slate-900/40 border border-dashed border-cyber-border rounded-xl p-3">
+                            <div class="flex justify-between items-center text-[11px]">
+                                <span class="text-emerald-400 flex items-center gap-1.5"><i class="fa-solid fa-wallet"></i> 可用實彈現金</span>
+                                <span id="audit-cash-val" class="font-mono text-emerald-400 font-bold">$0</span>
                             </div>
-                            <div class="w-full bg-slate-900 h-1.5 rounded-full mt-2 overflow-hidden">
-                                <div id="audit-short-bar" class="bg-red-500 h-full transition-all duration-500" style="width: 0%"></div>
-                            </div>
-                            <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-                                <span id="audit-short-val">目前: $0</span>
-                                <span id="audit-short-diff" class="text-red-400 font-bold">計算中</span>
-                            </div>
+                            <p class="text-[10px] text-slate-500 mt-1 leading-relaxed">現金放在銀行、不屬於任何一家券商，因此不列入上方比例計算。</p>
                         </div>
                     </div>
                 </div>
@@ -785,7 +953,7 @@
                         <div class="bg-blue-600 text-white p-2 rounded-lg text-xs flex items-center justify-center font-bold">富貴</div>
                         <div class="bg-cyber-card border border-cyber-border rounded-xl p-3.5 max-w-[85%] text-slate-200 leading-relaxed shadow-md">
                             家祥您好，我是您的財經戰術助手「財經富貴」！🤖<br>
-                            我們已升級至 <strong>v8.2 策略選股版</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
+                            我們已升級至 <strong>v8.7 雙帳戶版</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
                             現在系統分為四個分頁：<strong>📊 資產總覽</strong>（資產現況與 5,000 萬進度）、<strong>📰 財經情報</strong>（每日自動彙整你追蹤的財經頻道，可一鍵請我結合持股解讀）、<strong>📈 交易與AI檢討</strong>（買賣紀錄、績效日曆與我的戰術裁決）、<strong>🎯 策略選股</strong>（五流派自動選股引擎：胃納量核心榜、持股停損儀表板、當日訊號榜、結構財候選、題材熱度雷達，可一鍵請我給操作策略）。<br><br>
                             💡 <strong>操作核心心法：</strong><br>
                             1. 「🏆 45歲退休圓夢計畫」的 <strong>5,000 萬淨值目標</strong>可直接在畫面上調高調低，所有推估即時重算；退休被動收入只是下方的現金流方向參考。<br>
@@ -1019,6 +1187,143 @@
             </div>
         </div>
 
+        <!-- ============================================== -->
+        <!-- 🛡️ 保單資產（第五分頁：保單健檢報告資料） -->
+        <!-- ============================================== -->
+        <div data-tab="policy" class="space-y-6">
+
+            <!-- 保單養保單現金流閉環 -->
+            <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
+                <div class="flex items-center gap-2.5 mb-4">
+                    <div class="bg-purple-500/20 text-purple-400 p-2 rounded-lg border border-purple-500/30"><i class="fa-solid fa-shield-heart text-lg"></i></div>
+                    <div>
+                        <h3 class="text-base font-bold text-white">🛡️ 保單資產總覽</h3>
+                        <p id="policy-report-date" class="text-xs text-slate-400">依保單健檢報告整理</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                    <div class="bg-slate-800/40 border border-cyber-border rounded-xl p-4">
+                        <p class="text-xs text-slate-400 mb-1">台幣還本險每年領回</p>
+                        <p id="policy-cashloop-payout" class="text-xl font-mono font-bold text-emerald-400">$0</p>
+                    </div>
+                    <div class="bg-slate-800/40 border border-cyber-border rounded-xl p-4">
+                        <p class="text-xs text-slate-400 mb-1">醫療防護保費每年應繳</p>
+                        <p id="policy-cashloop-premium" class="text-xl font-mono font-bold text-red-400">$0</p>
+                    </div>
+                    <div class="bg-slate-800/40 border border-emerald-500/30 rounded-xl p-4">
+                        <p class="text-xs text-slate-400 mb-1">結餘（保單自己養保單）</p>
+                        <p id="policy-cashloop-surplus" class="text-xl font-mono font-bold text-emerald-400">$0</p>
+                    </div>
+                </div>
+                <p id="policy-cashloop-note" class="text-xs text-slate-400 bg-slate-800/30 border border-cyber-border rounded-lg p-3 leading-relaxed"></p>
+            </div>
+
+            <!-- 45~65歲 每5年現金流試算 -->
+            <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
+                <div class="flex items-center gap-2 mb-4">
+                    <i class="fa-solid fa-money-bill-trend-up text-amber-400"></i>
+                    <h3 class="text-base font-bold text-white">45~65 歲退休現金流試算（每 5 年一區間）</h3>
+                </div>
+                <div class="overflow-x-auto rounded-xl border border-cyber-border">
+                    <table class="w-full text-left border-collapse bg-slate-900/30 text-xs">
+                        <thead>
+                            <tr class="border-b border-cyber-border text-slate-400 font-semibold bg-slate-800/50">
+                                <th class="py-2.5 px-3">年齡</th>
+                                <th class="py-2.5 px-2">台幣保單年領</th>
+                                <th class="py-2.5 px-2">萬美利配息</th>
+                                <th class="py-2.5 px-2">富邦配息</th>
+                                <th class="py-2.5 px-2">美元折台幣</th>
+                                <th class="py-2.5 px-2">全年合計</th>
+                                <th class="py-2.5 px-3">月均被動收入</th>
+                            </tr>
+                        </thead>
+                        <tbody id="policy-cashflow-table-body" class="divide-y divide-cyber-border text-slate-300"></tbody>
+                    </table>
+                </div>
+                <p id="policy-retirement-summary" class="text-xs text-slate-400 mt-3 leading-relaxed"></p>
+            </div>
+
+            <!-- 儲蓄/資產型保單清單 -->
+            <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
+                <div class="flex items-center gap-2 mb-4">
+                    <i class="fa-solid fa-piggy-bank text-emerald-400"></i>
+                    <h3 class="text-base font-bold text-white">💰 儲蓄／資產／傳承型保單（現金流資產庫）</h3>
+                </div>
+                <div id="policy-savings-list" class="space-y-3"></div>
+            </div>
+
+            <!-- 醫療防護型保單清單 -->
+            <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-kit-medical text-blue-400"></i>
+                        <h3 class="text-base font-bold text-white">🩺 醫療／意外／疾病保障型保單（防護網）</h3>
+                    </div>
+                    <span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded border border-cyber-border font-mono" id="policy-protection-total">$0/年</span>
+                </div>
+                <div class="overflow-x-auto rounded-xl border border-cyber-border">
+                    <table class="w-full text-left border-collapse bg-slate-900/30 text-xs">
+                        <thead>
+                            <tr class="border-b border-cyber-border text-slate-400 font-semibold bg-slate-800/50">
+                                <th class="py-2.5 px-3">保險公司</th>
+                                <th class="py-2.5 px-2">險種</th>
+                                <th class="py-2.5 px-3 text-right">年繳保費</th>
+                            </tr>
+                        </thead>
+                        <tbody id="policy-protection-table-body" class="divide-y divide-cyber-border text-slate-300"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 身故/失能/特殊給付總表 -->
+            <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6 space-y-5">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-hand-holding-medical text-red-400"></i>
+                    <h3 class="text-base font-bold text-white">📋 身故／失能／特殊給付總表</h3>
+                </div>
+                <p id="policy-claims-asof" class="text-xs text-amber-300 bg-amber-950/30 border border-amber-500/20 rounded-lg px-3 py-2 leading-relaxed"></p>
+
+                <div>
+                    <h4 class="text-xs font-bold text-slate-300 mb-2">身故給付合計</h4>
+                    <div id="policy-death-cards" class="grid grid-cols-1 sm:grid-cols-3 gap-3"></div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold text-emerald-400 mb-2">重大疾病／癌症「一次性」給付彙整<span id="policy-critical-total" class="text-slate-500 font-normal ml-2"></span></h4>
+                    <div class="overflow-x-auto rounded-xl border border-cyber-border">
+                        <table class="w-full text-left border-collapse bg-slate-900/30 text-xs">
+                            <tbody id="policy-critical-table-body" class="divide-y divide-cyber-border text-slate-300"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold text-blue-400 mb-2">失能與長期照顧給付</h4>
+                    <div class="overflow-x-auto rounded-xl border border-cyber-border">
+                        <table class="w-full text-left border-collapse bg-slate-900/30 text-xs">
+                            <tbody id="policy-disability-table-body" class="divide-y divide-cyber-border text-slate-300"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold text-purple-400 mb-2">特殊項目給付</h4>
+                    <div id="policy-special-pills" class="flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+
+            <!-- 行動建議 -->
+            <div class="bg-cyber-card border border-cyber-border rounded-2xl p-6">
+                <div class="flex items-center gap-2 mb-3">
+                    <i class="fa-solid fa-list-check text-amber-400"></i>
+                    <h3 class="text-base font-bold text-white">✅ 行動建議</h3>
+                </div>
+                <ul id="policy-action-items" class="text-xs text-slate-300 leading-relaxed list-disc list-inside space-y-2"></ul>
+            </div>
+
+            <p class="text-[10px] text-slate-500 text-center pb-2">本分頁資料整理自保單健檢報告，僅供個人參考，不構成保單增/減保、解約或投資稅務規劃之專業建議，實際請以保險公司正式條款與最新公告為準。</p>
+        </div>
+
     </main>
 
     <!-- FOOTER WITH INVESTMENT DISCLAIMER -->
@@ -1089,6 +1394,26 @@
     </div>
 
     <!-- TRADE MODAL: BUY / SELL -->
+    <!-- 淨值快照管理：刪除異常的歷史資料點（例如雲端連線失敗時誤記的假資料） -->
+    <div id="snapshot-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur z-50 flex items-center justify-center p-4">
+        <div class="bg-cyber-card border border-cyber-border rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative max-h-[85vh] flex flex-col">
+            <button onclick="closeSnapshotManager()" class="absolute right-4 top-4 text-slate-500 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="flex items-center gap-2.5 border-b border-cyber-border pb-3">
+                <i class="fa-solid fa-chart-line text-blue-500 text-xl"></i>
+                <div>
+                    <h3 class="text-base font-bold text-white">管理淨值成長軌跡紀錄</h3>
+                    <p class="text-[10px] text-slate-500">刪除異常的資料點（例如當天連不上雲端、誤記到示範假資料）</p>
+                </div>
+            </div>
+            <p class="text-[10px] text-amber-300 bg-amber-950/30 border border-amber-500/20 rounded-lg px-3 py-2 leading-relaxed">
+                ⚠️ 系統會自動標出「跟前一天差異超過 30%」的可疑資料點。刪除後線圖會立刻重畫，此操作無法復原。
+            </p>
+            <div id="snapshot-list" class="flex-grow overflow-y-auto space-y-1.5 pr-1"></div>
+        </div>
+    </div>
+
     <div id="trade-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur z-50 flex items-center justify-center p-4">
         <div class="bg-cyber-card border border-cyber-border rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeTradeModal()" class="absolute right-4 top-4 text-slate-500 hover:text-white transition">
@@ -1106,6 +1431,13 @@
                 </div>
 
                 <div class="space-y-3">
+                    <div>
+                        <label class="text-xs text-slate-400">交易帳戶 <span class="text-slate-600">(會記住你上次選的)</span></label>
+                        <div class="flex gap-2 mt-1">
+                            <button type="button" id="trade-acct-esun" onclick="setTradeAccount('esun')" class="flex-1 py-2 rounded-xl text-xs font-bold border transition">🏦 玉山長期</button>
+                            <button type="button" id="trade-acct-yuanta" onclick="setTradeAccount('yuanta')" class="flex-1 py-2 rounded-xl text-xs font-bold border transition">⚔️ 元大戰鬥</button>
+                        </div>
+                    </div>
                     <div>
                         <label class="text-xs text-slate-400">選擇標的</label>
                         <select id="trade-stock-select" onchange="onTradeStockSelect()" class="w-full bg-cyber-bg border border-cyber-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 mt-1"></select>
@@ -1192,6 +1524,21 @@
         let tradeLog = [];
         let consensusLog = [];
         let netWorthHistory = [];   // 每日淨值快照（從實際使用當天起，不做任何憑空推估）
+
+        // ==========================================
+        // 券商帳戶（與 category 長/中/短線分類彼此獨立：
+        // account = 股票實際放在哪家券商；category = 這筆的操作策略）
+        // ==========================================
+        const ACCOUNTS = {
+            esun:   { key: 'esun',   name: '玉山長期部位',     short: '玉山', icon: '🏦', color: '#3B82F6', targetRatio: 0.8 },
+            yuanta: { key: 'yuanta', name: '元大個股戰鬥部位', short: '元大', icon: '⚔️', color: '#F59E0B', targetRatio: 0.2 }
+        };
+        const ACCOUNT_KEYS = ['esun', 'yuanta'];
+        const DEFAULT_ACCOUNT = 'esun';
+        function normalizeAccount(v) {
+            const s = String(v || '').trim().toLowerCase();
+            return ACCOUNTS[s] ? s : DEFAULT_ACCOUNT;
+        }
         
         let geminiApiKey = "";
         let appsScriptUrl = "";
@@ -1207,6 +1554,9 @@
 
         let allocationChart = null;
         let trendChartObj = null;
+        let acctTrendChartObj = null;
+        // 兩帳戶軌跡圖顯示模式：both=市值+報酬率 / value=只看市值 / pct=只看報酬率
+        let acctChartMode = localStorage.getItem('acct_chart_mode') || 'both';
 
         // 取得「本地時區」的 YYYY-MM-DD（避免 toISOString 用 UTC 導致台灣早上記錄變成前一天）
         function getLocalDateStr(d) {
@@ -1283,6 +1633,7 @@
             // 開機先抓一次最新報價（盤中=即時價，盤後=收盤價），之後盤中每5分鐘自動更新
             refreshAllQuotes(false);
             startQuoteAutoRefresh();
+            syncAcctModeButtons();
         };
 
         function validateAppsScriptUrl() {
@@ -1295,7 +1646,8 @@
         }
 
         function loadPreloadedFallback(preloaded) {
-            stockData = preloaded.stockData || [];
+            cloudDataConfirmed = false; // 這是示範假資料，嚴禁任何自動寫回雲端的動作
+            stockData = (preloaded.stockData || []).map(s => Object.assign({}, s, { account: normalizeAccount(s.account) }));
             const loadedCashData = preloaded.cashData || {};
             cashData = { 
                 bankCash: loadedCashData.bankCash || 2047382, 
@@ -1327,9 +1679,20 @@
             setSyncStatus('yellow', '同步中...', 'animate-pulse');
 
             try {
-                const res = await fetch(`${appsScriptUrl}?action=getAll&t=${Date.now()}`);
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const payload = await res.json();
+                // 網路偶爾會有一時性的小抖動（逾時、瞬斷），失敗先重試一次再放棄，
+                // 避免只是暫時連不上，就整個切去示範假資料狀態
+                let res, payload;
+                for (let attempt = 0; attempt < 2; attempt++) {
+                    try {
+                        res = await fetch(`${appsScriptUrl}?action=getAll&t=${Date.now()}`);
+                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                        payload = await res.json();
+                        break;
+                    } catch (retryErr) {
+                        if (attempt === 1) throw retryErr;
+                        await new Promise(r => setTimeout(r, 1500));
+                    }
+                }
                 if (payload.status === 'error') throw new Error(payload.message || '未知錯誤');
 
                 const cloud = payload.data || {};
@@ -1362,6 +1725,7 @@
                         price: parseFloat(s.price) || 0,
                         cost: parseFloat(s.cost) || 0,
                         category: (s.category || 'mid').toString(),
+                        account: normalizeAccount(s.account),
                         reason: (s.reason || '').toString()
                     })).filter(s => s.code !== "");
                 }
@@ -1381,6 +1745,7 @@
                     tradeLog = cloud.Trade_Log.map(t => ({
                         id: t.id, date: normalizeDateStr(t.date), action: t.action,
                         code: t.code, name: t.name, shares: parseFloat(t.shares) || 0, price: parseFloat(t.price) || 0,
+                        account: t.account ? normalizeAccount(t.account) : '',
                         amount: parseFloat(t.amount) || 0, note: t.note || '', realizedPnL: parseFloat(t.realizedPnL) || 0,
                         returnPct: parseFloat(t.returnPct) || 0, pctOfTotalAssets: parseFloat(t.pctOfTotalAssets) || 0,
                         reflection: t.reflection || ''
@@ -1406,6 +1771,12 @@
                     localStorage.setItem('networth_history', JSON.stringify(netWorthHistory));
                 }
 
+                // ⚠️ 這一行必須放在所有「渲染／重算」之前！
+                // 因為 recordNetWorthSnapshot 與 refreshAllQuotes 都會檢查這個旗標，
+                // 若等到畫面都畫完才設 true，載入當下的第一次重算會被自己的防護擋掉，
+                // 導致當天的淨值快照根本沒被記錄。
+                cloudDataConfirmed = true;
+
                 persistRetirementOverrides();
                 populateReservoirInputs();
                 renderConsensusLog();
@@ -1419,6 +1790,7 @@
 
             } catch (error) {
                 console.error("Sync Error:", error);
+                cloudDataConfirmed = false; // 這次沒讀到真實雲端資料，禁止任何自動寫回動作
                 setSyncStatus('red', '同步失敗');
                 if (!isInit) addSystemMessage(`❌ 同步失敗：${error.message}。請確認：① 網址是「部署為網頁應用程式」後拿到、結尾 /exec 的那組網址 ② 部署時「誰可以存取」選的是「任何人」③ 若剛修改過 Code.gs，記得要「管理部署作業」→ 新版本才會生效。`);
                 return false;
@@ -1461,16 +1833,22 @@
             }
             try {
                 setSyncStatus('blue', `正在寫入雲端 ${sheetName}...`, 'animate-pulse');
-                await fetch(appsScriptUrl, {
+                const res = await fetch(appsScriptUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids CORS preflight on Apps Script
                     body: JSON.stringify({ sheet: sheetName, action: action, data: data })
                 });
+                // ⚠️ fetch() 對 404/500 這種 HTTP 錯誤不會 reject，一定要自己檢查 res.ok
+                // 跟回傳內容是不是真的 {status:'ok'}，不然網址失效或部署錯誤時，
+                // 畫面還是會顯示「✅ 已同步」，讓人誤以為資料真的寫進雲端了
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const payload = await res.json();
+                if (payload.status !== 'ok') throw new Error(payload.message || '伺服器回傳非預期格式');
                 setSyncStatus('emerald', `✅ 已同步至雲端 ${sheetName}`);
                 return true;
             } catch (e) {
                 console.error('Sheet write error:', e);
-                setSyncStatus('red', `❌ 雲端寫入失敗：${sheetName}`);
+                setSyncStatus('red', `❌ 雲端寫入失敗：${sheetName}（${e.message}）`);
                 return false;
             }
         }
@@ -1500,7 +1878,7 @@
 
         function syncStockHoldingsToSheet() {
             writeToSheet('Stock_Holdings', 'replace_all', stockData.map(s => ({
-                code: s.code, name: s.name, shares: s.shares, price: s.price, cost: s.cost, category: s.category, reason: s.reason || '', updatedAt: new Date().toISOString()
+                code: s.code, name: s.name, shares: s.shares, price: s.price, cost: s.cost, category: s.category, account: normalizeAccount(s.account), reason: s.reason || '', updatedAt: new Date().toISOString()
             })));
         }
 
@@ -1519,6 +1897,10 @@
         // ==========================================
         let quoteRefreshTimer = null;
         let isRefreshingQuotes = false;
+        // 只有「這次確實成功從雲端讀到資料」才會是 true。
+        // 沒連上雲端時 stockData 會是系統內建的示範假資料，這個旗標就是用來擋住
+        // 「明明是假資料，卻被即時報價更新誤判成有變化，自動整包寫回雲端覆蓋真實持股」這種事故。
+        let cloudDataConfirmed = false;
 
         function isTwMarketHours() {
             const now = new Date();
@@ -1612,13 +1994,22 @@
 
                 if (changedCount > 0) {
                     recalculateAll();
-                    syncStockHoldingsToSheet(); // 價格有變才寫回雲端，避免頻繁寫入
+                    // ⚠️ 安全閥：只有這次真的成功連上雲端、確認 stockData 是真實持股時，
+                    // 才准許把更新後的價格寫回雲端。如果目前用的是示範假資料（雲端連線失敗時的備援），
+                    // 絕對不能把查到的真實報價套在假股數/假成本上寫回去，那會直接覆蓋掉真實持股資料。
+                    if (cloudDataConfirmed) {
+                        syncStockHoldingsToSheet();
+                    } else {
+                        console.warn('⚠️ 尚未確認為真實雲端資料，本次報價更新僅顯示於畫面，不寫回雲端');
+                    }
                 }
 
                 if (label) {
                     const t = new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' });
                     if (freshCount === 0) {
                         label.textContent = '⚠️ 報價查詢失敗，稍後會自動重試';
+                    } else if (!cloudDataConfirmed) {
+                        label.textContent = `⚠️ 報價已更新 ${t}，但尚未連上雲端真實資料，僅供畫面預覽（不會寫回雲端）`;
                     } else {
                         label.textContent = `✅ 報價已更新 ${t}（${freshCount}/${stockData.length} 檔${isTwMarketHours() ? '，盤中每5分鐘自動更新' : '，目前為收盤價'}）`;
                     }
@@ -1684,6 +2075,8 @@
                 stockData[idx][field] = parseFloat(value) || 0;
             } else if (field === 'category' || field === 'reason') {
                 stockData[idx][field] = value;
+            } else if (field === 'account') {
+                stockData[idx][field] = normalizeAccount(value);
             }
             recalculateAll();
             setSyncStatus('amber', '本地沙盤推演修改中');
@@ -1817,9 +2210,14 @@
         // ==========================================
         function recalculateAll() {
             let totalStockVal = 0, longCoreVal = 0, midWaveVal = 0, shortMomentumVal = 0;
+            // 各帳戶累計（市值已扣稅費、成本為原始投入）
+            const acctStats = { esun: { value: 0, cost: 0, count: 0 }, yuanta: { value: 0, cost: 0, count: 0 } };
 
-            const tableBody = document.getElementById('stock-table-body');
-            if (tableBody) tableBody.innerHTML = '';
+            const tableBodies = {
+                esun: document.getElementById('stock-table-body-esun'),
+                yuanta: document.getElementById('stock-table-body-yuanta')
+            };
+            ACCOUNT_KEYS.forEach(k => { if (tableBodies[k]) tableBodies[k].innerHTML = ''; });
 
             stockData.forEach((stock, idx) => {
                 const isETF = stock.code.startsWith('00');
@@ -1839,10 +2237,23 @@
                 else if (stock.category === 'mid') midWaveVal += netVal;
                 else if (stock.category === 'short') shortMomentumVal += netVal;
 
+                const acctKey = normalizeAccount(stock.account);
+                acctStats[acctKey].value += netVal;
+                acctStats[acctKey].cost += costBasis;
+                acctStats[acctKey].count++;
+
+                const tableBody = tableBodies[acctKey];
                 if (!tableBody) return;
 
                 const pnlClass = pnl >= 0 ? 'text-cyber-success' : 'text-cyber-danger';
                 const pnlSign = pnl >= 0 ? '+' : '';
+
+                const accountSelect = `
+                    <select onchange="updateStockField(${idx}, 'account', this.value)" title="改成另一個帳戶，這一列會立刻跳到另一張卡片" class="bg-slate-900 border border-cyber-border rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-blue-500 transition">
+                        <option value="esun" ${acctKey === 'esun' ? 'selected' : ''}>🏦 玉山</option>
+                        <option value="yuanta" ${acctKey === 'yuanta' ? 'selected' : ''}>⚔️ 元大</option>
+                    </select>
+                `;
 
                 const categorySelect = `
                     <select onchange="updateStockField(${idx}, 'category', this.value)" class="bg-slate-900 border border-cyber-border rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-blue-500 transition">
@@ -1859,6 +2270,7 @@
                         <div class="text-[11px] font-mono text-slate-400">${stock.code}</div>
                         <div>${stock.name}</div>
                     </td>
+                    <td class="py-3 px-2">${accountSelect}</td>
                     <td class="py-3 px-2">${categorySelect}</td>
                     <td class="py-3 px-2">
                         <input type="number" value="${stock.shares}" onchange="updateStockField(${idx}, 'shares', this.value)" class="w-16 bg-slate-900 border border-cyber-border rounded px-1.5 py-1 text-xs text-white font-mono text-center transition focus:ring-1 focus:ring-blue-500">
@@ -1902,44 +2314,60 @@
             document.getElementById('metric-progress-diff').innerText = gap > 0 ? `仍需 ${formatCurrency(gap)}` : `圓夢目標已完成！`;
             document.getElementById('metric-progress-bar').style.width = `${Math.min(progressPct, 100)}%`;
 
-            const longTarget = activeCombatTotal * 0.8;
-            const midTarget = activeCombatTotal * 0.1;
-            const shortTarget = activeCombatTotal * 0.1;
+            // ===== 兩帳戶資金比例稽核（分母只算兩帳戶持股市值，現金不屬於任何券商）=====
+            const acctTotal = acctStats.esun.value + acctStats.yuanta.value;
+            ACCOUNT_KEYS.forEach(k => {
+                const st = acctStats[k];
+                const meta = ACCOUNTS[k];
+                const pct = acctTotal > 0 ? (st.value / acctTotal) * 100 : 0;
+                const targetPct = meta.targetRatio * 100;
+                const targetVal = acctTotal * meta.targetRatio;
+                const diff = st.value - targetVal;
 
-            const longCorePct = activeCombatTotal > 0 ? (longCoreVal / activeCombatTotal) * 100 : 0;
-            const midWavePct = activeCombatTotal > 0 ? (midWaveVal / activeCombatTotal) * 100 : 0;
-            const shortMomentumPct = activeCombatTotal > 0 ? (shortMomentumVal / activeCombatTotal) * 100 : 0;
+                document.getElementById(`audit-${k}-pct`).innerText = `${pct.toFixed(1)}% / ${targetPct.toFixed(0)}.0%`;
+                document.getElementById(`audit-${k}-bar`).style.width = `${Math.min(pct, 100)}%`;
+                document.getElementById(`audit-${k}-val`).innerText = `目前: ${formatCurrency(st.value)}`;
 
-            document.getElementById('audit-long-pct').innerText = `${longCorePct.toFixed(1)}% / 80.0%`;
-            document.getElementById('audit-long-bar').style.width = `${Math.min(longCorePct, 100)}%`;
-            document.getElementById('audit-long-val').innerText = `目前: ${formatCurrency(longCoreVal)}`;
-            const longDiff = longCoreVal - longTarget;
-            document.getElementById('audit-long-diff').innerHTML = longDiff >= 0 ? 
-                `<span class="text-cyber-success font-semibold">足額 (+$${Math.round(longDiff).toLocaleString()})</span>` : `尚缺 ${formatCurrency(Math.abs(longDiff))}`;
+                const diffEl = document.getElementById(`audit-${k}-diff`);
+                if (k === 'yuanta' && diff > 0) {
+                    // 戰鬥部位超標才是紀律問題（長期部位偏多不算風險）
+                    diffEl.innerHTML = `<span class="text-cyber-danger font-bold">⚠️ 溢出 +${formatCurrency(diff)}</span>`;
+                } else if (diff >= 0) {
+                    diffEl.innerHTML = `<span class="text-cyber-success font-semibold">足額 (+$${Math.round(diff).toLocaleString()})</span>`;
+                } else {
+                    diffEl.innerHTML = `尚缺 ${formatCurrency(Math.abs(diff))}`;
+                }
 
-            document.getElementById('audit-mid-pct').innerText = `${midWavePct.toFixed(1)}% / 10.0%`;
-            document.getElementById('audit-mid-bar').style.width = `${Math.min(midWavePct, 100)}%`;
-            document.getElementById('audit-mid-val').innerText = `目前: ${formatCurrency(midWaveVal)}`;
-            const midDiff = midWaveVal - midTarget;
-            document.getElementById('audit-mid-diff').innerHTML = midDiff >= 0 ? 
-                `<span class="text-cyber-success font-semibold">足額 (+$${Math.round(midDiff).toLocaleString()})</span>` : `尚缺 ${formatCurrency(Math.abs(midDiff))}`;
+                // 卡片表頭：市值 / 損益 / 報酬率 / 佔比
+                const pnl = st.value - st.cost;
+                const pnlPct = st.cost > 0 ? (pnl / st.cost) * 100 : 0;
+                const cls = pnl >= 0 ? 'text-cyber-success' : 'text-cyber-danger';
+                const sign = pnl >= 0 ? '+' : '';
+                const setTxt = (id, txt, klass) => {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    el.innerText = txt;
+                    if (klass) el.className = klass;
+                };
+                setTxt(`acct-${k}-value`, formatCurrency(st.value), 'text-white font-bold');
+                setTxt(`acct-${k}-pnl`, `${sign}${formatCurrency(pnl)}`, `${cls} font-bold`);
+                setTxt(`acct-${k}-pct`, `${sign}${pnlPct.toFixed(2)}%`, `${cls} font-bold`);
+                setTxt(`acct-${k}-share`, `${pct.toFixed(1)}%`, 'text-slate-200 font-bold');
 
-            document.getElementById('audit-short-pct').innerText = `${shortMomentumPct.toFixed(1)}% / 10.0%`;
-            document.getElementById('audit-short-bar').style.width = `${Math.min(shortMomentumPct, 100)}%`;
-            document.getElementById('audit-short-val').innerText = `目前: ${formatCurrency(shortMomentumVal)}`;
-            const shortDiff = shortMomentumVal - shortTarget;
-            
-            if (shortDiff > 0) {
-                document.getElementById('audit-short-diff').innerHTML = `<span class="text-cyber-danger font-bold">⚠️ 嚴重溢出 +${formatCurrency(shortDiff)}</span>`;
-                document.getElementById('discipline-alert-banner').classList.remove('hidden');
-            } else {
-                document.getElementById('audit-short-diff').innerHTML = `仍可調配: ${formatCurrency(Math.abs(shortDiff))}`;
-                document.getElementById('discipline-alert-banner').classList.add('hidden');
-            }
+                const emptyEl = document.getElementById(`acct-${k}-empty`);
+                if (emptyEl) emptyEl.classList.toggle('hidden', st.count > 0);
+            });
 
-            updateDoughnutChart(longCoreVal, midWaveVal, shortMomentumVal, cashData.stockCash);
-            recordNetWorthSnapshot(netWorth, activeCombatTotal);
+            document.getElementById('audit-cash-val').innerText = formatCurrency(cashData.stockCash);
+
+            // 元大戰鬥部位超過目標比例 → 觸發頂部紀律警報
+            const yuantaPct = acctTotal > 0 ? (acctStats.yuanta.value / acctTotal) * 100 : 0;
+            document.getElementById('discipline-alert-banner').classList.toggle('hidden', yuantaPct <= ACCOUNTS.yuanta.targetRatio * 100);
+
+            updateDoughnutChart(acctStats.esun.value, acctStats.yuanta.value);
+            recordNetWorthSnapshot(netWorth, activeCombatTotal, acctStats);
             renderTrendChart();
+            renderAcctTrendChart();
             const nonStockAssets = cashData.bankCash + otherAssets.external + otherAssets.realestate;
             renderRetirementDashboard(totalStockVal, netWorth, nonStockAssets);
         }
@@ -1949,15 +2377,31 @@
         // 同一天多次重算 → 覆蓋當天最新值（每天只留一筆）
         // ==========================================
         let _snapshotDebounce = null;
-        function recordNetWorthSnapshot(netWorth, combat) {
+        function recordNetWorthSnapshot(netWorth, combat, acctStats) {
             if (!isFinite(netWorth) || netWorth <= 0) return;
+            // ⚠️ 安全閥：有設定雲端網址、但這次沒真的讀到雲端資料時，畫面上的數字是
+            // 內建示範假資料算出來的（例如外部資產會變成 0，淨值瞬間少一千多萬）。
+            // 這種數字絕對不能記進歷史軌跡，否則線圖會出現假的斷崖。
+            if (appsScriptUrl && !cloudDataConfirmed) {
+                console.warn('⚠️ 尚未確認為真實雲端資料，本次不記錄淨值快照（避免污染成長軌跡）');
+                return;
+            }
             const today = getLocalDateStr();
+            // 兩帳戶市值與成本一併記錄：市值畫「規模」，成本用來算「報酬率」，
+            // 這樣線圖之後要切換看市值或報酬率都不必重新累積歷史
+            const st = acctStats || { esun: { value: 0, cost: 0 }, yuanta: { value: 0, cost: 0 } };
+            const acctFields = {
+                esunValue: Math.round(st.esun.value), esunCost: Math.round(st.esun.cost),
+                yuantaValue: Math.round(st.yuanta.value), yuantaCost: Math.round(st.yuanta.cost)
+            };
+
             const existing = netWorthHistory.find(h => h.date === today);
             if (existing) {
                 existing.netWorth = Math.round(netWorth);
                 existing.combat = Math.round(combat);
+                Object.assign(existing, acctFields);
             } else {
-                netWorthHistory.push({ date: today, netWorth: Math.round(netWorth), combat: Math.round(combat) });
+                netWorthHistory.push(Object.assign({ date: today, netWorth: Math.round(netWorth), combat: Math.round(combat) }, acctFields));
             }
             netWorthHistory.sort((a, b) => a.date.localeCompare(b.date));
             // 只保留最近 60 天，避免無限增長
@@ -1975,8 +2419,65 @@
         }
 
         // ==========================================
-        // 45歲退休圓夢儀表板渲染
+        // 淨值快照管理：檢視／刪除歷史資料點
+        // （軌跡存在本機瀏覽器，若某天誤記到假資料，可在這裡直接移除）
         // ==========================================
+        function openSnapshotManager() {
+            document.getElementById('snapshot-modal').classList.remove('hidden');
+            renderSnapshotList();
+        }
+
+        function closeSnapshotManager() {
+            document.getElementById('snapshot-modal').classList.add('hidden');
+        }
+
+        function renderSnapshotList() {
+            const container = document.getElementById('snapshot-list');
+            if (!container) return;
+            const hist = [...netWorthHistory].sort((a, b) => b.date.localeCompare(a.date)); // 新的在上
+            if (hist.length === 0) {
+                container.innerHTML = '<p class="text-xs text-slate-500 text-center py-8">目前沒有任何淨值紀錄。</p>';
+                return;
+            }
+            // 依「日期先後」計算與前一天的變化幅度，用來標出可疑的異常點
+            const asc = [...hist].sort((a, b) => a.date.localeCompare(b.date));
+            const changeByDate = {};
+            asc.forEach((h, i) => {
+                if (i === 0) return;
+                const prev = asc[i - 1].netWorth;
+                if (prev > 0) changeByDate[h.date] = ((h.netWorth - prev) / prev) * 100;
+            });
+
+            container.innerHTML = hist.map(h => {
+                const pct = changeByDate[h.date];
+                const suspicious = pct !== undefined && Math.abs(pct) > 30;
+                const pctText = pct === undefined ? '—' : `${pct > 0 ? '+' : ''}${pct.toFixed(1)}%`;
+                return `
+                <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-lg border ${suspicious ? 'bg-red-950/20 border-red-500/40' : 'bg-slate-800/40 border-cyber-border'}">
+                    <div class="min-w-0">
+                        <p class="text-xs font-mono ${suspicious ? 'text-red-300' : 'text-slate-300'}">
+                            ${h.date}${suspicious ? ' <span class="text-[10px] bg-red-500/20 px-1.5 py-0.5 rounded ml-1">⚠️ 可疑</span>' : ''}
+                        </p>
+                        <p class="text-[10px] text-slate-500">
+                            淨值 ${formatCurrency(h.netWorth)}　戰力 ${formatCurrency(h.combat)}　較前日 ${pctText}
+                        </p>
+                    </div>
+                    <button onclick="deleteSnapshot('${h.date}')" title="刪除這筆" class="flex-shrink-0 text-slate-500 hover:text-red-400 transition px-2">
+                        <i class="fa-solid fa-trash text-xs"></i>
+                    </button>
+                </div>`;
+            }).join('');
+        }
+
+        function deleteSnapshot(date) {
+            if (!confirm(`確定要刪除 ${date} 這筆淨值紀錄嗎？\n刪除後線圖會立刻重畫，此操作無法復原。`)) return;
+            netWorthHistory = netWorthHistory.filter(h => h.date !== date);
+            localStorage.setItem('networth_history', JSON.stringify(netWorthHistory));
+            renderSnapshotList();
+            renderTrendChart();
+            renderAcctTrendChart();
+        }
+
         // ==========================================
         // 45歲退休圓夢儀表板渲染（動態依目標與水庫輸入即時重算）
         // ==========================================
@@ -2217,7 +2718,23 @@
             const status = document.getElementById('trade-quote-status');
             if (status) status.innerText = '';
             populateTradeStockSelect();
+            setTradeAccount(localStorage.getItem('last_trade_account') || DEFAULT_ACCOUNT);
             setTradeAction('buy');
+        }
+
+        // 交易帳戶選擇：記住上次選的，下次開啟自動帶出
+        let currentTradeAccount = DEFAULT_ACCOUNT;
+        function setTradeAccount(key) {
+            currentTradeAccount = normalizeAccount(key);
+            localStorage.setItem('last_trade_account', currentTradeAccount);
+            ACCOUNT_KEYS.forEach(k => {
+                const btn = document.getElementById(`trade-acct-${k}`);
+                if (!btn) return;
+                const on = (k === currentTradeAccount);
+                const onCls = k === 'esun' ? 'bg-blue-600 border-blue-500 text-white' : 'bg-amber-600 border-amber-500 text-white';
+                btn.className = `flex-1 py-2 rounded-xl text-xs font-bold border transition ${on ? onCls : 'bg-cyber-bg border-cyber-border text-slate-400 hover:text-white'}`;
+            });
+            populateTradeStockSelect();
         }
 
         function closeTradeModal() {
@@ -2243,8 +2760,11 @@
 
         function populateTradeStockSelect() {
             const select = document.getElementById('trade-stock-select');
+            // 只列出目前選定帳戶的持股：避免在元大要賣股時，誤選到玉山的同名部位
             select.innerHTML = '<option value="">-- 新標的（尚未持有）--</option>' +
-                stockData.map((s, idx) => `<option value="${idx}">${s.name} (${s.code}) — 現有 ${s.shares} 股</option>`).join('');
+                stockData.map((s, idx) => ({ s, idx }))
+                    .filter(x => normalizeAccount(x.s.account) === currentTradeAccount)
+                    .map(x => `<option value="${x.idx}">${x.s.name} (${x.s.code}) — 現有 ${x.s.shares} 股</option>`).join('');
             select.value = '';
             document.getElementById('trade-code').value = '';
             document.getElementById('trade-name').value = '';
@@ -2327,17 +2847,19 @@
             }
 
             if (currentTradeAction === 'sell') {
-                const existing = stockData.find(s => s.code === code);
+                // 庫存檢查必須綁定帳戶：玉山有 500 股不代表元大也能賣 500 股
+                const existing = stockData.find(s => s.code === code && normalizeAccount(s.account) === currentTradeAccount);
                 if (!existing || existing.shares < shares) {
-                    alert(`⚠️ 庫存不足：目前 ${code} 僅有 ${existing ? existing.shares : 0} 股，無法賣出 ${shares} 股。請確認股數是否與現實一致。`);
+                    alert(`⚠️ 庫存不足：${ACCOUNTS[currentTradeAccount].name}目前 ${code} 僅有 ${existing ? existing.shares : 0} 股，無法賣出 ${shares} 股。請確認股數與交易帳戶是否正確。`);
                     return;
                 }
             }
 
-            pendingTrade = { action: currentTradeAction, code, name, shares, price, date, note, amount: shares * price };
+            pendingTrade = { action: currentTradeAction, code, name, shares, price, date, note, account: currentTradeAccount, amount: shares * price };
 
             const actionLabel = currentTradeAction === 'buy' ? '📈 買進' : '📉 賣出';
             document.getElementById('trade-preview-content').innerHTML = `
+                <div class="flex justify-between"><span class="text-slate-400">交易帳戶</span><span class="${currentTradeAccount === 'esun' ? 'text-blue-300' : 'text-amber-300'} font-bold">${ACCOUNTS[currentTradeAccount].icon} ${ACCOUNTS[currentTradeAccount].name}</span></div>
                 <div class="flex justify-between"><span class="text-slate-400">動作</span><span class="text-white font-bold">${actionLabel}</span></div>
                 <div class="flex justify-between"><span class="text-slate-400">代號</span><span class="text-white">${code}</span></div>
                 <div class="flex justify-between"><span class="text-slate-400">名稱</span><span class="text-white">${name}</span></div>
@@ -2360,8 +2882,10 @@
             if (!pendingTrade) return;
             const t = pendingTrade;
             const netWorthNow = parseFloat((document.getElementById('metric-net-worth').innerText || '$0').replace(/[$,]/g, '')) || 0;
-            let existingIdx = stockData.findIndex(s => s.code === t.code);
-            let logEntry = { id: 'trd' + Date.now(), date: t.date, action: t.action, code: t.code, name: t.name, shares: t.shares, price: t.price, amount: t.amount, note: t.note, realizedPnL: 0, returnPct: 0, pctOfTotalAssets: t.amount > 0 && netWorthNow > 0 ? (t.amount / netWorthNow * 100) : 0, reflection: '' };
+            // 配對鍵＝代號＋帳戶：同一檔可同時存在於兩個帳戶，各自成本獨立不混算
+            const tAccount = normalizeAccount(t.account);
+            let existingIdx = stockData.findIndex(s => s.code === t.code && normalizeAccount(s.account) === tAccount);
+            let logEntry = { id: 'trd' + Date.now(), date: t.date, action: t.action, code: t.code, name: t.name, shares: t.shares, price: t.price, account: tAccount, amount: t.amount, note: t.note, realizedPnL: 0, returnPct: 0, pctOfTotalAssets: t.amount > 0 && netWorthNow > 0 ? (t.amount / netWorthNow * 100) : 0, reflection: '' };
 
             if (t.action === 'buy') {
                 if (existingIdx >= 0) {
@@ -2373,7 +2897,7 @@
                     s.price = t.price;
                     if (t.note) s.reason = (s.reason ? s.reason + '\n' : '') + `[${t.date} 加碼] ${t.note}`;
                 } else {
-                    stockData.push({ code: t.code, name: t.name, shares: t.shares, price: t.price, cost: t.price, category: 'mid', reason: t.note });
+                    stockData.push({ code: t.code, name: t.name, shares: t.shares, price: t.price, cost: t.price, category: 'mid', account: tAccount, reason: t.note });
                 }
                 // 買進 → 動用銀行現金
                 cashData.bankCash = Math.max(0, (cashData.bankCash || 0) - t.amount);
@@ -2483,6 +3007,7 @@
                         <div class="flex flex-wrap justify-between items-center gap-2 mb-1">
                             <div class="flex items-center gap-2">
                                 <span class="bg-slate-900 text-purple-400 font-mono font-bold text-xs px-2 py-1 rounded border border-purple-500/30">${t.date}</span>
+                                ${t.account && ACCOUNTS[t.account] ? `<span class="text-[10px] px-1.5 py-0.5 rounded border ${t.account === 'esun' ? 'bg-blue-500/10 text-blue-300 border-blue-500/30' : 'bg-amber-500/10 text-amber-300 border-amber-500/30'}">${ACCOUNTS[t.account].icon} ${ACCOUNTS[t.account].short}</span>` : ''}
                                 ${actionLabel}
                                 <span class="text-white text-sm font-medium">${t.name} (${t.code})</span>
                             </div>
@@ -2499,17 +3024,170 @@
             }).join('');
         }
 
-        function updateDoughnutChart(long, mid, short, cash) {
+        function updateDoughnutChart(esunVal, yuantaVal) {
             const chartCanvas = document.getElementById('allocationChart');
             if (!chartCanvas) return;
             const ctx = chartCanvas.getContext('2d');
             if (typeof Chart === 'undefined') return;
+            // 只畫兩帳戶，讓圓餅圖的百分比跟下方 80/20 進度條完全一致
             const data = {
-                labels: ['長線核心', '中期波段', '短線動能', '可用實彈'],
-                datasets: [{ data: [long, mid, short, cash], backgroundColor: ['#3B82F6', '#8B5CF6', '#EF4444', '#10B981'], borderColor: '#151D30', borderWidth: 2, hoverOffset: 4 }]
+                labels: ['🏦 玉山長期', '⚔️ 元大戰鬥'],
+                datasets: [{ data: [esunVal, yuantaVal], backgroundColor: [ACCOUNTS.esun.color, ACCOUNTS.yuanta.color], borderColor: '#151D30', borderWidth: 2, hoverOffset: 4 }]
             };
             if (allocationChart) allocationChart.destroy();
             try { allocationChart = new Chart(ctx, { type: 'doughnut', data: data, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, cutout: '75%', animation: { duration: 600 } } }); } catch (err) {}
+        }
+
+        // ==========================================================
+        // 兩帳戶部位軌跡圖（市值：左軸 $ / 報酬率：右軸 %）
+        // ==========================================================
+        function setAcctChartMode(mode) {
+            acctChartMode = mode;
+            localStorage.setItem('acct_chart_mode', mode);
+            renderAcctTrendChart();
+        }
+
+        function syncAcctModeButtons() {
+            document.querySelectorAll('.acct-mode-btn').forEach(btn => {
+                const on = btn.getAttribute('data-acctmode') === acctChartMode;
+                btn.className = 'acct-mode-btn text-[10px] px-2 py-1 rounded transition ' +
+                    (on ? 'bg-blue-600 text-white font-bold' : 'text-slate-400 hover:text-white');
+            });
+        }
+
+        function acctReturnPct(value, cost) {
+            if (!cost || cost <= 0) return null;
+            return ((value - cost) / cost) * 100;
+        }
+
+        function renderAcctTrendChart() {
+            syncAcctModeButtons();
+            const canvas = document.getElementById('acctTrendChart');
+            if (!canvas) return;
+            if (typeof Chart === 'undefined') return;
+            const ctx = canvas.getContext('2d');
+
+            // 只取真的有帳戶欄位的快照（拆帳戶之前的舊紀錄沒有這些欄位，不能拿來畫）
+            const hist = [...netWorthHistory]
+                .filter(h => h.esunValue !== undefined || h.yuantaValue !== undefined)
+                .sort((a, b) => a.date.localeCompare(b.date));
+
+            if (acctTrendChartObj) acctTrendChartObj.destroy();
+
+            const emptyHint = document.getElementById('acct-trend-empty-hint');
+            renderAcctDailyChange(hist);
+
+            if (hist.length < 2) {
+                if (emptyHint) {
+                    emptyHint.classList.remove('hidden');
+                    emptyHint.innerText = hist.length === 0
+                        ? '尚無兩帳戶紀錄。系統從今天起每天自動記錄一筆，需累積 2 天以上才會畫出走勢。'
+                        : `已記錄 ${hist[0].date} 首筆（玉山 ${formatCurrency(hist[0].esunValue || 0)}／元大 ${formatCurrency(hist[0].yuantaValue || 0)}）。明天起會自動累積軌跡。`;
+                }
+                canvas.classList.add('hidden');
+                return;
+            }
+            if (emptyHint) emptyHint.classList.add('hidden');
+            canvas.classList.remove('hidden');
+
+            const labels = hist.map(h => { const [y, m, d] = h.date.split('-'); return `${parseInt(m)}/${parseInt(d)}`; });
+            const showValue = acctChartMode === 'both' || acctChartMode === 'value';
+            const showPct = acctChartMode === 'both' || acctChartMode === 'pct';
+
+            const datasets = [];
+            if (showValue) {
+                datasets.push({
+                    label: '🏦 玉山市值', data: hist.map(h => h.esunValue || 0), yAxisID: 'y',
+                    borderColor: ACCOUNTS.esun.color, backgroundColor: 'rgba(59,130,246,0.08)',
+                    borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2, pointHoverRadius: 5
+                });
+                datasets.push({
+                    label: '⚔️ 元大市值', data: hist.map(h => h.yuantaValue || 0), yAxisID: 'y',
+                    borderColor: ACCOUNTS.yuanta.color, backgroundColor: 'rgba(245,158,11,0.08)',
+                    borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2, pointHoverRadius: 5
+                });
+            }
+            if (showPct) {
+                datasets.push({
+                    label: '🏦 玉山報酬率', data: hist.map(h => acctReturnPct(h.esunValue, h.esunCost)), yAxisID: 'y1',
+                    borderColor: ACCOUNTS.esun.color, borderDash: [5, 4], backgroundColor: 'transparent',
+                    borderWidth: 2, fill: false, tension: 0.3, pointRadius: 2, pointHoverRadius: 5, spanGaps: true
+                });
+                datasets.push({
+                    label: '⚔️ 元大報酬率', data: hist.map(h => acctReturnPct(h.yuantaValue, h.yuantaCost)), yAxisID: 'y1',
+                    borderColor: ACCOUNTS.yuanta.color, borderDash: [5, 4], backgroundColor: 'transparent',
+                    borderWidth: 2, fill: false, tension: 0.3, pointRadius: 2, pointHoverRadius: 5, spanGaps: true
+                });
+            }
+
+            const scales = {
+                x: { grid: { color: '#1E293B', drawBorder: false }, ticks: { color: '#64748B', maxTicksLimit: 10, font: { size: 10 } } }
+            };
+            if (showValue) {
+                scales.y = {
+                    position: 'left', grid: { color: '#1E293B', drawBorder: false },
+                    ticks: { color: '#64748B', font: { size: 10 }, callback: v => '$' + (v / 10000).toFixed(0) + '萬' }
+                };
+            }
+            if (showPct) {
+                scales.y1 = {
+                    position: 'right', grid: { drawOnChartArea: !showValue, color: '#1E293B', drawBorder: false },
+                    ticks: { color: '#94A3B8', font: { size: 10 }, callback: v => v.toFixed(0) + '%' }
+                };
+            }
+
+            try {
+                acctTrendChartObj = new Chart(ctx, {
+                    type: 'line',
+                    data: { labels: labels, datasets: datasets },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
+                        plugins: {
+                            legend: { display: true, position: 'top', align: 'end', labels: { color: '#94A3B8', boxWidth: 12, font: { size: 10 } } },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (c) {
+                                        const v = c.parsed.y;
+                                        if (v === null || v === undefined) return c.dataset.label + '：無資料';
+                                        return c.dataset.yAxisID === 'y1'
+                                            ? `${c.dataset.label}：${v >= 0 ? '+' : ''}${v.toFixed(2)}%`
+                                            : `${c.dataset.label}：${formatCurrency(v)}`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: scales
+                    }
+                });
+            } catch (err) {}
+        }
+
+        // 兩帳戶「較前一日」徽章（台股慣例：增加紅字、減少綠字）
+        function renderAcctDailyChange(hist) {
+            const el = document.getElementById('acct-daily-change');
+            if (!el) return;
+            if (!hist || hist.length < 2) { el.classList.add('hidden'); el.innerHTML = ''; return; }
+
+            const today = hist[hist.length - 1];
+            const prev = hist[hist.length - 2];
+            const pctChange = (curr, base) => (base ? ((curr - base) / Math.abs(base)) * 100 : 0);
+            const colorClass = v => v > 0 ? 'text-red-400' : (v < 0 ? 'text-emerald-400' : 'text-slate-400');
+            const arrow = v => v > 0 ? '▲' : (v < 0 ? '▼' : '─');
+            const fmt = v => `${v > 0 ? '+' : ''}${v.toFixed(2)}%`;
+            const fmtDiff = v => `${v > 0 ? '+' : '-'}${formatCurrency(Math.abs(v))}`;
+
+            const parts = ACCOUNT_KEYS.map(k => {
+                const cur = today[k + 'Value'] || 0;
+                const old = prev[k + 'Value'] || 0;
+                if (cur === 0 && old === 0) return `<span class="text-slate-600">${ACCOUNTS[k].icon} ${ACCOUNTS[k].short} 尚無部位</span>`;
+                const pct = pctChange(cur, old);
+                const diff = cur - old;
+                return `<span class="${colorClass(pct)} font-bold">${ACCOUNTS[k].icon} ${ACCOUNTS[k].short} ${arrow(pct)} ${fmt(pct)}（${fmtDiff(diff)}）</span>`;
+            });
+
+            el.innerHTML = `<span class="text-slate-500">較前一日 (${prev.date})：</span>` + parts.join('');
+            el.classList.remove('hidden');
         }
 
         function renderTrendChart() {
@@ -2602,7 +3280,119 @@
             if (name === 'intel' && !intelLoadedOnce) loadIntelDigests();
             // 第一次進入策略選股分頁時才載入資料
             if (name === 'strategy' && !strategyLoadedOnce) loadStrategyData();
+            // 第一次進入保單資產分頁時才渲染（純靜態資料，不需要每次都重畫）
+            if (name === 'policy' && !policyRenderedOnce) renderPolicyAssets();
             window.scrollTo({ top: 0 });
+        }
+
+        // ==========================================================
+        // 🛡️ 保單資產（純靜態資料渲染，來源：保單健檢報告 PRELOADED_STATE.policyAssets）
+        // ==========================================================
+        let policyRenderedOnce = false;
+
+        function fmtTwd(n) {
+            if (n === null || n === undefined || n === '' || isNaN(n)) return String(n ?? '-');
+            return '$' + Math.round(n).toLocaleString();
+        }
+
+        function renderPolicyAssets() {
+            const pa = (window.PRELOADED_STATE && window.PRELOADED_STATE.policyAssets) || null;
+            if (!pa) return;
+            policyRenderedOnce = true;
+
+            const dateLabel = document.getElementById('policy-report-date');
+            if (dateLabel) dateLabel.textContent = `依《保單健檢與財務效益分析報告》${pa.reportDate || ''}版整理，匯率基準 USD 1 : TWD ${pa.exchangeRate || ''}`;
+
+            // 現金流閉環
+            document.getElementById('policy-cashloop-payout').textContent = fmtTwd(pa.cashLoop.annualPayoutTwd) + '/年';
+            document.getElementById('policy-cashloop-premium').textContent = fmtTwd(pa.cashLoop.annualPremiumTwd) + '/年';
+            document.getElementById('policy-cashloop-surplus').textContent = fmtTwd(pa.cashLoop.surplusTwd) + '/年';
+            document.getElementById('policy-cashloop-note').textContent = pa.cashLoop.note || '';
+
+            // 45~65歲 每5年現金流試算表
+            const cfBody = document.getElementById('policy-cashflow-table-body');
+            cfBody.innerHTML = (pa.retirementCashflowTable || []).map(row => `
+                <tr class="hover:bg-slate-800/20 transition">
+                    <td class="py-2.5 px-3 font-bold text-white">${row.age} 歲</td>
+                    <td class="py-2.5 px-2 font-mono">${fmtTwd(row.twdPolicyAnnual)}</td>
+                    <td class="py-2.5 px-2 font-mono text-emerald-400">$${row.cathayUsd}</td>
+                    <td class="py-2.5 px-2 font-mono text-emerald-400">$${row.fubonUsd}</td>
+                    <td class="py-2.5 px-2 font-mono">${fmtTwd(row.usdInTwd)}</td>
+                    <td class="py-2.5 px-2 font-mono font-bold text-amber-400">${fmtTwd(row.totalTwd)}</td>
+                    <td class="py-2.5 px-3 font-mono">${fmtTwd(row.monthlyAvg)}</td>
+                </tr>
+            `).join('');
+            document.getElementById('policy-retirement-summary').textContent = pa.retirementSummary || '';
+
+            // 儲蓄/資產型保單清單
+            const savingsList = document.getElementById('policy-savings-list');
+            savingsList.innerHTML = (pa.savingsPolicies || []).map(p => `
+                <div class="bg-slate-800/40 border ${p.cancelled ? 'border-red-500/30' : 'border-cyber-border'} rounded-xl p-4 ${p.cancelled ? 'opacity-60' : ''}">
+                    <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
+                        <div>
+                            <p class="text-[10px] text-slate-500">${escapeHtml(p.company)}${p.policyNo ? '｜' + escapeHtml(p.policyNo) : ''}</p>
+                            <h4 class="text-sm font-bold text-white">${escapeHtml(p.product)}</h4>
+                        </div>
+                        <span class="text-[10px] px-2 py-1 rounded border ${p.cancelled ? 'bg-red-950/30 text-red-400 border-red-500/30' : 'bg-emerald-950/20 text-emerald-400 border-emerald-500/30'} font-bold whitespace-nowrap">${escapeHtml(p.status)}</span>
+                    </div>
+                    <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-400 mb-2">
+                        <span>保額：<span class="text-slate-200 font-mono">${escapeHtml(p.insuredAmount)}</span></span>
+                        <span>繳費年期：<span class="text-slate-200 font-mono">${escapeHtml(p.paymentYears)}</span></span>
+                        ${p.annualPremium && p.annualPremium !== '-' ? `<span>年繳保費：<span class="text-slate-200 font-mono">${escapeHtml(p.annualPremium)}</span></span>` : ''}
+                    </div>
+                    ${p.payout && p.payout !== '-' ? `<p class="text-xs text-amber-300 bg-amber-950/20 border border-amber-500/20 rounded-lg px-3 py-1.5">💰 ${escapeHtml(p.payout)}</p>` : ''}
+                    ${p.note ? `<p class="text-[11px] text-slate-500 mt-1.5">${escapeHtml(p.note)}</p>` : ''}
+                </div>
+            `).join('');
+
+            // 醫療防護型保單清單
+            const protBody = document.getElementById('policy-protection-table-body');
+            protBody.innerHTML = (pa.protectionPolicies || []).map(p => `
+                <tr class="hover:bg-slate-800/20 transition">
+                    <td class="py-2.5 px-3 text-slate-400">${escapeHtml(p.company)}</td>
+                    <td class="py-2.5 px-2 text-white">${escapeHtml(p.product)}</td>
+                    <td class="py-2.5 px-3 text-right font-mono">${fmtTwd(p.annualPremium)}</td>
+                </tr>
+            `).join('');
+            document.getElementById('policy-protection-total').textContent = fmtTwd(pa.protectionPremiumTotal) + '/年';
+
+            // 身故/失能/特殊給付總表
+            const cs = pa.claimsSummary || {};
+            document.getElementById('policy-claims-asof').innerHTML = `⏱ 資料時效性提醒：本節數據來自 ${escapeHtml(cs.asOf || '')}`;
+
+            document.getElementById('policy-death-cards').innerHTML = (cs.death || []).map(d => `
+                <div class="bg-slate-800/40 border border-cyber-border rounded-xl p-3.5">
+                    <p class="text-xs text-slate-400 mb-1">${escapeHtml(d.cause)}</p>
+                    <p class="text-lg font-mono font-bold text-white">${fmtTwd(d.amountTwd)}</p>
+                    ${d.note ? `<p class="text-[10px] text-amber-400 mt-1.5 leading-relaxed">${escapeHtml(d.note)}</p>` : ''}
+                </div>
+            `).join('');
+
+            document.getElementById('policy-critical-total').textContent = `合計 ${fmtTwd(cs.criticalIllnessTotal)}`;
+            document.getElementById('policy-critical-table-body').innerHTML = (cs.criticalIllness || []).map(c => `
+                <tr class="hover:bg-slate-800/20 transition">
+                    <td class="py-2 px-3 text-slate-400 w-1/3">${escapeHtml(c.source)}</td>
+                    <td class="py-2 px-2 text-white">${escapeHtml(c.item)}</td>
+                    <td class="py-2 px-3 text-right font-mono text-emerald-400">${fmtTwd(c.amountTwd)}</td>
+                </tr>
+            `).join('');
+
+            document.getElementById('policy-disability-table-body').innerHTML = (cs.disabilityAndCare || []).map(d => `
+                <tr class="hover:bg-slate-800/20 transition">
+                    <td class="py-2 px-3 text-slate-400 w-1/3">${escapeHtml(d.source)}</td>
+                    <td class="py-2 px-2 text-white">${escapeHtml(d.item)}</td>
+                    <td class="py-2 px-3 text-right font-mono text-blue-400">${d.amountTwd ? fmtTwd(d.amountTwd) + (d.frequency ? '/' + escapeHtml(d.frequency) : '') : escapeHtml(d.amount || '-')}</td>
+                </tr>
+            `).join('');
+
+            document.getElementById('policy-special-pills').innerHTML = (cs.special || []).map(s => `
+                <span class="inline-flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-full border bg-purple-950/20 text-purple-300 border-purple-500/30" title="${escapeHtml(s.note || '')}">
+                    ${escapeHtml(s.item)}：${fmtTwd(s.amountTwd)}
+                </span>
+            `).join('');
+
+            // 行動建議
+            document.getElementById('policy-action-items').innerHTML = (pa.actionItems || []).map(a => `<li>${escapeHtml(a)}</li>`).join('');
         }
 
         // ==========================================================
@@ -2930,7 +3720,7 @@ ${videoLines || '（無）'}
 
 請結合我目前的持股明細與 45 歲 5,000 萬總資產目標，給我：
 1. 這些情報中與「我的持股」最相關的 3 個標的，各自的影響方向（利多/利空/中性）與理由。
-2. 是否出現需要調整 80/10/10 配置紀律或加碼節奏的訊號？
+2. 是否出現需要調整兩帳戶 80/20 資金紀律或加碼節奏的訊號？
 3. 明天開盤前我最應該做的一件具體行動（或明確說明「不需行動」的理由）。`;
             switchTab('trading');
             addUserMessage(prompt);
@@ -3138,23 +3928,79 @@ ${videoLines || '（無）'}
                 const checkedAt = strategyStoploss && strategyStoploss.checkedAt
                     ? new Date(strategyStoploss.checkedAt).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' })
                     : '—';
-                info.textContent = `訊號日期：${d}　停損檢查時間：${checkedAt}`;
+                const stale = staleScanWarning(strategySignals && strategySignals.date);
+                info.innerHTML = `訊號日期：${escapeHtml(d)}　停損檢查時間：${escapeHtml(checkedAt)}` +
+                    (stale ? `<span class="block text-amber-400 mt-0.5">${escapeHtml(stale)}</span>` : '');
             }
             renderSchoolUpdatedBadges();
+        }
+
+        // 2026-07-30：使用者問「為什麼都沒更新」，但光看畫面沒辦法分辨「今天真的沒訊號」
+        // 還是「每日自動掃描根本沒在跑」——後者要跑到試算表選單查「引擎狀態」才知道，
+        // 對不熟系統的人等於查不到。這裡改成 App 自己算：把資料日期跟「照理說最新的交易日」
+        // 比對，落後就直接把可能原因寫在畫面上。
+        // 只用星期幾推算（跟 isTwWeekend 同一套邏輯），不含國定假日——所以文案寫成
+        // 「若不是連假」的提醒語氣，而不是斷定故障，避免在連假期間誤報。
+        function expectedLatestTradeDate() {
+            const now = new Date();
+            const d = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            // 平日但還沒到 16:00 掃描時間 → 最新可期待的資料仍是前一個交易日
+            const beforeScanTime = now.getHours() < 16;
+            if (beforeScanTime) d.setDate(d.getDate() - 1);
+            while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() - 1); // 退到最近的平日
+            const p = n => String(n).padStart(2, '0');
+            return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+        }
+
+        function staleScanWarning(signalDate) {
+            if (!signalDate) return '';
+            const expected = expectedLatestTradeDate();
+            if (signalDate >= expected) return '';
+            // 換算落後幾個「平日」，讓提示具體一點
+            let missed = 0;
+            const cur = new Date(signalDate + 'T00:00:00');
+            const end = new Date(expected + 'T00:00:00');
+            while (cur < end && missed < 30) {
+                cur.setDate(cur.getDate() + 1);
+                if (cur.getDay() !== 0 && cur.getDay() !== 6) missed++;
+            }
+            return `⚠️ 資料停在 ${signalDate}，落後約 ${missed} 個交易日。若這幾天不是連假，`
+                + `請到試算表選單「🎯 策略選股 → ③ 安裝每日自動掃描」確認排程是否還在，`
+                + `或先按上方「立即掃描」補跑一次。`;
         }
 
         // 每個流派各自顯示「更新：幾號」——股池改用MIS即時報價備援後，A/R流派遇到證交所
         // 官方全市場資料延遲時會跳過，可能跟C/D/E不是同一天，這裡把每個流派卡片自己的
         // 資料日期標出來，日期比今天舊時額外加「（尚未更新到今天）」，避免看到某流派是空的
         // 就誤以為「今天沒標的」，其實是「這流派今天還沒更新」。
-        function schoolUpdatedLabel(asOfDate) {
-            if (!asOfDate) return '尚無資料';
+        // scanRanToday：今天「整批掃描」有沒有跑過的判斷依據（signals.date 是全部流派共用的
+        // 全域最新日期，只要有任何一個流派今天寫入過資料，這個值就會是今天）。用來分辨
+        // 「這個流派今天根本沒跑」跟「今天有跑、只是真的沒有任何標的符合條件」——
+        // 這兩種情況以前顯示起來一模一樣，都卡在舊日期，容易讓人誤以為系統沒在動。
+        // 2026-07-25：使用者在週六看到「尚未更新到今天」誤以為系統壞掉，其實是當天休市、
+        // 證交所本來就沒有資料可更新，不是故障。這裡加一個「今天是不是週末」的判斷——只用
+        // 星期幾（跟 isTwMarketHours 同一個邏輯），不涵蓋國定假日，因為前端沒有假日曆可查；
+        // 假日仍會顯示原本的「尚未更新到今天」，這是可接受的殘餘落差（比週末少見很多）。
+        function isTwWeekend() {
+            const day = new Date().getDay();
+            return day === 0 || day === 6;
+        }
+
+        function schoolUpdatedLabel(asOfDate, scanRanToday) {
+            if (isTwWeekend()) {
+                return asOfDate ? `更新：${asOfDate}（今日休市，此為最近交易日）` : '今日休市，尚無資料';
+            }
+            if (!asOfDate) return scanRanToday ? '今天已掃描，尚無資料' : '尚無資料';
             const todayIso = new Date().toISOString().slice(0, 10);
-            return asOfDate === todayIso ? `更新：${asOfDate}` : `更新：${asOfDate}（尚未更新到今天）`;
+            if (asOfDate === todayIso) return `更新：${asOfDate}`;
+            if (scanRanToday) return `今天已掃描，無符合標的（上次：${asOfDate}）`;
+            return `更新：${asOfDate}（尚未更新到今天）`;
         }
 
         function renderSchoolUpdatedBadges() {
             const s = strategySignals || {};
+            const todayIso = new Date().toISOString().slice(0, 10);
+            const scanRanToday = s.date === todayIso;
             const map = {
                 'school-a-updated': s.schoolAAsOf,
                 'school-c-updated': s.schoolCAsOf,
@@ -3164,7 +4010,7 @@ ${videoLines || '（無）'}
             };
             Object.keys(map).forEach(id => {
                 const el = document.getElementById(id);
-                if (el) el.textContent = schoolUpdatedLabel(map[id]);
+                if (el) el.textContent = schoolUpdatedLabel(map[id], scanRanToday);
             });
             const bEl = document.getElementById('school-b-updated');
             if (bEl) {
@@ -3777,7 +4623,7 @@ ${scText}
                 const stockList = stockData.map(s => `${s.name}(${s.code})`).join('、');
                 prompt = `請扮演一位資深股票研究分析師。你的任務是編寫一份關於我目前所有持股：【${stockList}】的綜合投資分析報告。\n\n該報告應詳細、客觀且以數據為導向，使用過去五個完整財政年度和最近十二個月（TTM）的財務數據。\n\n使用以下部分來構建您的報告（請針對各股精要評估）：\n1. 執行摘要：簡要概述公司的業務。用 2-3 句話陳述整體投資論點（目前的估值是買入、持有還是賣出？）總結積極催化劑和風險。\n2. 財務表現與健康狀況：損益表分析、資產負債表分析、現金流量分析。\n3. 估值：倍數分析，得出估值結論。\n4. 商業模式與競爭護城河：業務部門、經濟護城河。\n5. 增長策略與未來展望：增長動力、市場機會。\n6. 管理與治理：領導力、資本配置、內部人持股。\n7. 風險分析：特殊風險、系統性風險。\n8. 最終建議：綜合以上得出最終投資結論。`;
             } else if (type === 'discipline') {
-                prompt = "分析我的戰鬥本金 80/10/10 配比：手動調整後的長線核心目前配比為多少？短線動能是否確實嚴重溢出？若有溢出，我今天最好的『冷血紀律執行動作』是什麼？";
+                prompt = "分析我的兩帳戶 80/20 資金配比：玉山長期部位與元大個股戰鬥部位目前各佔多少？元大戰鬥部位是否超過 20% 上限？若有溢出，我今天最好的『冷血紀律執行動作』是什麼？";
             } else if (type === 'retireCheck') {
                 prompt = "請針對我的『45歲 5,000萬總資產淨值目標』進行健診：目前總資產淨值距離 5,000 萬的達成率是多少？以現有速度（目前的年提撥金額、7%年化）推算，我到 45 歲時預估淨值能否達標？落在里程碑表的哪個階段？請聚焦在『如何加速讓總資產淨值往 5,000 萬推進』給我具體建議（例如加碼節奏、配置紀律、閒置資金運用），不要提供任何保險相關建議。";
             } else if (type === 'todoReminder') {
@@ -3821,7 +4667,26 @@ ${scText}
 目前總資產淨值: ${currentNetWorthText}
 【主要目標】45歲總資產淨值達 $${netWorthGoal.toLocaleString()}（${(netWorthGoal/10000).toLocaleString()}萬），目前達成率約 ${Math.round(currentNetWorthNum / netWorthGoal * 100)}%
 持股明細：
-${stockData.map(s => `- ${s.name} (${s.code}) [系統標記分類: ${s.category}]: ${s.shares} 股 / 現價 $${s.price} (成本 $${s.cost})${s.reason ? `，買進理由：${s.reason}` : ''}`).join('\n')}
+${stockData.map(s => `- [${(ACCOUNTS[normalizeAccount(s.account)] || {}).name || '未分類帳戶'}] ${s.name} (${s.code}) [系統標記分類: ${s.category}]: ${s.shares} 股 / 現價 $${s.price} (成本 $${s.cost})${s.reason ? `，買進理由：${s.reason}` : ''}`).join('\n')}
+
+【兩帳戶資金配比（紀律主軸，目標 玉山80% / 元大20%）】
+${(() => {
+    const st = { esun: { v: 0, c: 0 }, yuanta: { v: 0, c: 0 } };
+    stockData.forEach(x => {
+        const k = normalizeAccount(x.account);
+        st[k].v += (x.shares || 0) * (x.price || 0);
+        st[k].c += (x.shares || 0) * (x.cost || 0);
+    });
+    const tot = st.esun.v + st.yuanta.v;
+    return ACCOUNT_KEYS.map(k => {
+        const pct = tot > 0 ? (st[k].v / tot * 100) : 0;
+        const pnl = st[k].v - st[k].c;
+        const pnlPct = st[k].c > 0 ? (pnl / st[k].c * 100) : 0;
+        const target = ACCOUNTS[k].targetRatio * 100;
+        const flag = (k === 'yuanta' && pct > target) ? ' ⚠️已超出上限' : '';
+        return `- ${ACCOUNTS[k].name}：市值 $${Math.round(st[k].v).toLocaleString()}，佔比 ${pct.toFixed(1)}%（目標 ${target.toFixed(0)}%）${flag}，未實現損益 $${Math.round(pnl).toLocaleString()}（${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(2)}%）`;
+    }).join('\n');
+})()}
 
 【雙軌現金流水庫】
 - 主動收入水庫：年度總收入 $${rp.annualActiveIncome ? rp.annualActiveIncome.toLocaleString() : '未設定'}，建議每年固定提撥 $${rp.annualStockContribution ? rp.annualStockContribution.toLocaleString() : '未設定'} 進股市
@@ -3842,7 +4707,7 @@ ${tradesText}
 重要限制：
 1. 你只負責「投資、資產配置、現金流、紀律執行」相關的分析與建議。
 2. 絕對不要提供任何保險相關建議（例如叫他補買重大傷病險、癌症險、醫療險等）。家祥的醫療與保險保障非常完整，只是沒有全部上傳，你看不到不代表他缺，切勿假設他保障不足或建議他加保。
-3. 聚焦在如何讓總資產淨值往 5,000 萬推進：加碼節奏、80/10/10 配置紀律、動能部位是否溢出、閒置資金運用效率等。
+3. 聚焦在如何讓總資產淨值往 5,000 萬推進：加碼節奏、**兩帳戶 80/20 資金紀律**（玉山長期部位目標 80%、元大個股戰鬥部位上限 20%，分母為兩帳戶持股市值合計）、戰鬥部位是否溢出、閒置資金運用效率等。若元大戰鬥部位超過 20%，必須主動提醒他縮減、把資金拉回玉山長期核心。長/中/短線分類資訊仍會提供給你參考，但紀律主軸以兩帳戶 80/20 為準。
 請主動連結『目前數據』與『5000萬里程碑表』給出具體、可執行的下一步建議，並在合適時參考過去的共識摘要與交易紀錄。遵守資料來源紀律與合規要求，嚴禁保證收益。文末必須固定帶有簡短警語。以下為目前同步到的完整財務藍圖背景資訊：\n${portfolioContext}`;
 
             const keyToUse = getApiKey();
