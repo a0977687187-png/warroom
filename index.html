@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
-    <title>家祥投資戰情室 v9.0 - 45歲圓夢退休 真實費用版</title>
+    <title>家祥投資戰情室 v9.1 - 45歲圓夢退休 月結算版</title>
 
     <!-- PWA / 加到主畫面（手機App化）設定 -->
     <link rel="manifest" href="manifest.json">
@@ -135,7 +135,8 @@
             // ==========================================
             "retirementPlan": {
                 "reportDate": "2026-06-07",
-                "currentAge": "約32~33歲（推算）",
+                "birthDate": "1995-11-01",          // 使用者實際出生年月日（用來精算年齡與達標年齡）
+                "currentAge": "依 birthDate 自動計算",
                 "targetAge": "45歲",
                 "netWorthNow": 10052619,
                 "annualActiveIncome": 626000,          // 主動收入水庫年度總收入
@@ -284,7 +285,7 @@
                 </div>
                 <div>
                     <h1 class="text-lg font-bold tracking-wider text-white flex items-center gap-2">
-                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v9.0 真實費用版</span>
+                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v9.1 月結算版</span>
                     </h1>
                     <p class="text-xs text-slate-400">🤖 財經富貴 // 與 AI 一起朝 45 歲 5,000 萬總資產目標邁進</p>
                 </div>
@@ -328,6 +329,71 @@
             </div>
         </div>
 
+        <!-- ============================================== -->
+        <!-- 📅 本月結算（進度儀表板）-->
+        <!-- ============================================== -->
+        <div data-tab="overview" class="bg-cyber-card border border-cyber-border rounded-2xl p-5 shadow-lg shadow-black/20">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-check text-emerald-400"></i>
+                    <h3 class="text-base font-bold text-white">本月結算</h3>
+                    <span id="ms-month-label" class="text-xs text-slate-500 font-mono"></span>
+                </div>
+                <span id="ms-age-label" class="text-[10px] bg-slate-800 text-slate-400 px-2 py-1 rounded border border-cyber-border font-mono"></span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                <div class="bg-slate-800/40 border border-cyber-border rounded-xl p-4">
+                    <p class="text-xs text-slate-400 mb-1">本月資產增加</p>
+                    <p id="ms-asset-delta" class="text-xl font-mono font-bold text-slate-300">—</p>
+                    <p id="ms-asset-sub" class="text-[10px] text-slate-500 mt-1"></p>
+                </div>
+                <div class="bg-slate-800/40 border border-cyber-border rounded-xl p-4">
+                    <p class="text-xs text-slate-400 mb-1">本月投資損益</p>
+                    <p id="ms-invest-pnl" class="text-xl font-mono font-bold text-slate-300">—</p>
+                    <p id="ms-invest-sub" class="text-[10px] text-slate-500 mt-1"></p>
+                </div>
+                <div class="bg-slate-800/40 border border-cyber-border rounded-xl p-4">
+                    <p class="text-xs text-slate-400 mb-1">今年累計增加</p>
+                    <p id="ms-ytd" class="text-xl font-mono font-bold text-slate-300">—</p>
+                    <p id="ms-ytd-sub" class="text-[10px] text-slate-500 mt-1"></p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                <div class="bg-blue-950/20 border border-blue-500/25 rounded-xl p-4">
+                    <p class="text-xs text-blue-300 mb-1 flex items-center gap-1.5"><i class="fa-solid fa-route"></i> 計畫值：預估達標年齡</p>
+                    <p id="ms-plan-age" class="text-xl font-mono font-bold text-blue-200">—</p>
+                    <p id="ms-plan-sub" class="text-[10px] text-slate-500 mt-1"></p>
+                </div>
+                <div class="bg-amber-950/20 border border-amber-500/25 rounded-xl p-4">
+                    <p class="text-xs text-amber-300 mb-1 flex items-center gap-1.5"><i class="fa-solid fa-gauge-high"></i> 實際值：依目前成長速度</p>
+                    <p id="ms-real-age" class="text-xl font-mono font-bold text-amber-200">—</p>
+                    <p id="ms-real-sub" class="text-[10px] text-slate-500 mt-1 leading-relaxed"></p>
+                </div>
+            </div>
+
+            <details class="group">
+                <summary class="cursor-pointer text-xs text-slate-400 hover:text-white transition flex items-center gap-1.5 list-none">
+                    <i class="fa-solid fa-chevron-down group-open:rotate-180 transition-transform text-[10px]"></i> 歷月明細
+                </summary>
+                <div class="overflow-x-auto rounded-xl border border-cyber-border mt-3">
+                    <table class="w-full text-left border-collapse bg-slate-900/30 text-xs">
+                        <thead>
+                            <tr class="border-b border-cyber-border text-slate-400 font-semibold bg-slate-800/50">
+                                <th class="py-2.5 px-3 whitespace-nowrap">月份</th>
+                                <th class="py-2.5 px-2 whitespace-nowrap text-right">月底淨值</th>
+                                <th class="py-2.5 px-2 whitespace-nowrap text-right">資產增加</th>
+                                <th class="py-2.5 px-3 whitespace-nowrap text-right">投資損益</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ms-history-body" class="divide-y divide-cyber-border text-slate-300"></tbody>
+                    </table>
+                </div>
+                <p class="text-[10px] text-slate-500 mt-2 leading-relaxed">「資產增加」含存入的薪水；「投資損益」已扣除入金影響，只反映操作賺賠。台股慣例：紅色為增加、綠色為減少。</p>
+            </details>
+        </div>
+
         <!-- TREND CHART & TOP METRICS -->
         <div data-tab="overview" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- 30 Days Trend Chart -->
@@ -357,11 +423,12 @@
                 <p class="text-xs text-slate-400 font-medium mb-1">總資產淨值 (Net Worth)</p>
                 <h2 id="metric-net-worth" class="text-3xl font-bold text-white font-mono">$0</h2>
 
-                <!-- 本月流動資產推進（與總資產淨值同框上下呈現） -->
+                <!-- 戰力總額（股票+可用實彈現金）。原本這裡標「本月流動資產推進」是錯的：
+                     顯示的其實是總額而非月變化，真正的月變化改由上方「本月結算」卡呈現。 -->
                 <div class="mt-3 pt-3 border-t border-cyber-border/60 flex items-center justify-between">
                     <div class="flex items-center gap-1.5">
-                        <i class="fa-solid fa-arrow-trend-up text-amber-400 text-xs"></i>
-                        <p class="text-xs text-slate-400 font-medium">本月流動資產推進</p>
+                        <i class="fa-solid fa-shield-halved text-amber-400 text-xs"></i>
+                        <p class="text-xs text-slate-400 font-medium">戰力總額（股票+實彈）</p>
                     </div>
                     <p class="text-lg font-mono font-bold text-emerald-400" id="fluid-asset-display">$0</p>
                 </div>
@@ -966,7 +1033,7 @@
                         <div class="bg-blue-600 text-white p-2 rounded-lg text-xs flex items-center justify-center font-bold">富貴</div>
                         <div class="bg-cyber-card border border-cyber-border rounded-xl p-3.5 max-w-[85%] text-slate-200 leading-relaxed shadow-md">
                             家祥您好，我是您的財經戰術助手「財經富貴」！🤖<br>
-                            我們已升級至 <strong>v9.0 真實費用版</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
+                            我們已升級至 <strong>v9.1 月結算版</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
                             現在系統分為四個分頁：<strong>📊 資產總覽</strong>（資產現況與 5,000 萬進度）、<strong>📰 財經情報</strong>（每日自動彙整你追蹤的財經頻道，可一鍵請我結合持股解讀）、<strong>📈 交易與AI檢討</strong>（買賣紀錄、績效日曆與我的戰術裁決）、<strong>🎯 策略選股</strong>（五流派自動選股引擎：胃納量核心榜、持股停損儀表板、當日訊號榜、結構財候選、題材熱度雷達，可一鍵請我給操作策略）。<br><br>
                             💡 <strong>操作核心心法：</strong><br>
                             1. 「🏆 45歲退休圓夢計畫」的 <strong>5,000 萬淨值目標</strong>可直接在畫面上調高調低，所有推估即時重算；退休被動收入只是下方的現金流方向參考。<br>
@@ -2429,6 +2496,7 @@
             recordNetWorthSnapshot(netWorth, activeCombatTotal, acctStats);
             renderTrendChart();
             renderAcctTrendChart();
+            renderMonthlySummary();
             const nonStockAssets = cashData.bankCash + otherAssets.external + otherAssets.realestate;
             renderRetirementDashboard(totalStockVal, netWorth, nonStockAssets);
         }
@@ -2537,6 +2605,7 @@
             renderSnapshotList();
             renderTrendChart();
             renderAcctTrendChart();
+            renderMonthlySummary();
         }
 
         // ==========================================
@@ -2960,8 +3029,10 @@
                 } else {
                     stockData.push({ code: t.code, name: t.name, shares: t.shares, price: t.price, cost: t.price, category: 'mid', account: tAccount, reason: t.note });
                 }
-                // 買進 → 動用銀行現金
-                cashData.bankCash = Math.max(0, (cashData.bankCash || 0) - t.amount);
+                // 買進 → 扣「該交易帳戶」的現金（v8.8 起現金分帳戶，bankCash 是衍生值，
+                // 只改 bankCash 會在下次重算或重新載入時被 esun+yuanta 覆蓋掉，等於沒扣到）
+                const buyField = tAccount === 'yuanta' ? 'bankCashYuanta' : 'bankCashEsun';
+                cashData[buyField] = Math.max(0, (cashData[buyField] || 0) - t.amount);
             } else {
                 const s = stockData[existingIdx];
                 const costBasis = s.cost * t.shares;
@@ -2974,10 +3045,12 @@
                 s.price = t.price;
                 if (t.note) s.reason = (s.reason ? s.reason + '\n' : '') + `[${t.date} 減碼] ${t.note}`;
                 if (s.shares <= 0) stockData.splice(existingIdx, 1);
-                // 賣出 → 賣股價金回到銀行現金
-                cashData.bankCash = (cashData.bankCash || 0) + proceeds;
+                // 賣出 → 價金回到「該交易帳戶」的現金
+                const sellField = tAccount === 'yuanta' ? 'bankCashYuanta' : 'bankCashEsun';
+                cashData[sellField] = (cashData[sellField] || 0) + proceeds;
             }
-            // 重算可用實彈
+            // 重算總額與可用實彈（總額一律由兩帳戶加總而來）
+            cashData.bankCash = (cashData.bankCashEsun || 0) + (cashData.bankCashYuanta || 0);
             cashData.stockCash = Math.max(0, cashData.bankCash - (cashData.defenseFund || 0));
 
             tradeLog.push(logEntry);
@@ -3251,6 +3324,216 @@
             el.classList.remove('hidden');
         }
 
+        // ==========================================================
+        // 📅 本月結算 / 進度儀表板
+        //
+        // 兩個數字刻意分開，因為它們回答不同問題：
+        //   ① 資產增加 = 月底淨值 − 月初淨值（含存進來的薪水）→ 看 5,000 萬進度
+        //   ② 投資損益 = 未實現損益變化 + 當月已實現損益 → 看操作賺賠，不受入金影響
+        // ②需要「持有成本」歷史，2026-08-28 起才開始記錄，之前的月份標為資料累積中。
+        // ==========================================================
+
+        // 取每月「第一筆」與「最後一筆」有效快照
+        function buildMonthlySeries() {
+            const hist = [...netWorthHistory]
+                .filter(h => h && h.date && Number(h.netWorth) > 0)
+                .sort((a, b) => a.date.localeCompare(b.date));
+            const months = {};
+            hist.forEach(h => {
+                const m = h.date.slice(0, 7);
+                if (!months[m]) months[m] = { month: m, first: h, last: h };
+                else months[m].last = h;
+            });
+            const keys = Object.keys(months).sort();
+            return keys.map((m, i) => {
+                const cur = months[m];
+                // 月初基準：優先用「上個月最後一筆」，這樣月變化才不會漏掉跨月那一段
+                const prevMonth = i > 0 ? months[keys[i - 1]] : null;
+                const base = prevMonth ? prevMonth.last : cur.first;
+                const assetDelta = cur.last.netWorth - base.netWorth;
+                const assetPct = base.netWorth > 0 ? (assetDelta / base.netWorth) * 100 : 0;
+
+                // 投資損益：兩端都要有成本紀錄才算得出來
+                const unreal = h => {
+                    if (!h || h.esunCost === undefined || h.yuantaCost === undefined) return null;
+                    return ((h.esunValue || 0) - (h.esunCost || 0)) + ((h.yuantaValue || 0) - (h.yuantaCost || 0));
+                };
+                const uEnd = unreal(cur.last), uStart = unreal(base);
+                const realized = tradeLog
+                    .filter(t => t.action === "sell" && String(t.date).slice(0, 7) === m)
+                    .reduce((sum, t) => sum + (Number(t.realizedPnL) || 0), 0);
+                const investPnl = (uEnd !== null && uStart !== null) ? (uEnd - uStart) + realized : null;
+                const investBase = base.netWorth > 0 ? base.netWorth : 0;
+
+                // 當月非投資變動：淨值 − 戰力 的差額變化，即保單/不動產/防禦定存的手動改值。
+                // 這部分會灌水「資產增加」，必須讓使用者看得見，否則會誤以為是投資賺來的。
+                const nonInvest = h => (h.netWorth || 0) - (h.combat || 0);
+                const revaluation = nonInvest(cur.last) - nonInvest(base);
+
+                return {
+                    month: m, endNetWorth: cur.last.netWorth,
+                    assetDelta, assetPct, revaluation,
+                    investPnl, investPct: (investPnl !== null && investBase > 0) ? (investPnl / investBase) * 100 : null,
+                    realized, days: 0,
+                    baseDate: base.date, endDate: cur.last.date
+                };
+            });
+        }
+
+        // 有機成長：扣掉「保單/不動產/防禦定存」的手動重估。
+        // 因為 淨值 = 戰力總額 + 防禦定存 + 保單 + 不動產，
+        // 所以 (淨值 − 戰力) 的變化就是那些手動異動，扣掉後剩下的才是真正靠投資與存錢長出來的。
+        function computeOrganicGrowth() {
+            const hist = [...netWorthHistory]
+                .filter(h => h && h.date && Number(h.netWorth) > 0)
+                .sort((a, b) => a.date.localeCompare(b.date));
+            if (hist.length < 2) return null;
+            const f = hist[0], l = hist[hist.length - 1];
+            const nonInvestStart = (f.netWorth || 0) - (f.combat || 0);
+            const nonInvestEnd = (l.netWorth || 0) - (l.combat || 0);
+            const organicTotal = (l.netWorth - f.netWorth) - (nonInvestEnd - nonInvestStart);
+            const days = Math.max(1, (new Date(l.date) - new Date(f.date)) / 86400000);
+            const months = days / 30.44;
+            return {
+                organicTotal, months,
+                perMonth: months > 0 ? organicTotal / months : 0,
+                startDate: f.date, endDate: l.date,
+                revaluation: nonInvestEnd - nonInvestStart
+            };
+        }
+
+        function getAgeInfo() {
+            const rp = (window.PRELOADED_STATE && window.PRELOADED_STATE.retirementPlan) || {};
+            if (!rp.birthDate) return null;
+            const b = new Date(rp.birthDate + "T00:00:00");
+            const now = new Date();
+            let age = now.getFullYear() - b.getFullYear();
+            const md = now.getMonth() - b.getMonth();
+            if (md < 0 || (md === 0 && now.getDate() < b.getDate())) age--;
+            const exactAge = (now - b) / (365.25 * 86400000);
+            return { birth: b, age, exactAge };
+        }
+
+        function renderMonthlySummary() {
+            const rp = (window.PRELOADED_STATE && window.PRELOADED_STATE.retirementPlan) || {};
+            const goal = rp.netWorthGoal || 50000000;
+            const series = buildMonthlySeries();
+            const ageInfo = getAgeInfo();
+
+            const setV = (id, txt, cls) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.innerText = txt;
+                if (cls) el.className = cls;
+            };
+            // 台股慣例：增加紅字、減少綠字
+            const tone = v => v > 0 ? "text-red-400" : (v < 0 ? "text-emerald-400" : "text-slate-300");
+            const sign = v => v > 0 ? "+" : (v < 0 ? "-" : "");
+            const money = v => sign(v) + formatCurrency(Math.abs(v));
+
+            if (ageInfo) {
+                document.getElementById("ms-age-label").innerText =
+                    `目前 ${ageInfo.age} 歲｜距 45 歲還有 ${(45 - ageInfo.exactAge).toFixed(1)} 年`;
+            }
+
+            const cur = series.length ? series[series.length - 1] : null;
+            const prev = series.length > 1 ? series[series.length - 2] : null;
+
+            if (!cur) {
+                setV("ms-month-label", "尚無資料");
+                ["ms-asset-delta", "ms-invest-pnl", "ms-ytd"].forEach(id => setV(id, "—", "text-xl font-mono font-bold text-slate-500"));
+                setV("ms-asset-sub", "系統每天自動記錄一筆淨值，累積後這裡就會出現月結算。");
+                return;
+            }
+
+            document.getElementById("ms-month-label").innerText =
+                `${cur.month.replace("-", " 年 ")} 月（${cur.baseDate} → ${cur.endDate}）`;
+
+            // 本月資產增加
+            setV("ms-asset-delta", `${money(cur.assetDelta)}`, `text-xl font-mono font-bold ${tone(cur.assetDelta)}`);
+            let assetSub = `${sign(cur.assetPct)}${Math.abs(cur.assetPct).toFixed(2)}%　月底淨值 ${formatCurrency(cur.endNetWorth)}`;
+            if (prev) {
+                const d = cur.assetDelta - prev.assetDelta;
+                assetSub += `\n較上月 ${d >= 0 ? "多" : "少"}增加 ${formatCurrency(Math.abs(d))}`;
+            }
+            // 重估佔比大時明確標出，避免把「手動調保單估值」誤讀成投資賺錢
+            if (Math.abs(cur.revaluation) > 10000) {
+                const organic = cur.assetDelta - cur.revaluation;
+                assetSub += `\n⚠️ 其中 ${money(cur.revaluation)} 為保單/不動產重估，實際靠投資與存錢增加 ${money(organic)}`;
+            }
+            setV("ms-asset-sub", assetSub);
+
+            // 本月投資損益
+            if (cur.investPnl === null) {
+                setV("ms-invest-pnl", "資料累積中", "text-lg font-mono font-bold text-slate-500");
+                setV("ms-invest-sub", "需要「持有成本」的逐日紀錄才算得出來，系統自 2026-08-28 起開始記錄，9 月起即可精準呈現。");
+            } else {
+                setV("ms-invest-pnl", money(cur.investPnl), `text-xl font-mono font-bold ${tone(cur.investPnl)}`);
+                let sub = cur.investPct !== null ? `${sign(cur.investPct)}${Math.abs(cur.investPct).toFixed(2)}%` : "";
+                if (cur.realized) sub += `　其中已實現 ${money(cur.realized)}`;
+                setV("ms-invest-sub", sub);
+            }
+
+            // 今年累計
+            const year = cur.month.slice(0, 4);
+            const yearRows = series.filter(x => x.month.slice(0, 4) === year);
+            const ytd = yearRows.reduce((sum, x) => sum + x.assetDelta, 0);
+            setV("ms-ytd", money(ytd), `text-xl font-mono font-bold ${tone(ytd)}`);
+            setV("ms-ytd-sub", `${year} 年已記錄 ${yearRows.length} 個月`);
+
+            // 計畫值：以 7% 年化 + 年提撥推算幾歲達標
+            const cagr = rp.assumedCagr || 0.07;
+            const annualAdd = rp.annualStockContribution || 0;
+            let nw = cur.endNetWorth, yrs = 0;
+            while (nw < goal && yrs < 80) { nw = nw * (1 + cagr) + annualAdd; yrs++; }
+            if (ageInfo) {
+                const planAge = ageInfo.exactAge + yrs;
+                setV("ms-plan-age", yrs >= 80 ? "80 年內無法達標" : `${planAge.toFixed(1)} 歲`,
+                    `text-xl font-mono font-bold ${planAge <= 45 ? "text-emerald-400" : "text-blue-200"}`);
+                setV("ms-plan-sub", `假設年化 ${(cagr * 100).toFixed(0)}%、每年提撥 ${formatCurrency(annualAdd)}，還需 ${yrs} 年` +
+                    (planAge <= 45 ? "（可望提前達標）" : `（比 45 歲目標晚 ${(planAge - 45).toFixed(1)} 年）`));
+            }
+
+            // 實際值：依有機成長速度
+            const og = computeOrganicGrowth();
+            if (!og || og.months < 0.5) {
+                setV("ms-real-age", "資料累積中", "text-lg font-mono font-bold text-slate-500");
+                setV("ms-real-sub", "需要至少半個月的逐日紀錄才能推估。");
+            } else if (og.perMonth <= 0) {
+                setV("ms-real-age", "此期間無法推估", "text-lg font-mono font-bold text-slate-400");
+                setV("ms-real-sub",
+                    `近 ${og.months.toFixed(1)} 個月呈回檔（有機成長 ${money(og.organicTotal)}），無法推估達標年齡。` +
+                    `回檔是長期投資的正常過程，左側計畫值仍為你的基準線。` +
+                    (Math.abs(og.revaluation) > 1000 ? `\n（已排除保單/不動產重估 ${money(og.revaluation)}，那不算投資績效）` : ""));
+            } else {
+                const need = goal - cur.endNetWorth;
+                const monthsNeeded = need / og.perMonth;
+                const realAge = ageInfo ? ageInfo.exactAge + monthsNeeded / 12 : null;
+                const tooLong = monthsNeeded > 80 * 12;
+                setV("ms-real-age", tooLong ? "80 年內無法達標" : (realAge !== null ? `${realAge.toFixed(1)} 歲` : `還需 ${(monthsNeeded / 12).toFixed(1)} 年`),
+                    `text-xl font-mono font-bold ${(realAge !== null && realAge <= 45) ? "text-emerald-400" : "text-amber-200"}`);
+                let sub = `有機成長 ${money(og.perMonth)}/月（已排除保單/不動產重估）`;
+                if (og.months < 6) sub += `\n⚠️ 僅 ${og.months.toFixed(1)} 個月樣本，數字會大幅波動，滿 6 個月後才具參考性`;
+                setV("ms-real-sub", sub);
+            }
+
+            // 歷月明細
+            const tbody = document.getElementById("ms-history-body");
+            if (tbody) {
+                tbody.innerHTML = [...series].reverse().map(x => {
+                    const inv = x.investPnl === null
+                        ? '<span class="text-slate-600">資料累積中</span>'
+                        : `<span class="${tone(x.investPnl)}">${money(x.investPnl)}</span>`;
+                    return `
+                    <tr class="hover:bg-slate-800/20 transition">
+                        <td class="py-2.5 px-3 font-mono text-white whitespace-nowrap">${x.month}</td>
+                        <td class="py-2.5 px-2 font-mono text-right whitespace-nowrap">${formatCurrency(x.endNetWorth)}</td>
+                        <td class="py-2.5 px-2 font-mono text-right whitespace-nowrap ${tone(x.assetDelta)}">${money(x.assetDelta)}<span class="block text-[10px] opacity-70">${sign(x.assetPct)}${Math.abs(x.assetPct).toFixed(2)}%</span></td>
+                        <td class="py-2.5 px-3 font-mono text-right whitespace-nowrap">${inv}</td>
+                    </tr>`;
+                }).join("");
+            }
+        }
         function renderTrendChart() {
             const canvas = document.getElementById('trendChart');
             if (!canvas) return;

@@ -128,6 +128,9 @@ function doPost(e) {
       upsertByKey(sheet, data, 'date'); // 績效日曆一天一筆，用日期當唯一鍵
     } else if (sheetName === 'Daily_Log' && action === 'delete') {
       deleteByKey(sheet, data.date, 'date');
+    } else if (sheetName === 'NetWorth_History' && action === 'replace_all') {
+      // 整表覆蓋：用來清理歷史重複列（upsert 只會蓋掉第一筆相符的，無法移除其餘重複）
+      replaceAllRows(sheet, data);
     } else if (sheetName === 'NetWorth_History' && action === 'upsert_by_date') {
       // 淨值逐日快照：一天一筆，用日期當唯一鍵覆蓋。
       // 原本沒有這個分支，會掉進最下面的 else{appendRow}，變成每天新增一列重複資料，
