@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
-    <title>家祥投資戰情室 v9.1 - 45歲圓夢退休 月結算版</title>
+    <title>家祥投資戰情室 v9.2 - 45歲圓夢退休 終端風</title>
 
     <!-- PWA / 加到主畫面（手機App化）設定 -->
     <link rel="manifest" href="manifest.json">
@@ -95,6 +95,66 @@
             border-color: rgba(59,130,246,.4);
             box-shadow: 0 0 12px rgba(59,130,246,.25);
         }
+    </style>
+    <style>
+    /* ============================================================
+       終端機視覺主題（版本 C）
+       ------------------------------------------------------------
+       這一層「只改外觀」：不動任何 HTML 結構、不動任何計算或數值。
+       全部透過覆寫既有 class 的顏色/圓角/字體達成，所以功能零風險。
+       ============================================================ */
+
+    /* 底色更深、對比更強，像看盤軟體 */
+    body { background: #070910; }
+    .bg-cyber-card { background-color: #0E1219 !important; }
+    .bg-cyber-bg   { background-color: #0A0D14 !important; }
+
+    /* 細框線取代粗邊框 */
+    .border-cyber-border, .border-cyber-border\/50, .border-cyber-border\/60 { border-color: #1C2432 !important; }
+    .divide-cyber-border > :not([hidden]) ~ :not([hidden]) { border-color: #1C2432 !important; }
+
+    /* 收斂圓角：大圓角 → 方正俐落 */
+    .rounded-3xl { border-radius: 10px !important; }
+    .rounded-2xl { border-radius: 8px !important; }
+    .rounded-xl  { border-radius: 6px !important; }
+    .rounded-lg  { border-radius: 5px !important; }
+
+    /* 拿掉發光陰影（終端風格不用光暈），但保留 focus ring */
+    .shadow-lg, .shadow-md, .shadow-2xl, .shadow-sm, .shadow-inner,
+    [class*="shadow-black"], [class*="shadow-blue-9"], [class*="shadow-emerald-9"] { box-shadow: none !important; }
+
+    /* 數字一律等寬並對齊小數點，位數變動時不會跳動 */
+    .font-mono, input[type="number"], table td, table th {
+        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-variant-numeric: tabular-nums;
+        font-feature-settings: "tnum" 1;
+    }
+
+    /* 表格：更緊湊、標題列像終端機欄位名 */
+    table thead tr {
+        background: #0B0F17 !important;
+        letter-spacing: 0.08em;
+    }
+    table thead th { font-weight: 500 !important; color: #6B7A90 !important; }
+    table tbody tr { border-color: #161C28 !important; }
+
+    /* 輸入框：內嵌式、不搶戲 */
+    input[type="number"], input[type="text"], input[type="date"], select, textarea {
+        background-color: #0A0D14 !important;
+        border-color: #1C2432 !important;
+    }
+    input:focus, select:focus, textarea:focus { border-color: #3B82F6 !important; }
+
+    /* 分頁列：方正的終端機頁籤 */
+    .tab-btn { border-radius: 4px !important; letter-spacing: 0.04em; }
+    .tab-btn-active {
+        background: #16233A !important;
+        border-color: #2B4A7A !important;
+        box-shadow: inset 0 -2px 0 #3B82F6 !important;
+    }
+
+    /* 頂部狀態列：加一條細的終端機頂線 */
+    header.sticky { border-top: 2px solid #3B82F6; }
     </style>
 </head>
 <body class="text-cyber-text antialiased min-h-screen flex flex-col">
@@ -285,7 +345,7 @@
                 </div>
                 <div>
                     <h1 class="text-lg font-bold tracking-wider text-white flex items-center gap-2">
-                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v9.1 月結算版</span>
+                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v9.2 終端風</span>
                     </h1>
                     <p class="text-xs text-slate-400">🤖 財經富貴 // 與 AI 一起朝 45 歲 5,000 萬總資產目標邁進</p>
                 </div>
@@ -1033,7 +1093,7 @@
                         <div class="bg-blue-600 text-white p-2 rounded-lg text-xs flex items-center justify-center font-bold">富貴</div>
                         <div class="bg-cyber-card border border-cyber-border rounded-xl p-3.5 max-w-[85%] text-slate-200 leading-relaxed shadow-md">
                             家祥您好，我是您的財經戰術助手「財經富貴」！🤖<br>
-                            我們已升級至 <strong>v9.1 月結算版</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
+                            我們已升級至 <strong>v9.2 終端風</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
                             現在系統分為四個分頁：<strong>📊 資產總覽</strong>（資產現況與 5,000 萬進度）、<strong>📰 財經情報</strong>（每日自動彙整你追蹤的財經頻道，可一鍵請我結合持股解讀）、<strong>📈 交易與AI檢討</strong>（買賣紀錄、績效日曆與我的戰術裁決）、<strong>🎯 策略選股</strong>（五流派自動選股引擎：胃納量核心榜、持股停損儀表板、當日訊號榜、結構財候選、題材熱度雷達，可一鍵請我給操作策略）。<br><br>
                             💡 <strong>操作核心心法：</strong><br>
                             1. 「🏆 45歲退休圓夢計畫」的 <strong>5,000 萬淨值目標</strong>可直接在畫面上調高調低，所有推估即時重算；退休被動收入只是下方的現金流方向參考。<br>
