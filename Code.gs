@@ -112,6 +112,10 @@ function doPost(e) {
     const action = payload.action;
     const data = payload.data;
 
+    // 沒帶分頁名稱就直接拒絕：舊版會走到 ss.insertSheet(undefined)，
+    // 在試算表裡生出「工作表1、工作表2…」這種垃圾分頁，而且回傳 ok 讓人看不出錯
+    if (!sheetName) return jsonOutput({ status: 'error', message: 'missing sheet name' });
+
     const ss = SpreadsheetApp.getActiveSpreadsheet();
     let sheet = ss.getSheetByName(sheetName);
     if (!sheet) {
@@ -512,7 +516,17 @@ function replaceAllRows(sheet, dataArray) {
     sheet.clear();
     return;
   }
-  const keys = Object.keys(dataArray[0]);
+  // ⚠️ 欄位必須取「所有列的聯集」，不能只看第一列！
+  //    NetWorth_History 這種表只有比較新的列才有 esunValue/yuantaValue 等欄位，
+  //    舊版用 Object.keys(dataArray[0]) 會直接把整批帳戶欄位丟掉（整表清空重寫，救不回來）。
+  //    這正是先前前端合併時掉欄位的同一種錯，這裡一併堵住。
+  const keys = [];
+  const seenKey = {};
+  dataArray.forEach(function (item) {
+    Object.keys(item || {}).forEach(function (k) {
+      if (!seenKey[k]) { seenKey[k] = true; keys.push(k); }
+    });
+  });
   sheet.clear();
   sheet.appendRow(keys);
   const rows = dataArray.map(item => keys.map(k => protectLeadingZeros(item[k] !== undefined ? item[k] : '')));
