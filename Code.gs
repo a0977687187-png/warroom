@@ -128,6 +128,12 @@ function doPost(e) {
       upsertByKey(sheet, data, 'date'); // 績效日曆一天一筆，用日期當唯一鍵
     } else if (sheetName === 'Daily_Log' && action === 'delete') {
       deleteByKey(sheet, data.date, 'date');
+    } else if (sheetName === 'NetWorth_History' && action === 'upsert_by_date') {
+      // 淨值逐日快照：一天一筆，用日期當唯一鍵覆蓋。
+      // 原本沒有這個分支，會掉進最下面的 else{appendRow}，變成每天新增一列重複資料，
+      // 而且 readAllSheets 也沒讀回來，等於這條備份路徑一直是壞的。
+      upsertByKey(sheet, data, 'date');
+      pruneNetWorthHistory(sheet, 400);
     } else if (sheetName === 'Consensus_Log' && action === 'append') {
       appendRow(sheet, data);
     } else if (sheetName === 'Strategy_Config' && action === 'set') {
@@ -425,7 +431,7 @@ function readAllSheets() {
   const assetSheet = ss.getSheetByName('Asset_Summary');
   result.Asset_Summary = assetSheet ? readSingleRowAsObject(assetSheet) : null;
 
-  ['Stock_Holdings', 'Trade_Log', 'Consensus_Log', 'Daily_Log'].forEach(name => {
+  ['Stock_Holdings', 'Trade_Log', 'Consensus_Log', 'Daily_Log', 'NetWorth_History'].forEach(name => {
     const sh = ss.getSheetByName(name);
     result[name] = sh ? readSheetAsObjectArray(sh) : [];
   });
@@ -583,6 +589,23 @@ function deleteByKey(sheet, keyValue, keyField) {
       sheet.deleteRow(i + 2);
     }
   }
+}
+
+// 淨值歷史保留上限：超過 keepDays 筆就刪掉最舊的（依日期排序後從最前面砍）
+function pruneNetWorthHistory(sheet, keepDays) {
+  const lastRow = sheet.getLastRow();
+  if (lastRow <= keepDays + 1) return; // +1 是表頭
+  const lastCol = sheet.getLastColumn();
+  const header = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+  const dateIdx = header.indexOf('date');
+  if (dateIdx === -1) return;
+  const rows = sheet.getRange(2, 1, lastRow - 1, lastCol).getValues();
+  rows.sort(function (a, b) {
+    return String(toComparableKey(a[dateIdx])).localeCompare(String(toComparableKey(b[dateIdx])));
+  });
+  const kept = rows.slice(rows.length - keepDays);
+  sheet.getRange(2, 1, lastRow - 1, lastCol).clearContent();
+  if (kept.length) sheet.getRange(2, 1, kept.length, lastCol).setValues(kept);
 }
 
 // Consensus_Log / Daily_Log: simple append-only log

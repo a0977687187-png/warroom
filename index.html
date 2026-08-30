@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
-    <title>家祥投資戰情室 v8.7 - 45歲圓夢退休 雙帳戶版</title>
+    <title>家祥投資戰情室 v8.9 - 45歲圓夢退休 雙帳戶版</title>
 
     <!-- PWA / 加到主畫面（手機App化）設定 -->
     <link rel="manifest" href="manifest.json">
@@ -284,7 +284,7 @@
                 </div>
                 <div>
                     <h1 class="text-lg font-bold tracking-wider text-white flex items-center gap-2">
-                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v8.7 雙帳戶版</span>
+                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v8.9 雙帳戶版</span>
                     </h1>
                     <p class="text-xs text-slate-400">🤖 財經富貴 // 與 AI 一起朝 45 歲 5,000 萬總資產目標邁進</p>
                 </div>
@@ -732,9 +732,21 @@
                                 
                                 <div>
                                     <label class="text-xs text-slate-400 flex justify-between mb-1">
-                                        <span>🏦 銀行總現金 (Total Bank Cash):</span>
+                                        <span>🏦 玉山帳戶現金:</span>
                                     </label>
-                                    <input type="number" id="input-bank-cash" oninput="updateCashLogic()" class="w-full bg-slate-900 border border-cyber-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-mono transition">
+                                    <input type="number" id="input-bank-cash-esun" oninput="updateCashLogic()" class="w-full bg-slate-900 border border-blue-500/30 rounded-lg px-3 py-2 text-sm text-blue-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-mono transition">
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-400 flex justify-between mb-1">
+                                        <span>⚔️ 元大帳戶現金:</span>
+                                    </label>
+                                    <input type="number" id="input-bank-cash-yuanta" oninput="updateCashLogic()" class="w-full bg-slate-900 border border-amber-500/30 rounded-lg px-3 py-2 text-sm text-amber-200 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 font-mono transition">
+                                </div>
+                                <div class="pt-2 border-t border-cyber-border">
+                                    <label class="text-xs text-slate-400 flex justify-between mb-1">
+                                        <span>🏦 銀行總現金（自動加總）:</span>
+                                    </label>
+                                    <div id="bank-cash-total-disp" class="w-full bg-slate-900/80 border border-cyber-border rounded-lg px-3 py-2 text-sm text-white font-mono font-bold">$0</div>
                                 </div>
                                 <div>
                                     <label class="text-xs text-slate-400 flex justify-between mb-1">
@@ -749,6 +761,7 @@
                                     <div id="current-stock-cash-disp" class="w-full bg-slate-900/80 border border-emerald-500/30 rounded-lg px-3 py-2 text-sm text-emerald-400 font-mono font-bold">
                                         $0
                                     </div>
+                                    <p id="stock-cash-breakdown" class="text-[10px] text-slate-500 mt-1.5 leading-relaxed"></p>
                                 </div>
                             </div>
                         </div>
@@ -821,7 +834,7 @@
                                 <span class="text-emerald-400 flex items-center gap-1.5"><i class="fa-solid fa-wallet"></i> 可用實彈現金</span>
                                 <span id="audit-cash-val" class="font-mono text-emerald-400 font-bold">$0</span>
                             </div>
-                            <p class="text-[10px] text-slate-500 mt-1 leading-relaxed">現金放在銀行、不屬於任何一家券商，因此不列入上方比例計算。</p>
+                            <p id="audit-cash-note" class="text-[10px] text-slate-500 mt-1 leading-relaxed"></p>
                         </div>
                     </div>
                 </div>
@@ -953,7 +966,7 @@
                         <div class="bg-blue-600 text-white p-2 rounded-lg text-xs flex items-center justify-center font-bold">富貴</div>
                         <div class="bg-cyber-card border border-cyber-border rounded-xl p-3.5 max-w-[85%] text-slate-200 leading-relaxed shadow-md">
                             家祥您好，我是您的財經戰術助手「財經富貴」！🤖<br>
-                            我們已升級至 <strong>v8.7 雙帳戶版</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
+                            我們已升級至 <strong>v8.9 雙帳戶版</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
                             現在系統分為四個分頁：<strong>📊 資產總覽</strong>（資產現況與 5,000 萬進度）、<strong>📰 財經情報</strong>（每日自動彙整你追蹤的財經頻道，可一鍵請我結合持股解讀）、<strong>📈 交易與AI檢討</strong>（買賣紀錄、績效日曆與我的戰術裁決）、<strong>🎯 策略選股</strong>（五流派自動選股引擎：胃納量核心榜、持股停損儀表板、當日訊號榜、結構財候選、題材熱度雷達，可一鍵請我給操作策略）。<br><br>
                             💡 <strong>操作核心心法：</strong><br>
                             1. 「🏆 45歲退休圓夢計畫」的 <strong>5,000 萬淨值目標</strong>可直接在畫面上調高調低，所有推估即時重算；退休被動收入只是下方的現金流方向參考。<br>
@@ -1649,10 +1662,14 @@
             cloudDataConfirmed = false; // 這是示範假資料，嚴禁任何自動寫回雲端的動作
             stockData = (preloaded.stockData || []).map(s => Object.assign({}, s, { account: normalizeAccount(s.account) }));
             const loadedCashData = preloaded.cashData || {};
-            cashData = { 
-                bankCash: loadedCashData.bankCash || 2047382, 
+            const fbEsun = loadedCashData.bankCashEsun !== undefined ? loadedCashData.bankCashEsun : (loadedCashData.bankCash || 2047382);
+            const fbYuanta = loadedCashData.bankCashYuanta || 0;
+            cashData = {
+                bankCashEsun: fbEsun,
+                bankCashYuanta: fbYuanta,
+                bankCash: fbEsun + fbYuanta,
                 defenseFund: loadedCashData.defenseFund || 1500000,
-                stockCash: Math.max(0, (loadedCashData.bankCash || 0) - (loadedCashData.defenseFund || 0))
+                stockCash: Math.max(0, (fbEsun + fbYuanta) - (loadedCashData.defenseFund || 1500000))
             };
             otherAssets = preloaded.otherAssets || { external: 1942526, realestate: 858897 };
             journalData = preloaded.journalData || [];
@@ -1700,10 +1717,20 @@
                 // Asset_Summary
                 if (cloud.Asset_Summary) {
                     const a = cloud.Asset_Summary;
+                    // 現金分帳戶：舊資料若只有 bankCash（沒有分帳戶欄位），
+                    // 一律先歸到玉山，避免總額憑空消失
+                    const legacyTotal = parseFloat(a.bankCash) || 0;
+                    const hasSplit = (a.bankCashEsun !== undefined && a.bankCashEsun !== '') ||
+                                     (a.bankCashYuanta !== undefined && a.bankCashYuanta !== '');
+                    const cEsun = hasSplit ? (parseFloat(a.bankCashEsun) || 0) : legacyTotal;
+                    const cYuanta = hasSplit ? (parseFloat(a.bankCashYuanta) || 0) : 0;
+                    const cDefense = parseFloat(a.defenseFund) || 0;
                     cashData = {
-                        bankCash: parseFloat(a.bankCash) || 0,
-                        defenseFund: parseFloat(a.defenseFund) || 0,
-                        stockCash: Math.max(0, (parseFloat(a.bankCash) || 0) - (parseFloat(a.defenseFund) || 0))
+                        bankCashEsun: cEsun,
+                        bankCashYuanta: cYuanta,
+                        bankCash: cEsun + cYuanta,   // 總額一律由兩帳戶加總而來，不再獨立維護
+                        defenseFund: cDefense,
+                        stockCash: Math.max(0, (cEsun + cYuanta) - cDefense)
                     };
                     otherAssets = {
                         external: parseFloat(a.external) || 0,
@@ -1857,6 +1884,8 @@
             const rp = (window.PRELOADED_STATE && window.PRELOADED_STATE.retirementPlan) || {};
             writeToSheet('Asset_Summary', 'upsert', {
                 bankCash: cashData.bankCash,
+                bankCashEsun: cashData.bankCashEsun || 0,
+                bankCashYuanta: cashData.bankCashYuanta || 0,
                 defenseFund: cashData.defenseFund,
                 external: otherAssets.external,
                 realestate: otherAssets.realestate,
@@ -2034,7 +2063,8 @@
         }
 
         function populateInputsAndRender() {
-            document.getElementById('input-bank-cash').value = cashData.bankCash;
+            document.getElementById('input-bank-cash-esun').value = cashData.bankCashEsun || 0;
+            document.getElementById('input-bank-cash-yuanta').value = cashData.bankCashYuanta || 0;
             document.getElementById('input-defense-cash').value = cashData.defenseFund;
             document.getElementById('input-external').value = otherAssets.external;
             document.getElementById('input-realestate').value = otherAssets.realestate;
@@ -2060,7 +2090,9 @@
 
         // Local sandbox simulation logic
         function updateCashLogic() {
-            cashData.bankCash = parseFloat(document.getElementById('input-bank-cash').value) || 0;
+            cashData.bankCashEsun = parseFloat(document.getElementById('input-bank-cash-esun').value) || 0;
+            cashData.bankCashYuanta = parseFloat(document.getElementById('input-bank-cash-yuanta').value) || 0;
+            cashData.bankCash = cashData.bankCashEsun + cashData.bankCashYuanta;
             cashData.defenseFund = parseFloat(document.getElementById('input-defense-cash').value) || 0;
             cashData.stockCash = Math.max(0, cashData.bankCash - cashData.defenseFund);
             otherAssets.external = parseFloat(document.getElementById('input-external').value) || 0;
@@ -2296,6 +2328,13 @@
             });
 
             document.getElementById('current-stock-cash-disp').innerText = formatCurrency(cashData.stockCash);
+            const bankTotalEl = document.getElementById('bank-cash-total-disp');
+            if (bankTotalEl) bankTotalEl.innerText = formatCurrency(cashData.bankCash);
+            const breakdownEl = document.getElementById('stock-cash-breakdown');
+            if (breakdownEl) {
+                breakdownEl.innerHTML = `🏦 玉山 ${formatCurrency(cashData.bankCashEsun || 0)}　⚔️ 元大 ${formatCurrency(cashData.bankCashYuanta || 0)}` +
+                    `<br>（可用實彈＝兩帳戶現金合計 − 鐵血防禦定存 ${formatCurrency(cashData.defenseFund || 0)}）`;
+            }
 
             const activeCombatTotal = totalStockVal + cashData.stockCash;
             const netWorth = activeCombatTotal + cashData.defenseFund + otherAssets.external + otherAssets.realestate;
@@ -2359,6 +2398,11 @@
             });
 
             document.getElementById('audit-cash-val').innerText = formatCurrency(cashData.stockCash);
+            const cashNoteEl = document.getElementById('audit-cash-note');
+            if (cashNoteEl) {
+                cashNoteEl.innerHTML = `🏦 玉山 ${formatCurrency(cashData.bankCashEsun || 0)}　⚔️ 元大 ${formatCurrency(cashData.bankCashYuanta || 0)}` +
+                    '<br>上方 80/20 比例只計算「持股市值」，現金不列入（避免尚未投入的資金稀釋掉實際部位配置）。';
+            }
 
             // 元大戰鬥部位超過目標比例 → 觸發頂部紀律警報
             const yuantaPct = acctTotal > 0 ? (acctStats.yuanta.value / acctTotal) * 100 : 0;
