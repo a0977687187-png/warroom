@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
-    <title>家祥投資戰情室 v9.2 - 45歲圓夢退休 終端風</title>
+    <title>家祥投資戰情室 v9.3 - 45歲圓夢退休 終端風</title>
 
     <!-- PWA / 加到主畫面（手機App化）設定 -->
     <link rel="manifest" href="manifest.json">
@@ -345,7 +345,7 @@
                 </div>
                 <div>
                     <h1 class="text-lg font-bold tracking-wider text-white flex items-center gap-2">
-                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v9.2 終端風</span>
+                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v9.3 終端風</span>
                     </h1>
                     <p class="text-xs text-slate-400">🤖 財經富貴 // 與 AI 一起朝 45 歲 5,000 萬總資產目標邁進</p>
                 </div>
@@ -463,11 +463,15 @@
                         <i class="fa-solid fa-chart-area text-blue-500"></i>
                         <h3 class="text-base font-bold text-white">資產淨值成長軌跡</h3>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="openSnapshotManager()" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded border border-cyber-border transition flex items-center gap-1">
-                            <i class="fa-solid fa-sliders"></i> 管理紀錄
+                    <div class="flex items-center gap-1.5">
+                        <div class="flex items-center gap-0.5 bg-slate-900/70 border border-cyber-border rounded p-0.5">
+                            <button data-range="1m"  onclick="setChartRange('1m')"  class="range-btn text-[10px] px-2 py-1 rounded transition">1個月</button>
+                            <button data-range="3m"  onclick="setChartRange('3m')"  class="range-btn text-[10px] px-2 py-1 rounded transition">3個月</button>
+                            <button data-range="all" onclick="setChartRange('all')" class="range-btn text-[10px] px-2 py-1 rounded transition">全部</button>
+                        </div>
+                        <button onclick="openSnapshotManager()" title="管理淨值紀錄" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded border border-cyber-border transition flex items-center gap-1">
+                            <i class="fa-solid fa-sliders"></i>
                         </button>
-                        <span class="text-[10px] bg-emerald-900/30 text-emerald-400 px-2 py-1 rounded border border-emerald-500/30">真實逐日記錄</span>
                     </div>
                 </div>
                 <div id="trend-daily-change" class="hidden flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono mb-3"></div>
@@ -475,6 +479,7 @@
                     <canvas id="trendChart"></canvas>
                     <p id="trend-empty-hint" class="hidden text-xs text-slate-500 text-center px-4 leading-relaxed"></p>
                 </div>
+                <p id="trend-range-note" class="text-[10px] text-slate-500 mt-2"></p>
             </div>
 
             <!-- Goal Tracker Compact -->
@@ -1093,7 +1098,7 @@
                         <div class="bg-blue-600 text-white p-2 rounded-lg text-xs flex items-center justify-center font-bold">富貴</div>
                         <div class="bg-cyber-card border border-cyber-border rounded-xl p-3.5 max-w-[85%] text-slate-200 leading-relaxed shadow-md">
                             家祥您好，我是您的財經戰術助手「財經富貴」！🤖<br>
-                            我們已升級至 <strong>v9.2 終端風</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
+                            我們已升級至 <strong>v9.3 終端風</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
                             現在系統分為四個分頁：<strong>📊 資產總覽</strong>（資產現況與 5,000 萬進度）、<strong>📰 財經情報</strong>（每日自動彙整你追蹤的財經頻道，可一鍵請我結合持股解讀）、<strong>📈 交易與AI檢討</strong>（買賣紀錄、績效日曆與我的戰術裁決）、<strong>🎯 策略選股</strong>（五流派自動選股引擎：胃納量核心榜、持股停損儀表板、當日訊號榜、結構財候選、題材熱度雷達，可一鍵請我給操作策略）。<br><br>
                             💡 <strong>操作核心心法：</strong><br>
                             1. 「🏆 45歲退休圓夢計畫」的 <strong>5,000 萬淨值目標</strong>可直接在畫面上調高調低，所有推估即時重算；退休被動收入只是下方的現金流方向參考。<br>
@@ -1695,6 +1700,9 @@
         let allocationChart = null;
         let trendChartObj = null;
         let acctTrendChartObj = null;
+        // 圖表顯示區間：手機上全期資料點太密不好讀，預設只看近 1 個月，需要細查再切「全部」。
+        // 這個設定同時套用到「資產淨值成長軌跡」與「兩帳戶部位軌跡」，兩張圖的時間軸才會一致。
+        let chartRange = localStorage.getItem('chart_range') || '1m';
         // 兩帳戶軌跡圖顯示模式：both=市值+報酬率 / value=只看市值 / pct=只看報酬率
         let acctChartMode = localStorage.getItem('acct_chart_mode') || 'both';
 
@@ -1919,7 +1927,20 @@
                     netWorthHistory.forEach(h => { merged[h.date] = h; });
                     cloud.NetWorth_History.forEach(h => {
                         const d = normalizeDateStr(h.date);
-                        if (d) merged[d] = { date: d, netWorth: parseFloat(h.netWorth) || 0, combat: parseFloat(h.combat) || 0 };
+                        if (!d) return;
+                        // ⚠️ 帳戶欄位（esunValue/esunCost/yuantaValue/yuantaCost）一定要一起帶回來！
+                        // 舊版只取 netWorth/combat，導致每次從雲端載入就把帳戶成本資料丟掉，
+                        // 「兩帳戶部位軌跡」永遠只剩今天一筆，月投資損益也永遠算不出來。
+                        const row = { date: d, netWorth: parseFloat(h.netWorth) || 0, combat: parseFloat(h.combat) || 0 };
+                        ['esunValue', 'esunCost', 'yuantaValue', 'yuantaCost'].forEach(k => {
+                            if (h[k] !== undefined && h[k] !== '' && h[k] !== null) row[k] = parseFloat(h[k]) || 0;
+                        });
+                        // 雲端沒有帳戶欄位但本地有（例如今天剛記錄、還沒同步上去）→ 保留本地的
+                        const local = merged[d];
+                        if (local && row.esunValue === undefined && local.esunValue !== undefined) {
+                            ['esunValue', 'esunCost', 'yuantaValue', 'yuantaCost'].forEach(k => { row[k] = local[k]; });
+                        }
+                        merged[d] = row;
                     });
                     netWorthHistory = Object.values(merged).sort((a, b) => a.date.localeCompare(b.date));
                     localStorage.setItem('networth_history', JSON.stringify(netWorthHistory));
@@ -3262,9 +3283,9 @@
             const ctx = canvas.getContext('2d');
 
             // 只取真的有帳戶欄位的快照（拆帳戶之前的舊紀錄沒有這些欄位，不能拿來畫）
-            const hist = [...netWorthHistory]
+            const hist = sliceByRange([...netWorthHistory]
                 .filter(h => h.esunValue !== undefined || h.yuantaValue !== undefined)
-                .sort((a, b) => a.date.localeCompare(b.date));
+                .sort((a, b) => a.date.localeCompare(b.date)));
 
             if (acctTrendChartObj) acctTrendChartObj.destroy();
 
@@ -3594,14 +3615,50 @@
                 }).join("");
             }
         }
+        function setChartRange(r) {
+            chartRange = r;
+            localStorage.setItem('chart_range', r);
+            renderTrendChart();
+            renderAcctTrendChart();
+        }
+
+        function syncRangeButtons() {
+            document.querySelectorAll('.range-btn').forEach(btn => {
+                const on = btn.getAttribute('data-range') === chartRange;
+                btn.className = 'range-btn text-[10px] px-2 py-1 rounded transition ' +
+                    (on ? 'bg-blue-600 text-white font-bold' : 'text-slate-400 hover:text-white');
+            });
+        }
+
+        // 依目前選定區間裁切資料（以「最後一筆的日期」往回推，而非今天，
+        // 這樣即使幾天沒開 App 也還是看得到最近一個月的紀錄）
+        function sliceByRange(hist) {
+            if (chartRange === 'all' || hist.length === 0) return hist;
+            const days = chartRange === '3m' ? 92 : 31;
+            const last = new Date(hist[hist.length - 1].date + 'T00:00:00');
+            const cutoff = new Date(last.getTime() - days * 86400000);
+            const cutStr = getLocalDateStr(cutoff);
+            const sliced = hist.filter(h => h.date >= cutStr);
+            return sliced.length >= 2 ? sliced : hist;   // 該區間資料太少就退回全部，避免畫不出線
+        }
+
         function renderTrendChart() {
             const canvas = document.getElementById('trendChart');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             if (typeof Chart === 'undefined') return;
 
-            // 只使用真實記錄的快照（從你實際開始使用當天起）
-            const hist = [...netWorthHistory].sort((a, b) => a.date.localeCompare(b.date));
+            // 只使用真實記錄的快照（從你實際開始使用當天起），再依選定區間裁切
+            syncRangeButtons();
+            const fullHist = [...netWorthHistory].sort((a, b) => a.date.localeCompare(b.date));
+            const hist = sliceByRange(fullHist);
+            const noteEl = document.getElementById('trend-range-note');
+            if (noteEl) {
+                const label = chartRange === 'all' ? '全部' : (chartRange === '3m' ? '近 3 個月' : '近 1 個月');
+                noteEl.innerText = hist.length
+                    ? `顯示區間：${label}（${hist[0].date} ~ ${hist[hist.length - 1].date}，共 ${hist.length} 筆；總累積 ${fullHist.length} 筆）　此區間同時套用到下方「兩帳戶部位軌跡」`
+                    : '';
+            }
 
             renderDailyChangeBadge(hist);
 
