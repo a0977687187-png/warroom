@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
-    <title>家祥投資戰情室 v9.4 - 45歲圓夢退休 終端風</title>
+    <title>家祥投資戰情室 v9.5 - 45歲圓夢退休 終端風</title>
 
     <!-- PWA / 加到主畫面（手機App化）設定 -->
     <link rel="manifest" href="manifest.json">
@@ -345,7 +345,7 @@
                 </div>
                 <div>
                     <h1 class="text-lg font-bold tracking-wider text-white flex items-center gap-2">
-                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v9.4 終端風</span>
+                        家祥投資戰情室 <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">v9.5 終端風</span>
                     </h1>
                     <p class="text-xs text-slate-400">🤖 財經富貴 // 與 AI 一起朝 45 歲 5,000 萬總資產目標邁進</p>
                 </div>
@@ -1098,7 +1098,7 @@
                         <div class="bg-blue-600 text-white p-2 rounded-lg text-xs flex items-center justify-center font-bold">富貴</div>
                         <div class="bg-cyber-card border border-cyber-border rounded-xl p-3.5 max-w-[85%] text-slate-200 leading-relaxed shadow-md">
                             家祥您好，我是您的財經戰術助手「財經富貴」！🤖<br>
-                            我們已升級至 <strong>v9.4 終端風</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
+                            我們已升級至 <strong>v9.5 終端風</strong>，主要目標明確設定為 <strong class="text-amber-400">45歲總資產淨值達 5,000 萬</strong>。<br>
                             現在系統分為四個分頁：<strong>📊 資產總覽</strong>（資產現況與 5,000 萬進度）、<strong>📰 財經情報</strong>（每日自動彙整你追蹤的財經頻道，可一鍵請我結合持股解讀）、<strong>📈 交易與AI檢討</strong>（買賣紀錄、績效日曆與我的戰術裁決）、<strong>🎯 策略選股</strong>（五流派自動選股引擎：胃納量核心榜、持股停損儀表板、當日訊號榜、結構財候選、題材熱度雷達，可一鍵請我給操作策略）。<br><br>
                             💡 <strong>操作核心心法：</strong><br>
                             1. 「🏆 45歲退休圓夢計畫」的 <strong>5,000 萬淨值目標</strong>可直接在畫面上調高調低，所有推估即時重算；退休被動收入只是下方的現金流方向參考。<br>
@@ -1519,7 +1519,8 @@
                     <i class="fa-solid fa-circle-info text-blue-400 mt-0.5"></i>
                     <div class="text-[10px] text-slate-400 leading-relaxed">
                         第一次設定完網址後，點下方「儲存並連線」會自動嘗試讀取雲端資料。<br>
-                        如果雲端試算表目前是空的，可以點 <strong class="text-white">「⬆️ 用目前畫面資料初始化雲端」</strong>，把現在畫面上的數字一次寫入所有分頁。
+                        <span class="text-slate-300">換新手機或在電腦上開？只要貼上同一組網址後按「儲存並連線」，資料就會自動抓下來，不需要重新輸入。</span><br>
+                        <span class="text-amber-400">⚠️ 下面那顆「用目前畫面資料初始化雲端」方向是相反的（畫面 → 雲端），<strong>只有在雲端試算表全新是空的時候才用</strong>。在還沒連上雲端的新裝置上按它，會把真實資料洗掉。</span>
                     </div>
                 </div>
                 <button onclick="initializeCloudFromCurrentState()" class="w-full bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition flex items-center justify-center gap-2">
@@ -2014,6 +2015,44 @@
             localStorage.setItem('apps_script_url', appsScriptUrl);
             if (!validateAppsScriptUrl()) { alert('網址格式看起來不對，請確認結尾是 /exec'); return; }
 
+            // ⚠️ 安全閥（2026-08-30 補）：這顆按鈕是「把畫面資料覆蓋到雲端」，方向跟平常相反。
+            //    最危險的情境是「在一台從沒設定過的新裝置上按它」——因為沒讀過雲端，
+            //    畫面上是內建示範資料，一按就會把真實的持股、現金、資產總覽全部洗掉。
+            //    所以先讀一次雲端：只要雲端已經有資料，就必須讓使用者看清楚並二次確認。
+            setSyncStatus('yellow', '檢查雲端現有資料...', 'animate-pulse');
+            let cloudPeek = null;
+            try {
+                const res = await fetch(appsScriptUrl + '?action=getAll&_=' + Date.now());
+                if (res.ok) {
+                    const j = await res.json();
+                    if (j && j.status === 'ok') cloudPeek = j.data || {};
+                }
+            } catch (err) { cloudPeek = null; }
+
+            if (cloudPeek === null) {
+                setSyncStatus('red', '讀不到雲端');
+                alert('⚠️ 讀不到雲端資料，為了安全起見已中止。\n\n請先確認網址正確、且部署時「誰可以存取」選的是「任何人」，再試一次。');
+                return;
+            }
+
+            const cloudHoldings = Array.isArray(cloudPeek.Stock_Holdings) ? cloudPeek.Stock_Holdings.length : 0;
+            const cloudTrades = Array.isArray(cloudPeek.Trade_Log) ? cloudPeek.Trade_Log.length : 0;
+            const cloudHasSummary = cloudPeek.Asset_Summary && Object.keys(cloudPeek.Asset_Summary).length > 0;
+
+            if (cloudHoldings > 0 || cloudTrades > 0 || cloudHasSummary) {
+                const ok = confirm(
+                    '🛑 等一下！你的雲端試算表「已經有資料」了：\n\n' +
+                    '　• 持股 ' + cloudHoldings + ' 檔\n' +
+                    '　• 交易紀錄 ' + cloudTrades + ' 筆\n' +
+                    '　• 資產總覽 ' + (cloudHasSummary ? '已設定' : '無') + '\n\n' +
+                    '這顆按鈕會用「現在這台裝置畫面上的數字」把上面這些全部覆蓋掉。\n\n' +
+                    '如果你只是想在新裝置（電腦／新手機）上看到資料，\n' +
+                    '請按「取消」，改按下面的「儲存並連線」——那才是把雲端資料抓下來。\n\n' +
+                    '真的要用畫面資料覆蓋雲端嗎？'
+                );
+                if (!ok) { setSyncStatus('slate', '已取消，未變更雲端'); return; }
+            }
+
             setSyncStatus('yellow', '正在初始化雲端資料...', 'animate-pulse');
             await syncAssetSummaryToSheet();
             await syncStockHoldingsToSheet();
@@ -2441,6 +2480,9 @@
                 // ETF 證交稅 0.1%、個股 0.3%。
                 const grossVal = stock.shares * stock.price;          // 股票市值（券商顯示的市值，未扣費用）
                 const netVal = sellNetOf(stock.code, stock.shares, stock.price); // 現在全部賣掉實際入袋
+                // 下方「市值」的 tooltip 要拆開顯示費用明細，這裡把兩筆費用單獨算出來
+                const sellFee = grossVal > 0 ? Math.max(MIN_FEE, grossVal * FEE_RATE) : 0;
+                const sellTax = grossVal * sellTaxRateOf(stock.code);
                 const costBasis = buyCostOf(stock.shares, stock.cost);           // 持有成本（含買進手續費）
                 const pnl = netVal - costBasis;
                 const pnlPct = costBasis > 0 ? (pnl / costBasis) * 100 : 0;
@@ -5151,7 +5193,7 @@ ${scText}
                 : '（目前尚無交易紀錄）';
 
             const portfolioContext = `
-家祥當前控制中樞 v9.4 (五分頁整合版) 精密即時數據：
+家祥當前控制中樞 v9.5 (五分頁整合版) 精密即時數據：
 目前總資產淨值: ${currentNetWorthText}
 【主要目標】45歲總資產淨值達 $${netWorthGoal.toLocaleString()}（${(netWorthGoal/10000).toLocaleString()}萬），目前達成率約 ${Math.round(currentNetWorthNum / netWorthGoal * 100)}%
 持股明細：
